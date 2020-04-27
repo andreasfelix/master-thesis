@@ -19,3 +19,10 @@ html:
 	--filter pandoc-crossref \
 	--toc
 
+deploy: html pdf
+	cd _dist
+	git init
+	git add -A
+	git commit -m 'deploy'
+	git push -f git@github.com:andreasfelix/master-thesis.git master:gh-pages
+	cd -
