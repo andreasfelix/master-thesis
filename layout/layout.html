@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Felix Andreas" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>Master Thesis</title>
+    <style>
+        :root {
+            --sans-font: 'Inter', sans-serif;
+            --serif-font: Georgia, 'Times New Roman', Times, serif;
+            --page-color: white;
+            --navbar-color: white;
+            --font-size: 14px;
+            --background-color: #f9f9f9;
+            --border-color: #EFEFEF;
+            --sidebar-width: 300px;
+            --text-colo: #273849;
+            --text-color-muted: #273849e0;
+            --icon-color: #273849b0;
+            --hover-color: #008CFA;
+            --shadow: 0 0 0.3cm rgba(0, 0, 0, 0.025);
+        }
+
+        @media only screen and (max-width: 600px) {
+            :root {
+                --sidebar-is-open: 0;
+                --padding: 5mm;
+            }
+
+            #content {
+                transform: translate(calc(var(--sidebar-is-open) * var(--sidebar-width)), 0);
+            }
+        }
+
+        @media only screen and (min-width: 601px) {
+            :root {
+                --sidebar-is-open: 1;
+                --padding: 25mm;
+            }
+
+            #content {
+                margin-left: calc(var(--sidebar-is-open) * var(--sidebar-width));
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-family: var(--sans-font);
+            color: var(--text-colo);
+        }
+
+        i {
+            color: var(--icon-color);
+        }
+
+
+
+        #sidebar {
+            color: --text-color-muted;
+            position: fixed;
+            background: var(--background-color);
+            width: var(--sidebar-width);
+            height: 100vh;
+            transform: translate(calc((var(--sidebar-is-open) - 1) * var(--sidebar-width)));
+            transition: transform 200ms ease-out;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .sidebar__title {
+            padding: 25px 15px;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #sidebar .TOC {
+            font-size: 14px;
+        }
+
+        .TOC .toc-section-number {
+            font-weight: bold;
+        }
+
+        .TOC ul {
+            padding: 0 0 0 10px;
+            list-style: none;
+        }
+
+        .TOC>ul {
+            padding: 0;
+        }
+
+        .TOC a {
+            padding: 10px 15px;
+            color: var(--text-color-muted);
+            text-decoration: none;
+            text-overflow: ellipsis;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .TOC a:hover {
+            color: #008CFA;
+        }
+
+        #content {
+            font-family: var(--serif-font);
+            font-size: var(--font-size);
+            background: var(--page-color);
+            transition: 200ms ease-out;
+            padding-bottom: 100px;
+            line-height: 1.5;
+        }
+
+
+        #content .header-section-number {
+            margin-right: 0.25em;
+        }
+
+        #content h1,
+        #content h2,
+        #content h3,
+        #content h4 {
+            font-family: var(--sans-font);
+            margin: 1.25em 0 0.75em;
+        }
+
+        #content h1 {
+            font-size: 2em;
+        }
+
+        #content h2 {
+            font-size: 1.75em;
+        }
+
+        #content h3 {
+            font-size: 1.5em;
+        }
+
+        #navbar {
+            color: var(--text-color-muted);
+            background: var(--page-color);
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            height: 48px;
+        }
+
+        #navbar>a {
+            text-decoration: none;
+        }
+
+        .navbar__item {
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .navbar__item:hover>i {
+            color: var(--hover-color);
+        }
+
+        .navbar__item--style {
+            position: relative;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 125%;
+            width: 200px;
+            left: calc(-100px + 50%);
+            background: var(--navbar-color);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown:after,
+        .dropdown:before {
+            bottom: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .dropdown:after {
+            border-bottom-color: var(--navbar-color);
+            border-width: 8.6px;
+            margin-left: -8.6px;
+        }
+
+        .dropdown:before {
+            border-bottom-color: var(--border-color);
+            border-width: 10px;
+            margin-left: -10px;
+        }
+
+        .dropdown>* {
+            color: var(--icon-color);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .dropdown__item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown__item:hover>i {
+            color: var(--hover-color);
+        }
+
+        .pages {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background: var(--page-color);
+            margin: 10mm auto 0;
+            /* max-width: 210mm; */
+            max-width: 1000pxhon;
+            padding: 15mm var(--padding) 20mm;
+            /* box-shadow: var(--shadow); */
+            /* border: 1px solid var(--border-color); */
+            outline: none;
+        }
+
+        .pages p {
+            text-align: justify;
+            margin-bottom: 0;
+        }
+
+        .pages p+p {
+            margin-top: 0;
+            text-indent: 6mm;
+        }
+
+        p>span {
+            align-self: center;
+        }
+
+        #title-page {
+            font-size: 18px;
+            min-height: calc(297mm - 2 * var(--padding));
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            font-variant: small-caps;
+            margin-bottom: 200px;
+        }
+
+        #title-page>.uni-logo>img {
+            width: 60mm;
+        }
+
+        #title-page>.thesis-type {
+            font-variant: small-caps;
+        }
+
+        #title-page>.thesis-title {
+            font-weight: 700;
+        }
+
+        #title-page>.author-supervisor {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        #title-page>.author-supervisor>.author {
+            text-align: left;
+        }
+
+        .author>div:first-child,
+        .supervisor> :first-child {
+            font-style: italic;
+        }
+
+        #title-page>.author-supervisor>.supervisor {
+            text-align: right;
+        }
+
+        #title-page>.thesis-and-institute {
+            width: 80%;
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            align-items: center;
+        }
+
+        #title-page>.thesis-and-institute> :nth-child(-n + 2) {
+            font-style: italic;
+        }
+
+        #title-page>.thesis-and-institute>.institute {
+            font-variant: small-caps;
+        }
+    </style>
+</head>
+
+<body>
+    $for(include-before)$
+    $include-before$
+    $endfor$
+    <div id="sidebar">
+        <div class="sidebar__title"><b>Master Thesis</b></div>
+        <div class="$idprefix$TOC">
+            $toc$
+        </div>
+    </div>
+    <div id="content">
+        <div id="navbar">
+            <div class="navbar__item" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="navbar__item navbar__item--style" onclick="toggleDropdownStyle()">
+                <i class="toggleDropdown fas fa-font"></i>
+                <div class="dropdown">
+                    <div class="font-size">
+                        <div class="dropdown__item"><i class="fas fa-font fa-xs"></i></div>
+                        <div class="dropdown__item"><i class="fas fa-font"></i></div>
+                    </div>
+                    <div class="text-height">
+                        <div class="dropdown__item"><i class="fas fa-text-height fa-xs"></i></div>
+                        <div class="dropdown__item"><i class="fas fa-text-height"></i></div>
+                    </div>
+                    <div class="theme">
+                        <div class="dropdown__item"><i class="far fa-lightbulb"></i></div>
+                        <div class="dropdown__item"><i class="far fa-moon"></i></div>
+                    </div>
+                    <div class="font-style">
+                        <div class="dropdown__item">Sans</div>
+                        <div class="dropdown__item">Serif</div>
+                    </div>
+                </div>
+            </div>
+            <a href="https://github.com/andreasfelix/master-thesis" target="_blank">
+                <div class="navbar__item">
+                    <i class="fab fa-github"></i>
+                </div>
+            </a>
+            <a href="thesis.pdf" class="button" download>
+                <div class="navbar__item">
+                    <i class="far fa-file-pdf"></i>
+                </div>
+            </a>
+        </div>
+        <div class="pages">
+            <div id="title-page">
+                <div class="uni-logo">
+                    <img src="hu-logo.svg" />
+                </div>
+                <div class="thesis-type">Master Thesis</div>
+                <div class="thesis-title">
+                    Lattice Development at the BESSY II Storage Ring
+                    <br />Optimization of the Twiss parameter
+                </div>
+                <div class="author-supervisor">
+                    <div class="author">
+                        <div>Author:</div>
+                        <div>Felix Andreas</div>
+                    </div>
+                    <div class="supervisor">
+                        <div>Supervisors:</div>
+                        <div>Prof. Dr. Andreas Jankowiak</div>
+                        <div>Dr. Paul Goslawski</div>
+                    </div>
+                </div>
+                <div class="thesis-and-institute">
+                    <div class="thesis-requirements">
+                        A thesis submitted in fulfillment of the requirements for the degree of
+                        Master of Science (M.Sc)
+                    </div>
+                    <div class="in">in the</div>
+                    <div class="institute">
+                        Faculty of Mathematics and Natural Sciences
+                        <br />Department of Physics
+                    </div>
+                </div>
+                <div class="date">April 29, 2020</div>
+            </div>
+            $if(toc)$
+            <div class="$idprefix$TOC">
+                $toc$
+            </div>
+            $endif$
+            $if(lof)$
+            <div id="$idprefix$LOF">
+                $lof$
+            </div>
+            $endif$
+            $if(lot)$
+            <div id="$idprefix$LOT">
+                $lot$
+            </div>
+            $endif$
+            $body$
+        </div>
+    </div>
+    $for(include-after)$
+    $include-after$
+    $endfor$
+    <script>
+        let root = document.documentElement;
+        let style = getComputedStyle(root, null);
+        function toggleSidebar() {
+            let isOpen = style.getPropertyValue("--sidebar-is-open").trim();
+            console.log(isOpen);
+            root.style.setProperty("--sidebar-is-open", isOpen === "1" ? "0" : "1");
+        }
+
+        function toggleDropdownStyle(element) {
+            document.querySelector(".dropdown").classList.toggle("show");
+        }
+
+        function changeFontSize(value) {
+            let fontSize = style.getPropertyValue("--font-size").trim();
+
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.toggleDropdown')) {
+                for (element of document.getElementsByClassName("dropdown")) {
+                    if (element.classList.contains('show')) {
+                        element.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
