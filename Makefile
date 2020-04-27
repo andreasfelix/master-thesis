@@ -9,7 +9,7 @@ pdf:
 
 html:
 	pandoc content/*.md \
-	-o _dist/thesis.html \
+	-o _dist/index.html \
 	--metadata title="Master Thesis" \
 	--bibliography=content/bibliography.bib \
 	--highlight-style=pygments \
