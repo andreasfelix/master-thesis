@@ -2,52 +2,89 @@
 <html lang="en">
 
 <head>
+    <title>Master Thesis</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Felix Andreas" />
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <title>Master Thesis</title>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" /> -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.5/dist/medium-zoom.min.js"></script>
+    <script>
+        function setDarkTheme() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        function setLightTheme() {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+
+        //determines if the user has a set theme
+        function detectColorScheme() {
+            if (!window.matchMedia) {
+                //matchMedia method not supported
+                return false;
+            } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                //OS theme setting detected as dark
+                setDarkTheme();
+            }
+        }
+        detectColorScheme();
+    </script>
+
     <style>
+        /*
+         * Variables
+         */
+
         :root {
             --sans-font: 'Inter', sans-serif;
-            --serif-font: Georgia, 'Times New Roman', Times, serif;
-            --page-color: white;
-            --navbar-color: white;
-            --font-size: 14px;
-            --background-color: #f9f9f9;
-            --border-color: #EFEFEF;
-            --sidebar-width: 300px;
-            --text-colo: #273849;
-            --text-color-muted: #273849e0;
-            --icon-color: #273849b0;
-            --hover-color: #008CFA;
+            --serif-font: 'Source Serif Pro', serif;
+            --content-font: var(--serif-font);
+            --ui-font: var(--sans-font);
+            --page-width: 210mm;
+            --padding: 20mm;
+            --header-height: 48px;
+            --font-size: 16px;
+            --nav-width: 250px;
             --shadow: 0 0 0.3cm rgba(0, 0, 0, 0.025);
+            --style-transition: 400ms ease;
         }
 
-        @media only screen and (max-width: 600px) {
-            :root {
-                --sidebar-is-open: 0;
-                --padding: 5mm;
-            }
-
-            #content {
-                transform: translate(calc(var(--sidebar-is-open) * var(--sidebar-width)), 0);
-            }
+        :root {
+            /* light theme variables */
+            --nav-color: #fafbfc;
+            --header-color: #fff;
+            --page-color: #fff;
+            --border-color: #eaebec;
+            --hover-color: #00000006;
+            --active-color: #0000000C;
+            --text-color: #24292e;
+            --text-color-muted: #24292ece;
+            --icon-color: #24292eb0;
+            --accent-color: hsl(210, 100%, 50%);
         }
 
-        @media only screen and (min-width: 601px) {
-            :root {
-                --sidebar-is-open: 1;
-                --padding: 25mm;
-            }
-
-            #content {
-                margin-left: calc(var(--sidebar-is-open) * var(--sidebar-width));
-            }
+        [data-theme="dark"] {
+            --nav-color: #2f363d;
+            --header-color: #2f363d;
+            --page-color: #2f363d;
+            --hover-color: #131313;
+            --active-color: #050505;
+            --border-color: #111;
+            --text-color: white;
+            --text-color-muted: #f2f9ff;
+            --icon-color: #f2f9ff;
+            --accent-color: hsl(210, 100%, 65%);
+            --uni-logo-filter: invert(100%) hue-rotate(180deg);
         }
+
+        /*
+         * Layout
+         */
 
         * {
             box-sizing: border-box;
@@ -55,51 +92,105 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
         html,
         body {
             padding: 0;
             margin: 0;
+            /* overflow-x: hidden; */
+            /* does not work with sticky ?!*/
         }
+
 
         body {
-            font-family: var(--sans-font);
-            color: var(--text-colo);
+            font-family: var(--ui-font);
+            color: var(--text-color);
+            background: var(--page-color);
+            transition: background var(--style-transition);
+            display: grid;
+            /* grid-template-columns: minmax(var(--nav-width), 1fr) minmax(0, var(--page-width)) 1fr; */
+            grid-template-columns: 1fr minmax(0, var(--page-width)) minmax(var(--nav-width), 1fr);
+            grid-template-rows: auto auto;
+            /* grid-template-areas: "nav header header""nav main ."; */
+            grid-template-areas: "header header nav"". main nav";
         }
 
-        i {
+        .feather {
+            height: 16px;
             color: var(--icon-color);
+            transition: color var(--style-transition);
         }
 
+        /*
+         * Nav
+         */
 
-
-        #sidebar {
-            color: --text-color-muted;
-            position: fixed;
-            background: var(--background-color);
-            width: var(--sidebar-width);
+        nav {
+            transform: scaleX(-1);
+            grid-area: nav;
             height: 100vh;
-            transform: translate(calc((var(--sidebar-is-open) - 1) * var(--sidebar-width)));
-            transition: transform 200ms ease-out;
+            position: sticky;
+            top: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            color: var(--text-color-muted);
+            background: var(--nav-color);
             border-right: 1px solid var(--border-color);
+            transition:
+                transform 200ms ease-out,
+                background var(--style-transition),
+                border var(--style-transition);
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color);
         }
 
-        .sidebar__title {
-            padding: 25px 15px;
+        nav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        nav::-webkit-scrollbar-thumb {
+            background: none;
+            border-radius: 20px;
+        }
+
+        nav:hover::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+        }
+
+
+        nav .toc-container {
+            padding-left: 30px;
+            transform: scaleX(-1);
+            min-width: var(--nav-width);
+            height: 100vh;
+            margin-left: auto;
+            /* margin-right: auto; */
+        }
+
+        .nav__title {
+            padding-top: 20px;
             display: flex;
-            justify-content: center;
-            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+            align-items: center;
         }
 
-        #sidebar .TOC {
+        .nav__title img {
+            height: 120px;
+            filter: var(--uni-logo-filter);
+        }
+
+        nav .TOC {
+            margin-top: 20px;
             font-size: 14px;
         }
 
-        .TOC .toc-section-number {
-            font-weight: bold;
-        }
-
         .TOC ul {
-            padding: 0 0 0 10px;
+            /* padding: 0 0 0 10px; */
+            padding: 0;
             list-style: none;
         }
 
@@ -107,8 +198,14 @@
             padding: 0;
         }
 
+        .TOC>ul>li>a {
+            font-weight: 600;
+            font-size: 1.2em;
+            font-variant: small-caps;
+        }
+
         .TOC a {
-            padding: 10px 15px;
+            padding: 10px 0;
             color: var(--text-color-muted);
             text-decoration: none;
             text-overflow: ellipsis;
@@ -118,97 +215,111 @@
         }
 
         .TOC a:hover {
-            color: #008CFA;
+            color: var(--accent-color);
+            background: var(--hover-color);
         }
 
-        #content {
-            font-family: var(--serif-font);
-            font-size: var(--font-size);
-            background: var(--page-color);
-            transition: 200ms ease-out;
-            padding-bottom: 100px;
-            line-height: 1.5;
-        }
+        /*
+         * Header
+         */
 
-
-        #content .header-section-number {
-            margin-right: 0.25em;
-        }
-
-        #content h1,
-        #content h2,
-        #content h3,
-        #content h4 {
-            font-family: var(--sans-font);
-            margin: 1.25em 0 0.75em;
-        }
-
-        #content h1 {
-            font-size: 2em;
-        }
-
-        #content h2 {
-            font-size: 1.75em;
-        }
-
-        #content h3 {
-            font-size: 1.5em;
-        }
-
-        #navbar {
-            color: var(--text-color-muted);
-            background: var(--page-color);
+        header {
+            grid-area: header;
+            background: var(--header-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background var(--style-transition), border var(--style-transition);
             position: sticky;
             top: 0;
             display: flex;
+            flex-direction: row-reverse;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            height: 48px;
+            height: var(--header-height);
+            text-decoration: none;
+            z-index: 1;
         }
 
-        #navbar>a {
+        header a {
             text-decoration: none;
         }
 
-        .navbar__item {
+        .header__left,
+        .header__right {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .header__item {
             cursor: pointer;
             height: 100%;
             display: flex;
             align-items: center;
-            padding: 0 20px;
-        }
-
-        .navbar__item:hover>i {
-            color: var(--hover-color);
-        }
-
-        .navbar__item--style {
+            justify-content: center;
+            width: var(--header-height);
             position: relative;
         }
 
-        .dropdown {
-            display: none;
-            position: absolute;
-            top: 125%;
-            width: 200px;
-            left: calc(-100px + 50%);
-            background: var(--navbar-color);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 4px;
-            box-shadow: var(--shadow);
+        .header__item:hover {
+            background: var(--hover-color);
+            transition: background var(--style-transition);
         }
 
-        .dropdown.show {
-            display: block;
+        .header__item:hover>.feather {
+            color: var(--accent-color);
+        }
+
+        .tooltip {
+            visibility: hidden;
+            position: absolute;
+            min-width: max-content;
+            top: 40px;
+            font-size: 0.8em;
+            padding: 4px;
+            color: var(--nav-color);
+            background: var(--text-color-muted);
+            border-radius: 4px;
+        }
+
+        .header__left .tooltip {
+            right: 4px;
+        }
+
+        .header__right .tooltip {
+            left: 4px;
+        }
+
+        .header__item:hover>.tooltip {
+            animation: 0s linear 400ms forwards delayedShow;
+        }
+
+        @keyframes delayedShow {
+            to {
+                visibility: visible;
+            }
+        }
+
+        .dropdown {
+            visibility: hidden;
+            position: absolute;
+            top: calc(var(--header-height) - 2px);
+            left: calc(-80px + 50%);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            background: var(--header-color);
+            transition: var(--style-transition);
+        }
+
+        .header__item:hover>.dropdown {
+            visibility: visible;
         }
 
         .dropdown:after,
         .dropdown:before {
+            transition: border var(--style-transition);
             bottom: 100%;
-            left: 50%;
             border: solid transparent;
             content: " ";
+            left: 79.3px;
             height: 0;
             width: 0;
             position: absolute;
@@ -216,15 +327,15 @@
         }
 
         .dropdown:after {
-            border-bottom-color: var(--navbar-color);
-            border-width: 8.6px;
-            margin-left: -8.6px;
+            border-bottom-color: var(--header-color);
+            border-width: 10.6px;
+            margin-left: -10.6px;
         }
 
         .dropdown:before {
             border-bottom-color: var(--border-color);
-            border-width: 10px;
-            margin-left: -10px;
+            border-width: 12px;
+            margin-left: -12px;
         }
 
         .dropdown>* {
@@ -237,96 +348,229 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
+            width: 80px;
+            height: 50px;
             cursor: pointer;
+            transition: background 0.8s;
         }
 
-        .dropdown__item:hover>i {
-            color: var(--hover-color);
+        .dropdown__item:hover>.feather {
+            color: var(--accent-color);
+        }
+
+        .dropdown__item:hover {
+            color: var(--accent-color);
+            background: var(--hover-color) radial-gradient(circle, transparent 1%, var(--hover-color) 1%) center/15000%;
+        }
+
+        .dropdown__item:active {
+            background-color: var(--border-color);
+            background-size: 100%;
+            transition: background 0s;
+        }
+
+        .dropdown .font-style {
+            font-weight: 600;
+        }
+
+        /*
+         * Main
+         */
+
+        main {
+            grid-area: main;
+            font-family: var(--content-font);
+            font-size: var(--font-size);
+            background: var(--page-color);
+            transition: background var(--style-transition);
         }
 
         .pages {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            background: var(--page-color);
-            margin: 10mm auto 0;
-            /* max-width: 210mm; */
-            max-width: 1000pxhon;
-            padding: 15mm var(--padding) 20mm;
-            /* box-shadow: var(--shadow); */
-            /* border: 1px solid var(--border-color); */
+            margin: 0 auto;
+            max-width: var(--page-width);
+            padding: 0 var(--padding) 20mm;
             outline: none;
         }
 
-        .pages p {
-            text-align: justify;
-            margin-bottom: 0;
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--sans-font);
+            font-weight: 600;
+            margin: 2.5em 0 0.8em;
+            position: relative;
+            /* text-align: center; */
+            font-variant: small-caps;
         }
 
-        .pages p+p {
+
+        h1 {
+            font-size: 2em;
+            top: 2px;
+            /* TODO: make h1 sticky */
+            /* position: sticky; */
+            /* z-index: 2;
+            background-color: white; */
+            padding-bottom: 1em;
+            border-bottom: 2px solid var(--border-color);
+            transition: border-bottom var(--style-transition);
+        }
+
+        h2 {
+            font-size: 1.75em;
+        }
+
+        h2:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -30px;
+            height: 1px;
+            width: 100%;
+            background-color: var(--border-color);
+            transition: background-color var(--style-transition);
+        }
+
+        h3 {
+            font-size: 1.5em;
+        }
+
+        .header-section-number {
+            margin-right: 0.25em;
+        }
+
+        math {
+            margin: 1.5em 0;
+        }
+
+        figure {
+            margin: 1em 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        figure img {
+            filter: var(--uni-logo-filter);
+            max-width: 100%;
+            /* necessary to avoid vertical spacing*/
+        }
+
+        figure figcaption {
+            margin: 0.5em 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        /* Use :has and :not to filter equations */
+        p+p {
             margin-top: 0;
             text-indent: 6mm;
         }
 
-        p>span {
-            align-self: center;
+        p>span>span.math.display {
+            margin-top: 0;
+            display: block;
+            text-align: center;
+        }
+
+        a {
+            color: var(--accent-color);
         }
 
         #title-page {
-            font-size: 18px;
-            min-height: calc(297mm - 2 * var(--padding));
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            font-variant: small-caps;
-            margin-bottom: 200px;
+            font-family: var(--sans-font);
+            /* margin-bottom: 200px; */
         }
 
-        #title-page>.uni-logo>img {
-            width: 60mm;
-        }
-
-        #title-page>.thesis-type {
-            font-variant: small-caps;
-        }
-
-        #title-page>.thesis-title {
-            font-weight: 700;
-        }
-
-        #title-page>.author-supervisor {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-        }
-
-        #title-page>.author-supervisor>.author {
+        #title-page h1 {
+            /* font-variant: small-caps; */
             text-align: left;
         }
 
-        .author>div:first-child,
-        .supervisor> :first-child {
+        #title-page .thesis-text {
+            font-size: 0.85em;
             font-style: italic;
+            margin-bottom: 2em;
+            color: var(--text-color-muted);
         }
 
-        #title-page>.author-supervisor>.supervisor {
+        #title-page .info {
+            margin-top: 10px;
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+            transition: border var(--style-transition);
+            padding: 10px 20px;
+        }
+
+        #title-page .info th:nth-child(1) {
             text-align: right;
+            vertical-align: top;
         }
 
-        #title-page>.thesis-and-institute {
-            width: 80%;
-            display: grid;
-            grid-template-rows: repeat(3, 1fr);
-            align-items: center;
+        #title-page .info th:nth-child(2) {
+            text-align: left;
+            vertical-align: top;
+            font-weight: normal;
+            padding: 0 1em 0.5em;
         }
 
-        #title-page>.thesis-and-institute> :nth-child(-n + 2) {
-            font-style: italic;
+        /*
+         * Mobile
+         */
+
+        #overlay,
+        .header__item--toggle-nav {
+            display: none;
         }
 
-        #title-page>.thesis-and-institute>.institute {
-            font-variant: small-caps;
+        @media only screen and (max-width: 800px) {
+            :root {
+                --padding: 5vw;
+            }
+
+            body {
+                grid-template-columns: auto;
+                grid-template-areas: "header""main";
+                /* width: 100vw; */
+            }
+
+            nav {
+                position: fixed;
+                z-index: 3;
+                max-width: 80vw;
+                transform: scaleX(-1) translateX(-100%);
+                transition: transform 200ms ease-out;
+                top: 0;
+                right: 0;
+            }
+
+            nav.show {
+                transform: scaleX(-1) translateX(0);
+            }
+
+            .header__item--toggle-nav {
+                display: flex;
+            }
+
+            #overlay.show {
+                cursor: pointer;
+                display: block;
+                position: fixed;
+                /* cannot use vw/vh - mobile viewport can change */
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 2;
+            }
         }
     </style>
 </head>
@@ -335,87 +579,123 @@
     $for(include-before)$
     $include-before$
     $endfor$
-    <div id="sidebar">
-        <div class="sidebar__title"><b>Master Thesis</b></div>
-        <div class="$idprefix$TOC">
-            $toc$
-        </div>
-    </div>
-    <div id="content">
-        <div id="navbar">
-            <div class="navbar__item" onclick="toggleSidebar()">
-                <i class="fas fa-bars"></i>
+    <nav>
+        <div class="toc-container">
+            <div class="nav__title">
+                <!-- <b>Master Thesis</b> -->
+                <img src="hu-logo-mark.svg" />
             </div>
-            <div class="navbar__item navbar__item--style" onclick="toggleDropdownStyle()">
-                <i class="toggleDropdown fas fa-font"></i>
-                <div class="dropdown">
-                    <div class="font-size">
-                        <div class="dropdown__item"><i class="fas fa-font fa-xs"></i></div>
-                        <div class="dropdown__item"><i class="fas fa-font"></i></div>
-                    </div>
-                    <div class="text-height">
-                        <div class="dropdown__item"><i class="fas fa-text-height fa-xs"></i></div>
-                        <div class="dropdown__item"><i class="fas fa-text-height"></i></div>
-                    </div>
-                    <div class="theme">
-                        <div class="dropdown__item"><i class="far fa-lightbulb"></i></div>
-                        <div class="dropdown__item"><i class="far fa-moon"></i></div>
-                    </div>
-                    <div class="font-style">
-                        <div class="dropdown__item">Sans</div>
-                        <div class="dropdown__item">Serif</div>
-                    </div>
-                </div>
-            </div>
-            <a href="https://github.com/andreasfelix/master-thesis" target="_blank">
-                <div class="navbar__item">
-                    <i class="fab fa-github"></i>
-                </div>
-            </a>
-            <a href="thesis.pdf" class="button" download>
-                <div class="navbar__item">
-                    <i class="far fa-file-pdf"></i>
-                </div>
-            </a>
-        </div>
-        <div class="pages">
-            <div id="title-page">
-                <div class="uni-logo">
-                    <img src="hu-logo.svg" />
-                </div>
-                <div class="thesis-type">Master Thesis</div>
-                <div class="thesis-title">
-                    Lattice Development at the BESSY II Storage Ring
-                    <br />Optimization of the Twiss parameter
-                </div>
-                <div class="author-supervisor">
-                    <div class="author">
-                        <div>Author:</div>
-                        <div>Felix Andreas</div>
-                    </div>
-                    <div class="supervisor">
-                        <div>Supervisors:</div>
-                        <div>Prof. Dr. Andreas Jankowiak</div>
-                        <div>Dr. Paul Goslawski</div>
-                    </div>
-                </div>
-                <div class="thesis-and-institute">
-                    <div class="thesis-requirements">
-                        A thesis submitted in fulfillment of the requirements for the degree of
-                        Master of Science (M.Sc)
-                    </div>
-                    <div class="in">in the</div>
-                    <div class="institute">
-                        Faculty of Mathematics and Natural Sciences
-                        <br />Department of Physics
-                    </div>
-                </div>
-                <div class="date">April 29, 2020</div>
-            </div>
-            $if(toc)$
             <div class="$idprefix$TOC">
                 $toc$
             </div>
+        </div>
+    </nav>
+    <div id="overlay" onclick="toggleNav()"></div>
+    <header>
+        <div class="header__left">
+            <div class="header__item header__item--toggle-nav" onclick="toggleNav()">
+                <i data-feather="menu"></i>
+            </div>
+            <a href="thesis.pdf" class="button" download>
+                <div class="header__item">
+                    <i data-feather="download"></i>
+                    <span class="tooltip">Download PDF</span>
+                </div>
+            </a>
+            <div class="header__item header__item--bookmark" onclick="alert('book mark is not implemented yet')">
+                <i data-feather="bookmark"></i>
+                <span class="tooltip">Set Bookmark</span>
+            </div>
+            <div class="header__item header__item--style">
+                <i data-feather="sliders"></i>
+                <div class="dropdown">
+                    <div class="theme">
+                        <div class="dropdown__item" onclick="setLightTheme()"><i data-feather="sun"></i></div>
+                        <div class="dropdown__item" onclick="setDarkTheme()"><i data-feather="moon"></i></div>
+                    </div>
+                    <div class="font-size">
+                        <div class="dropdown__item" onclick="changeFontSize(-2)"><i data-feather="zoom-out"></i>
+                        </div>
+                        <div class="dropdown__item" onclick="changeFontSize(+2)"><i data-feather="zoom-in"></i></div>
+                    </div>
+                    <!-- <div class="text-width">
+                        <div class="dropdown__item" onclick="changePageWidth(-10)"><i
+                                class="fas fa-text-width fa-xs"></i></div>
+                        <div class="dropdown__item" onclick="changePageWidth(+10)"><i class="fas fa-text-width"></i>
+                        </div>
+                    </div> -->
+                    <div class="font-style">
+                        <div class="dropdown__item" onclick="setSansFont()">Sans</div>
+                        <div class="dropdown__item" style="font-family: var(--serif-font);" onclick="setSerifFont()">
+                            Serif</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header__right">
+            <a href="mailto:felix" target="_blank">
+                <div class="header__item">
+                    <i data-feather="mail"></i>
+                    <span class="tooltip">Send Mail</span>
+                </div>
+            </a>
+            <a href="https://github.com/andreasfelix" target="_blank">
+                <div class="header__item">
+                    <i data-feather="github"></i>
+                    <span class="tooltip">View Github Page</span>
+                </div>
+            </a>
+            <!-- <a href="https://andreasfelix.github.io" target="_blank">
+                <div class="header__item">
+                    <i data-feather="home"></i>
+                    <span class="tooltip">View Home Page</span>
+                </div>
+            </a> -->
+        </div>
+    </header>
+    <main>
+        <div class="pages">
+            <div id="title-page">
+                <!-- <h1>Lattice Development at the BESSY II Storage Ring:
+                    Optimization of the Twiss parameter</h1> -->
+                <h1>Master Thesis</h1>
+                <div class="thesis-text">
+                    A thesis submitted in fulfillment of the requirements for the degree of Master of Science (M.Sc)
+                </div>
+                <table class="info">
+                    <tr>
+                        <th><strong>Title:</strong></th>
+                        <th>Lattice Development at the BESSY II Storage Ring: Optimization of the Twiss parameter</th>
+                    </tr>
+                    <tr>
+                        <th><strong>Author:</strong></th>
+                        <th>Felix Andreas</th>
+                    </tr>
+                    <tr>
+                        <th><strong>Supervisors:</strong></th>
+                        <th> Prof. Dr. Andreas Jankowiak, Dr. Paul Goslawski</th>
+                    </tr>
+                    <tr>
+                        <th><strong>Institution:</strong></th>
+                        <th>
+                            <a href="https://www.physik.hu-berlin.de" rel="nofollow">
+                                Department of Physics, <br>
+                                Faculty of Mathematics and Natural Sciences,<br>
+                                Humboldt University of Berlin
+                            </a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th><strong>Date:</strong></th>
+                        <th>June 29, 2020</th>
+                    </tr>
+                </table>
+            </div>
+            $if(toc)$
+            <!-- <div class="$idprefix$TOC">
+                <h1>Contents</h1>
+                $toc$
+            </div> -->
             $endif$
             $if(lof)$
             <div id="$idprefix$LOF">
@@ -429,38 +709,43 @@
             $endif$
             $body$
         </div>
-    </div>
-    $for(include-after)$
-    $include-after$
-    $endfor$
-    <script>
-        let root = document.documentElement;
-        let style = getComputedStyle(root, null);
-        function toggleSidebar() {
-            let isOpen = style.getPropertyValue("--sidebar-is-open").trim();
-            console.log(isOpen);
-            root.style.setProperty("--sidebar-is-open", isOpen === "1" ? "0" : "1");
-        }
 
-        function toggleDropdownStyle(element) {
-            document.querySelector(".dropdown").classList.toggle("show");
-        }
-
-        function changeFontSize(value) {
-            let fontSize = style.getPropertyValue("--font-size").trim();
-
-        }
-
-        window.onclick = function (event) {
-            if (!event.target.matches('.toggleDropdown')) {
-                for (element of document.getElementsByClassName("dropdown")) {
-                    if (element.classList.contains('show')) {
-                        element.classList.remove('show');
-                    }
-                }
+        $for(include-after)$
+        $include-after$
+        $endfor$
+        <script>
+            let root = document.documentElement;
+            let style = getComputedStyle(root, null);
+            const nav = document.querySelector("nav");
+            const overlay = document.querySelector("#overlay");
+            function toggleNav() {
+                nav.classList.toggle("show");
+                overlay.classList.toggle("show");
             }
-        }
-    </script>
+
+            function changeFontSize(diff) {
+                let current = style.getPropertyValue("--font-size").trim().slice(0, -2);
+                let new_value = Number(current) + diff;
+                root.style.setProperty("--font-size", new_value + "px");
+            }
+
+            function changePageWidth(diff) {
+                let current = style.getPropertyValue("--page-width").trim().slice(0, -2);
+                let new_value = Number(current) + diff;
+                root.style.setProperty("--page-width", new_value + "mm");
+            }
+
+            function setSansFont() {
+                root.style.setProperty("--content-font", "var(--sans-font)");
+            }
+
+            function setSerifFont() {
+                root.style.setProperty("--content-font", "var(--serif-font)");
+            }
+
+            feather.replace();
+            mediumZoom(document.querySelectorAll('figure>img'), { margin: 50, background: '#FFFFFF' })
+        </script>
 </body>
 
 </html>
