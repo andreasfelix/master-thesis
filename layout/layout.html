@@ -4,7 +4,7 @@
 <head>
     <title>Master Thesis</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width">
     <meta name="author" content="Felix Andreas" />
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://unpkg.com/feather-icons"></script>
@@ -82,6 +82,12 @@
             --uni-logo-filter: invert(100%) hue-rotate(180deg);
         }
 
+        /* * {
+            background: #000 !important;
+            color: #0f0 !important;
+            outline: solid #f00 1px !important;
+        } */
+
         /*
          * Layout
          */
@@ -99,6 +105,7 @@
 
         html,
         body {
+            min-width: fit-content;
             padding: 0;
             margin: 0;
             /* overflow-x: hidden; */
@@ -378,6 +385,7 @@
          */
 
         main {
+            overflow-x: hidden;
             grid-area: main;
             font-family: var(--content-font);
             font-size: var(--font-size);
@@ -386,7 +394,6 @@
         }
 
         .pages {
-            margin: 0 auto;
             max-width: var(--page-width);
             padding: 0 var(--padding) 20mm;
             outline: none;
@@ -421,11 +428,13 @@
             font-size: 1.75em;
         }
 
-        h2:before {
+        h2:before,
+        h3:before,
+        h4:before {
             content: "";
             position: absolute;
             left: 0;
-            top: -30px;
+            top: -1.5em;
             height: 1px;
             width: 100%;
             background-color: var(--border-color);
@@ -442,6 +451,7 @@
 
         math {
             margin: 1.5em 0;
+            overflow: scroll;
         }
 
         figure {
@@ -452,8 +462,9 @@
 
         figure img {
             filter: var(--uni-logo-filter);
-            max-width: 100%;
+            /* background-color: var(--page-color); */
             /* necessary to avoid vertical spacing*/
+            max-width: 100%;
         }
 
         figure figcaption {
@@ -491,6 +502,7 @@
 
         #title-page h1 {
             /* font-variant: small-caps; */
+            margin-top: calc(2.5em - var(--header-height));
             text-align: left;
         }
 
@@ -582,7 +594,6 @@
     <nav>
         <div class="toc-container">
             <div class="nav__title">
-                <!-- <b>Master Thesis</b> -->
                 <img src="hu-logo-mark.svg" />
             </div>
             <div class="$idprefix$TOC">

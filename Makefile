@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+.SHELLFLAGS := -O extglob -c
 .PHONY: dist pdf html deploy
 
 dist:
@@ -5,7 +7,7 @@ dist:
 
 # TODO: use MathML once supported in chrome
 html: dist
-	pandoc content/*.md \
+	pandoc content/!(_*).md \
 	-o _dist/index.html \
 	--metadata title="Master Thesis" \
 	--bibliography=bibliography.bib \
