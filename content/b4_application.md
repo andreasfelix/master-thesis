@@ -4,11 +4,44 @@ This chapter covers the applications of the developed optics simulation progam a
 
 ## Adjusting the BESSY II Optics for the VSR project
 
+The cavity module needs more space than initially assumed ...
+
 ### Optimizing the Q5T2 Optics in Simulations
+
+The first steps towards a Q5T2 optics are described in my bachelor's thesis [@andreas_ba]. With the best solution found it was possible to achieve a working machine with reasonable injection efficency and lifetime. An issue was the relatively high beta beat along the storage ring. As the sextupole settings is carefully finetuned for the current standard user mode and to avoid confilicitng with previous made considerations, the goal should be to reduce the beta beat as much as possible.
+
+Due to the improvements made to the Twiss calculation code, it was now possible to do much more iterations in a much shorter time span: An 
+
+$$
+F(\beta) = \frac{1}{L} \int_0^L R\left(\frac{\beta(s)}{\beta_{\mathrm{ref}}(s)}\right)^2 \mathrm{d}s \quad \textrm{with } R(x) = \begin{cases} 1, &\textrm{for } x < 1\\ x, &\textrm{else} \end{cases}
+$$ {#eq:objectiv-function}
+
+With the developed code this roughly translates to: (TODO: update!!)
+
+```python
+def fitness(params):
+    for element, attribute, param in zip(elements, attributes, params):
+        setattr(element, attribute, param)
+
+        twiss = lin.get_twiss()
+
+        betaxres = twiss.betax / ref_twiss.betax
+        betayres = twiss.betay / ref_twiss.betay
+        betaxres[betaxres < 1] = 1
+        betayres[betayres < 1] = 1
+        betaxres = betaxres ** 2
+        betayres = betayres ** 2
+        return np.mean([betaxres, betayres])
+
+scipy.optimize.minimize(fitness, initial_values)
+```
 
 ### User Operation Acceptance Test of the Q5T2 Optics
 
 The new obtained opitcs was
+
+
+multiknob
 
 1. Injection Efficiency
 2. Kicker Lifetime

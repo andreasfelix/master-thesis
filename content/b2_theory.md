@@ -6,7 +6,7 @@ This chapter introduces the basics of electron beam dynamics in ciruclar acceler
 
 As the linear order of beam optics was thourghly described in my Bachelor's Thesis [@andreas_ba], this section provides a brief overview of the most important formulas and results.
 
-![Co-moving Frenet-Serret coordinate system](frenet-serret-coordinates.svg){#fig:frenet-serret-coordinates}
+![Co-moving Frenet-Serret coordinate system](figures/frenet-serret-coordinates.svg){#fig:frenet-serret-coordinates}
 
 Here we use the @fig:frenet-serret-coordinates
 

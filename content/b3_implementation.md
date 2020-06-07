@@ -4,9 +4,20 @@ This chapter covers the challenges and consideration made of the implementation 
 
 ## Overview of used Technology
 
-### Performance Comparision of different Implementations of Twiss Computations
+## Improving the twiss calculation performance
 
-### An Object-Orient Representation of the Magnetic Lattice
+- rewrite time critical part in c
+- instead of matrix multiplication use ausmulitplizierten term
+
+- grafik Performance Comparision of different Implementations of Twiss Computation
+
+TODO: add pythran and numba
+
+![Performance comparison of different twiss calulation implementations.](figures/benchmark-twiss-calculation.svg){#fig:benchmark-twiss-calculation}
+
+
+
+## An Object-Orient Representation of the Magnetic Lattice
 
 This section gives a short overview of the purpose of the Python library *apace*. A comprehensive documentation can be found at: [https://apace.readthedocs.io](https://apace.readthedocs.io)
 
@@ -33,3 +44,6 @@ As this object-orient way comes at a price, the simulation methods itself should
 The representation of the particle accelerator can be thought of as a tree-like structure, as shown in @fig:lattice-tree, where the `Element` objects are the leafs, the sublattices are the nodes and the main lattices is the root the tree.
 
 ![A representation of the BESSY II storage ring design lattice. At the top tree is the  *BESSY II* lattice, which consists out of the the *Doublet* and *Triplet* sub-lattices. The *Doublet* and *Triplet* again consist out of two *Achromat* sub-lattices, one *Straight* sub-lattice and two dipole elements.](figures/lattice-tree.svg){#fig:lattice-tree}
+
+
+## LatticeJSON: A Universal Lattice File Format

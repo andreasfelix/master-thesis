@@ -64,7 +64,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll--top: 80px;
 }
 
 html,
@@ -157,7 +156,7 @@ nav .toc-container {
 
 nav .TOC {
   margin-top: 20px;
-  font-size: 14px;
+  font-size: 0.875em;
 }
 
 .TOC ul {
@@ -172,7 +171,7 @@ nav .TOC {
 
 .TOC > ul > li > a {
   font-weight: 600;
-  font-size: 1.2em;
+  font-size: 1.25em;
   font-variant: small-caps;
 }
 
@@ -242,7 +241,7 @@ header a {
   position: absolute;
   min-width: max-content;
   top: 40px;
-  font-size: 0.8em;
+  font-size: 0.75em;
   padding: 4px;
   color: var(--nav-color);
   background: var(--text-color-muted);
@@ -250,11 +249,11 @@ header a {
 }
 
 .header__left .tooltip {
-  right: 4px;
+  left: 4px;
 }
 
 .header__right .tooltip {
-  left: 4px;
+  right: 4px;
 }
 
 .header__item:hover > .tooltip {
@@ -283,6 +282,7 @@ header a {
   visibility: visible;
 }
 
+/* TODO: use ripple effect from stockr */
 .dropdown:after,
 .dropdown:before {
   transition: border var(--style-transition);
@@ -433,7 +433,7 @@ figure img {
 figure figcaption {
   margin: 0.5em 0;
   text-align: center;
-  font-size: 0.9em;
+  font-size: 0.875em;
 }
 
 p {

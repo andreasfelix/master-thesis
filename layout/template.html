@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
     $for(author-meta)$
     <meta name="author" content="$author-meta$" />
     $endfor$
@@ -13,26 +13,21 @@
     </style>
     $for(css)$
     <link rel="stylesheet" href="$css$" />
+    $endfor$ $if(math)$ $math$ $endif$ $for(header-includes)$ $header-includes$
     $endfor$
-    $if(math)$
-    $math$
-    $endif$
-    $for(header-includes)$
-    $header-includes$
-    $endfor$
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <script src="https://unpkg.com/feather-icons"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.5/dist/medium-zoom.min.js"></script>
     <script>
         function setDarkTheme() {
-            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.setAttribute("data-theme", "dark");
         }
 
         function setLightTheme() {
-            document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.setAttribute("data-theme", "light");
         }
 
         //determines if the user has a set theme
@@ -53,6 +48,7 @@
     $for(include-before)$
     $include-before$
     $endfor$
+
     <nav>
         <div class="toc-container">
             <div class="nav__title">
@@ -83,24 +79,26 @@
                 <i data-feather="sliders"></i>
                 <div class="dropdown">
                     <div class="theme">
-                        <div class="dropdown__item" onclick="setLightTheme()"><i data-feather="sun"></i></div>
-                        <div class="dropdown__item" onclick="setDarkTheme()"><i data-feather="moon"></i></div>
+                        <div class="dropdown__item" onclick="setLightTheme()">
+                            <i data-feather="sun"></i>
+                        </div>
+                        <div class="dropdown__item" onclick="setDarkTheme()">
+                            <i data-feather="moon"></i>
+                        </div>
                     </div>
                     <div class="font-size">
-                        <div class="dropdown__item" onclick="changeFontSize(-2)"><i data-feather="zoom-out"></i>
+                        <div class="dropdown__item" onclick="changeFontSize(-2)">
+                            <i data-feather="zoom-out"></i>
                         </div>
-                        <div class="dropdown__item" onclick="changeFontSize(+2)"><i data-feather="zoom-in"></i></div>
+                        <div class="dropdown__item" onclick="changeFontSize(+2)">
+                            <i data-feather="zoom-in"></i>
+                        </div>
                     </div>
-                    <!-- <div class="text-width">
-                        <div class="dropdown__item" onclick="changePageWidth(-10)"><i
-                                class="fas fa-text-width fa-xs"></i></div>
-                        <div class="dropdown__item" onclick="changePageWidth(+10)"><i class="fas fa-text-width"></i>
-                        </div>
-                    </div> -->
                     <div class="font-style">
                         <div class="dropdown__item" onclick="setSansFont()">Sans</div>
                         <div class="dropdown__item" style="font-family: var(--serif-font);" onclick="setSerifFont()">
-                            Serif</div>
+                            Serif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,12 +116,6 @@
                     <span class="tooltip">View Github Page</span>
                 </div>
             </a>
-            <!-- <a href="https://andreasfelix.github.io" target="_blank">
-                <div class="header__item">
-                    <i data-feather="home"></i>
-                    <span class="tooltip">View Home Page</span>
-                </div>
-            </a> -->
         </div>
     </header>
     <main>
@@ -133,12 +125,15 @@
                     Optimization of the Twiss parameter</h1> -->
                 <h1>Master Thesis</h1>
                 <div class="thesis-text">
-                    A thesis submitted in fulfillment of the requirements for the degree of Master of Science (M.Sc)
+                    A thesis submitted in fulfillment of the requirements for the degree
+                    of Master of Science (M.Sc)
                 </div>
                 <table class="info">
                     <tr>
                         <th><strong>Title:</strong></th>
-                        <th>Developing a Twiss Optimization Code for Electron Storage Rings</th>
+                        <th>
+                            Developing a Twiss Optimization Code for Electron Storage Rings
+                        </th>
                     </tr>
                     <tr>
                         <th><strong>Author:</strong></th>
@@ -146,14 +141,14 @@
                     </tr>
                     <tr>
                         <th><strong>Supervisors:</strong></th>
-                        <th> Prof. Dr. Andreas Jankowiak, Dr. Paul Goslawski</th>
+                        <th>Prof. Dr. Andreas Jankowiak, Dr. Paul Goslawski</th>
                     </tr>
                     <tr>
                         <th><strong>Institution:</strong></th>
                         <th>
                             <a href="https://www.physik.hu-berlin.de" rel="nofollow">
-                                Department of Physics, <br>
-                                Faculty of Mathematics and Natural Sciences,<br>
+                                Department of Physics, <br />
+                                Faculty of Mathematics and Natural Sciences,<br />
                                 Humboldt University of Berlin
                             </a>
                         </th>
@@ -164,61 +159,61 @@
                     </tr>
                 </table>
             </div>
-            $if(toc)$
-            <!-- <div class="$idprefix$TOC">
-                <h1>Contents</h1>
-                $toc$
-            </div> -->
-            $endif$
             $if(lof)$
             <div id="$idprefix$LOF">
                 $lof$
             </div>
-            $endif$
-            $if(lot)$
+            $endif$ $if(lot)$
             <div id="$idprefix$LOT">
                 $lot$
             </div>
-            $endif$
-            $body$
+            $endif$ $body$
         </div>
+    </main>
 
-        $for(include-after)$
-        $include-after$
-        $endfor$
-        <script>
-            let root = document.documentElement;
-            let style = getComputedStyle(root, null);
-            const nav = document.querySelector("nav");
-            const overlay = document.querySelector("#overlay");
-            function toggleNav() {
-                nav.classList.toggle("show");
-                overlay.classList.toggle("show");
-            }
+    $for(include-after)$
+    $include-after$
+    $endfor$
 
-            function changeFontSize(diff) {
-                let current = style.getPropertyValue("--font-size").trim().slice(0, -2);
-                let new_value = Number(current) + diff;
-                root.style.setProperty("--font-size", new_value + "px");
-            }
+    <script>
+        let root = document.documentElement;
+        let style = getComputedStyle(root, null);
+        const nav = document.querySelector("nav");
+        const overlay = document.querySelector("#overlay");
+        function toggleNav() {
+            nav.classList.toggle("show");
+            overlay.classList.toggle("show");
+        }
 
-            function changePageWidth(diff) {
-                let current = style.getPropertyValue("--page-width").trim().slice(0, -2);
-                let new_value = Number(current) + diff;
-                root.style.setProperty("--page-width", new_value + "mm");
-            }
+        function changeFontSize(diff) {
+            let current = style.getPropertyValue("--font-size").trim().slice(0, -2);
+            let new_value = Number(current) + diff;
+            root.style.setProperty("--font-size", new_value + "px");
+        }
 
-            function setSansFont() {
-                root.style.setProperty("--content-font", "var(--sans-font)");
-            }
+        function changePageWidth(diff) {
+            let current = style
+                .getPropertyValue("--page-width")
+                .trim()
+                .slice(0, -2);
+            let new_value = Number(current) + diff;
+            root.style.setProperty("--page-width", new_value + "mm");
+        }
 
-            function setSerifFont() {
-                root.style.setProperty("--content-font", "var(--serif-font)");
-            }
+        function setSansFont() {
+            root.style.setProperty("--content-font", "var(--sans-font)");
+        }
 
-            feather.replace();
-            mediumZoom(document.querySelectorAll('figure>img'), { margin: 50, background: '#FFFFFF' })
-        </script>
+        function setSerifFont() {
+            root.style.setProperty("--content-font", "var(--serif-font)");
+        }
+
+        feather.replace();
+        mediumZoom(document.querySelectorAll("figure>img"), {
+            margin: 50,
+            background: "#FFFFFF",
+        });
+    </script>
 </body>
 
 </html>
