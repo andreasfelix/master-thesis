@@ -1,10 +1,8 @@
-# Simulation and Measurements
+# Implementation
 
-Test references equation of different section. *@eq:betatron-oscilation
+This chapter covers the challenges and consideration made of the implementation of the developed optics code. For a 
 
-## Implementation of the Optics Simulation Program
-
-### Overview of used Technology
+## Overview of used Technology
 
 ### Performance Comparision of different Implementations of Twiss Computations
 
@@ -35,18 +33,3 @@ As this object-orient way comes at a price, the simulation methods itself should
 The representation of the particle accelerator can be thought of as a tree-like structure, as shown in @fig:lattice-tree, where the `Element` objects are the leafs, the sublattices are the nodes and the main lattices is the root the tree.
 
 ![A representation of the BESSY II storage ring design lattice. At the top tree is the  *BESSY II* lattice, which consists out of the the *Doublet* and *Triplet* sub-lattices. The *Doublet* and *Triplet* again consist out of two *Achromat* sub-lattices, one *Straight* sub-lattice and two dipole elements.](figures/lattice-tree.svg){#fig:lattice-tree}
-
-## Adjusting the BESSY II Optics for the VSR project
-
-### Optimizing the Q5T2 optics in simulations
-
-### User Operation Acceptance Test of the Q5T2 Optics
-
-1. Injection Efficiency
-2. Kicker Lifetime
-3. IDs, bumps
-4. High current test
-5. General effects on user operations
-
-## High beta function in T2 (Emittance Exchange)
-

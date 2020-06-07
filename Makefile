@@ -1,22 +1,23 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -O extglob -c
-.PHONY: dist pdf html deploy
+.PHONY: dist pdf html tex epub deploy
 
 dist:
 	mkdir -p _dist
+	rsync -avu --delete figures layout/images layout/style.css _dist
 
 # TODO: use MathML once supported in chrome
 html: dist
 	pandoc content/!(_*).md \
+	--standalone \
 	-o _dist/index.html \
 	--metadata title="Master Thesis" \
-	--bibliography=bibliography.bib \
-	--highlight-style=pygments \
-	--template=layout/layout.html \
-	--standalone \
+	--metadata link-citations \
+	--bibliography bibliography.bib \
+	--template layout/template.html \
+	--css style.css \
 	--number-sections \
 	--csl layout/ieee.csl \
-	--metadata link-citations \
 	--mathml \
 	--filter pandoc-crossref \
 	--filter pandoc-citeproc \
@@ -29,10 +30,20 @@ pdf: dist
 	--number-sections \
 	--csl layout/ieee.csl \
 	--metadata link-citations \
-	--filter pandoc-xnos \
 	--filter pandoc-crossref \
 	--filter pandoc-citeproc \
 	--verbose
+
+tex:
+	pandoc content/*.md \
+	-o _dist/thesis.tex \
+	--bibliography=bibliography.bib \
+	-V fontsize=12pt \
+	-V papersize=a4paper \
+	-V documentclass=report \
+	-N \
+	--csl layout/ieee.csl \
+	--pdf-engine=xelatex
 
 epub: dist
 	pandoc content/*.md \

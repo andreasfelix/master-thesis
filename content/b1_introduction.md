@@ -1,6 +1,6 @@
 # Introduction
 
-Here comes the introduction
+The first section of this chapter comprises a brief overview of the current status of the third generation light source BESSY II. The second section 
 
 ## Current Status of BESSY II
 
