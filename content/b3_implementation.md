@@ -2,14 +2,55 @@
 
 This chapter covers the challenges and consideration made of the implementation of the developed optics code. For a 
 
-## Overview of used Technology
+## Overview of Used Technology
 
-## Improving the twiss calculation performance
+## Improving the Performance of the Twiss Calculation
 
 - rewrite time critical part in c
 - instead of matrix multiplication use ausmulitplizierten term
 
-- grafik Performance Comparision of different Implementations of Twiss Computation
+A relativey simple but effective optimization is
+
+$$ \mathbf{B}(s_1) = \mathbf{R}(s_0,s_1) \cdot \mathbf{B}(s_0) \cdot \mathbf{R}^T(s_0,s_1)
+$$
+
+$$
+\begin{pmatrix}
+    \beta_x & -\alpha_x & 0 & 0 \\
+    -\alpha_x & \gamma_x & 0 & 0 \\
+    0 & 0 & \beta_x & -\alpha_x \\
+    0 & 0 & -\alpha_x & \gamma_x
+\end{pmatrix} =
+\begin{pmatrix}
+    R_{11} & R_{12} & 0 & 0 \\
+    R_{21} & R_{22} & 0 & 0 \\
+    0 & 0 & R_{33} & R_{34} \\
+    0 & 0 & R_{43} & R_{44}
+\end{pmatrix}
+\begin{pmatrix}
+    \beta_x & -\alpha_x & 0 & 0 \\
+    -\alpha_x & \gamma_x & 0 & 0 \\
+    0 & 0 & \beta_x & -\alpha_x \\
+    0 & 0 & -\alpha_x & \gamma_x
+\end{pmatrix}
+\begin{pmatrix}
+    R_{11} & R_{12} & 0 & 0 \\
+    R_{21} & R_{22} & 0 & 0 \\
+    0 & 0 & R_{33} & R_{34} \\
+    0 & 0 & R_{43} & R_{44}
+\end{pmatrix}^\mathrm{T}
+$$
+
+$$
+\begin{aligned}
+    \beta(s)  & \quad= & R_{11}^2 \:\beta(s) \quad        & - & 2 R_{11} R_{12} \:\alpha(s)\quad            & + & R_{12}^2 \:\gamma(s)     \\
+    \alpha(s) & \quad= & - R_{11} R_{12} \:\beta(s) \quad & + & (R_{11}R_{22} + R_{12}^2)\: \alpha(s) \quad & + & R_{12}R_{22} \:\gamma(s) \\
+    \gamma(s) & \quad= & R_{12}^2 \:\beta (s) \quad       & - & 2 R_{12} R_{22} \:\alpha(s) \quad           & + & R_{22}^2 \:\gamma(s) ,
+\end{aligned}
+$$ {#eq:betatron-function-transformation}
+
+Twiss product is a R^n -> R^m ...:
+write twiss multiplication in index notation (similar to einsum) 
 
 TODO: add pythran and numba
 

@@ -1,12 +1,19 @@
 SHELL := /bin/bash
-.SHELLFLAGS := -O extglob -c
+.SHELLFLAGS := -O extglob -O globstar -c
 .PHONY: dist pdf html tex epub deploy
 
 dist:
 	mkdir -p _dist
+	# TODO: --delete also deletes .pdf images
 	rsync -avu --delete figures layout/images layout/style.css _dist
 
-# TODO: use MathML once supported in chrome
+# convert to pdf because latex cannot read svg
+svg2pdf: $(patsubst %.svg, %.pdf, $(wildcard _dist/figures/*.svg))
+	echo run all
+
+_dist/figures/%.pdf: _dist/figures/%.svg
+	rsvg-convert -f pdf -o $@ $<
+
 html: dist
 	pandoc content/!(_*).md \
 	--standalone \
@@ -34,7 +41,7 @@ pdf: dist
 	--filter pandoc-citeproc \
 	--verbose
 
-tex:
+tex: svg2pdf
 	pandoc content/*.md \
 	-o _dist/thesis.tex \
 	--bibliography=bibliography.bib \
@@ -44,6 +51,7 @@ tex:
 	-N \
 	--csl layout/ieee.csl \
 	--pdf-engine=xelatex
+	sed -i 's/.svg/.pdf/g' _dist/thesis.tex
 
 epub: dist
 	pandoc content/*.md \

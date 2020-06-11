@@ -414,6 +414,7 @@ h3 {
 
 math {
   margin: 1.5em 0;
+  font-size: 0.875em;
   overflow: scroll;
 }
 
@@ -442,7 +443,6 @@ p {
   line-height: 1.5;
 }
 
-/* Use :has and :not to filter equations */
 p + p {
   margin-top: 0;
   text-indent: 6mm;
@@ -463,13 +463,13 @@ div.sourceCode {
   /* border: 1px solid var(--border-color);
   border-radius: 4px; */
   padding: 1em;
-  overflow: auto;
+  overflow: scroll;
   line-height: 1.5em;
 }
 
 code {
   overflow: auto;
-  font-size: 0.9em;
+  font-size: 0.875em;
   font-family: Consolas, "Liberation Mono", Courier, monospace;
   margin: 0 0.25em;
   padding: 0 0.25em;
