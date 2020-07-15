@@ -4,14 +4,17 @@ SHELL := /bin/bash
 
 dist:
 	mkdir -p _dist
-	# TODO: --delete also deletes .pdf images
 	rsync -avu --delete figures layout/images layout/style.css _dist
 
-# convert to pdf because latex cannot read svg
-svg2pdf: $(patsubst %.svg, %.pdf, $(wildcard _dist/figures/*.svg))
-	echo run all
+tex-dir:
+	mkdir -p _tex/figures
 
-_dist/figures/%.pdf: _dist/figures/%.svg
+tex-pngs: tex-dir
+	rsync -avu --delete --include "/*" --include "*.png" --exclude="*" figures _tex
+
+tex-pdfs: tex-dir $(patsubst figures/%.svg, _tex/figures/%.pdf, $(wildcard figures/*.svg))
+
+_tex/figures/%.pdf: figures/%.svg
 	rsvg-convert -f pdf -o $@ $<
 
 html: dist
@@ -30,28 +33,33 @@ html: dist
 	--filter pandoc-citeproc \
 	--toc
 
-pdf: dist
-	pandoc content/*.md \
-	-o _dist/thesis.pdf \
-	--bibliography=bibliography.bib \
-	--number-sections \
-	--csl layout/ieee.csl \
-	--metadata link-citations \
-	--filter pandoc-crossref \
-	--filter pandoc-citeproc \
-	--verbose
+# pdf: dist
+# 	pandoc content/*.md \
+# 	-o _dist/thesis.pdf \
+# 	--bibliography=bibliography.bib \
+# 	--number-sections \
+# 	--csl layout/ieee.csl \
+# 	--metadata link-citations \
+# 	--filter pandoc-crossref \
+# 	--filter pandoc-citeproc \
+# 	--verbose
 
-tex: svg2pdf
+tex: dist tex-pdfs tex-pngs
 	pandoc content/*.md \
-	-o _dist/thesis.tex \
-	--bibliography=bibliography.bib \
+	--standalone \
+	-o _tex/thesis.tex \
+	--bibliography=../bibliography.bib \
 	-V fontsize=12pt \
 	-V papersize=a4paper \
 	-V documentclass=report \
 	-N \
 	--csl layout/ieee.csl \
-	--pdf-engine=xelatex
-	sed -i 's/.svg/.pdf/g' _dist/thesis.tex
+	--filter pandoc-crossref \
+	--filter pandoc-citeproc \
+	--toc
+	sed -i 's/.svg/.pdf/g' _tex/thesis.tex
+	cd _tex; latexmk -pdf thesis.tex
+	mv thesis.pdf ../_dist/thesis-tex.pdf
 
 epub: dist
 	pandoc content/*.md \
@@ -65,7 +73,7 @@ epub: dist
 	--verbose
 
 .ONESHELL:
-deploy: html pdf
+deploy: html
 	cd _dist
 	git init
 	git add -A
