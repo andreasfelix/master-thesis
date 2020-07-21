@@ -6,11 +6,8 @@ This chapter introduces the basics of electron beam dynamics in ciruclar acceler
 
 All covered concepts are implemented in the developed beam optics code.
 
-## Linear Beam Dynamics {#sec:linear-beam-dynamics}
 
-As the linear order of beam optics was thourghly described in my Bachelor's Thesis [@andreas_ba], this section skips all derivations and provides only a summary of the most important results.
-
-### The Co-moving coordinate system
+## The Co-moving coordinate system
 
 To describe the motion of a particle within an accelerator it is common to choose the co-moving Frenet-Serret coordinates, whose origin follows the trajectory of the reference particle.
 
@@ -42,7 +39,7 @@ $$
 
 
 
-### Equations of motion
+## Equations of motion
 
 
 $$
@@ -114,6 +111,23 @@ $$ {#eq:eom-8}
 
 
 The particle trajectory within non linear elements can be obtained by integrating @eq:eom-7 numerically. This method was for example used to created the plots in @sec:chromaticity.
+
+...
+But it is rather computational expensive and only allos for a numerical investigation. It would be desireable to habe an analytical formalism. Courant and Synder [@courantsnyder] developed an analytical formalism for the linearized equations of motion which is covered in the next section.
+
+## Linear Beam Dynamics {#sec:linear-beam-dynamics}
+
+As the linear order of beam optics was thourghly described in my Bachelor's Thesis [@andreas_ba], this section skips all derivations and provides only a summary of the most important results.
+
+### Linearized Equations of Motion
+
+- how to get linearized eom
+- linear eom are matrices
+- hard ede modell and 
+
+X = R * X
+
+transfer matrizen in den Anhang
 
 ### Betatron oscillation
 

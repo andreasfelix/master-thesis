@@ -87,4 +87,25 @@ The representation of the particle accelerator can be thought of as a tree-like 
 ![A representation of the BESSY II storage ring design lattice. At the top tree is the  *BESSY II* lattice, which consists out of the the *Doublet* and *Triplet* sub-lattices. The *Doublet* and *Triplet* again consist out of two *Achromat* sub-lattices, one *Straight* sub-lattice and two dipole elements.](figures/lattice-tree.svg){#fig:lattice-tree}
 
 
-## LatticeJSON: A Universal Lattice File Format
+## LatticeJSON: An Attempt towards a Universal Lattice File Format
+
+The definition of the magnetic lattice is stored in a so called lattice file. At the moment there are several of these data formats and all can only be processed by the corresponding simulation software. This variety of different lattice file format is an ongoing issue of accelerator physics and has even its on dedicated wikipedia section [@lattice-file-issues]. There exist several converters between these files, which are able to do the heavy lifiting, but often still require manual adjustments made by a human. But even if the lattice file is availiabe in all common formats, there is still no straightfoward way to load the data into the programming language of your choice. As the most mature accelerator simulations codes come bundled with several optimization routines and a scripting language, this was a smaller problem in the past. But in the last several years, there was an uprise of powerful scripting languages and modern optimization libraries. To leverage these tools it would be is necessary to have convenient access to the lattice data.
+
+As at HZB and for this thesis Python was used, one solution would be to write a robust parser for an existing lattice file format. Candidates would be the MADX[@madx] or elegant[@elegant] lattice file format, which are very similar but not compatible. Both file formats have the problem that syntax is ambiguous: Without further context the parser cannot infer the type of an attribute. For example in
+
+```txt
+TWISS, FILE=optics;
+```
+
+`optics` is a string and not a variable name. In another case
+
+```txt
+RFC: RFCAVITY, HARMON = num;
+```
+
+`num` refers to a variable and not a string. In these cases the parser has to know the type of `FILE` and `HARMON` to parse the file correctly. This makes the implementation of a parser non-trivial and ties the file format specific the simulation software. Both lattice file formats also support variables and arithmetic expressions. MADX even supports more advanced constructs like loops, macros and if-else statements. This makes the implementation of such a parser even more difficult and error-prone. If the goal is to be 100% compatible one would have to reimplement a whole programming language, just to load the lattice data. A more feasible solution would be to define a restricted subset of the MADX input file, which would contain only data and no logic. Grammar files which allow to load basic elegant and a subset of MADX lattice files into Python are given in the appendix @sec:elegant-grammar and @sec:madx-grammar, respectively. These work for simple cases but fail for more advanced lattice files, because of the above mentioned reasons.
+
+A better solution for plain lattice data format would be to define a schema for an existing data format, which already has parsers for the the most popular programming languages. One A universal lattice file format would also make it easier cross-checking 
+
+
+Man haetete auch einen MADX parser schreiben koennen, aber das ist nicht trivial, da madx nicht context free ist: man kann den type nicht aus dem syntax ablesen.
