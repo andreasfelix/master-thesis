@@ -136,7 +136,7 @@ This is an restricted subset of MADX which should be sufficient to parse basic l
 %ignore /\s+/  // whitespace
 %ignore "&" // backwards compatiable line continuation
 %ignore /(!|\/\/).*/  // single line comments
-%ignore /\/\*(\*(?!\/)|[^*])*\*\//  // multiline commetn
+%ignore /\/\*(\*(?!\/)|[^*])*\*\//  // multiline comment
 %import common (SIGNED_INT, NUMBER, ESCAPED_STRING)
 
 int         : SIGNED_INT

@@ -105,7 +105,69 @@ RFC: RFCAVITY, HARMON = num;
 
 `num` refers to a variable and not a string. In these cases the parser has to know the type of `FILE` and `HARMON` to parse the file correctly. This makes the implementation of a parser non-trivial and ties the file format specific the simulation software. Both lattice file formats also support variables and arithmetic expressions. MADX even supports more advanced constructs like loops, macros and if-else statements. This makes the implementation of such a parser even more difficult and error-prone. If the goal is to be 100% compatible one would have to reimplement a whole programming language, just to load the lattice data. A more feasible solution would be to define a restricted subset of the MADX input file, which would contain only data and no logic. Grammar files which allow to load basic elegant and a subset of MADX lattice files into Python are given in the appendix @sec:elegant-grammar and @sec:madx-grammar, respectively. These work for simple cases but fail for more advanced lattice files, because of the above mentioned reasons.
 
-A better solution for plain lattice data format would be to define a schema for an existing data format, which already has parsers for the the most popular programming languages. One A universal lattice file format would also make it easier cross-checking 
+A better solution for plain lattice data format would be to define a schema for an existing data format, which already has parsers for the the most popular programming languages. One attempt of such an universal lattice file format was the Accelerator Markup language (AML)[@aml] and the Universal Accelerator Parser (UAP)[@uap]. The AML is based on the eXtensible Markup Language (XML), which is syntactically similar to HTML, the standard markup language for web documents. AML's goal was to support the evaluation of arithmetic expressions and two different representations of the magnetic lattice: A "unevaluated" representation with contains nested beamlines as well as variables and a "flat" representaiton, where the sub-lattices are expanded into a flattend array of lattice elements. Furthermore it aimed to support information beyond the lattice description, like control system configurations, magnet history or other documentary data. This way AML could be used as an all-in-one solution for an accelerator facilities's database. As of March 2020, AML and the UAP are no longer maintained.
 
+The AML had high ambitions, which made it difficult to implement. The large amount of feature, like variables and a complex representation of the magnetic lattice, made it, even though it is based on XML, necessary to implement a custom parser for every programming langugage.
 
-Man haetete auch einen MADX parser schreiben koennen, aber das ist nicht trivial, da madx nicht context free ist: man kann den type nicht aus dem syntax ablesen.
+This thesis takes a simpler approach: Variables or other dependency relations should not be implemented by the lattice file. This functionality is already availabe in programming languages, and should not be reimplemented in the lattice file. The definition of lattice file should not rely on different representations of the magnetic lattice. The lattice file should be easy to load and should not require an additional parser. The main purpose of this lattice file should be simulation code and the implementation should not be complicated by making it suitable for control system usage.
+
+Further requirements are: The lattice file format should be independent of the simulation tool and programming language. The file format should be commonly used, so there is no need to implemented it for different  programming languages.
+It should be easy to generate elegant and MAD-X files from this intermediate format.
+It should be taken into account, that the magnetic lattice has a tree-like structure (see @#fig:lattice-tree): The magnetic lattice consist of different elements, like drifts, magnets or cavities, as well as of sub-lattices, which by itself are made of other elements. A universal lattice file format should somehow take this structure into account.
+
+Storing the description of the magnetic lattice raises effectivly two questions (fig:lattice-representation):
+
+1. How to store the lattice file persistently on disk?
+2. How to represent the lattice file within a programming language?
+
+As data structures and object types a specifically tied to a programming language it is not possible to choose arbitary data types. But practically every programming language supports primitives like *strings*, *numbers*, *bools*, *null* and some type of containers structures like *arrays* and *key-value stores*. The goal should be to provide a consistent way to represent the information stored in the lattice files using these generic data types. This representation should not try to invent the next scripting language, but it should be a pure data format. This way the lattice data can be used by any programming language.
+
+![The lattice file has to be stored on disk. Therefore the representation of the lattice file within the programming language has to be serialize into a format that can be stored permanently. Conversely, this persistent data format has to be deserialize into a data structure when the lattice is loaded into a program.](figures/lattice-representation.svg){#fig:lattice-representation}
+
+Fortunately this issues is already solved by JSON [@json], which is an acronym for JavaScript Object Notation. Even though it has its origins in JavaScript, it is a language-independent and open data file format. It is able to describe complex data and is the de-facto standard for exchanging data between web applications. There already exist an huge amount of tools for validating and working with JSON.
+
+JSON effectlify answers both questions as the is a 1:1 correspondence between JSON data types and the generic data types available in almost all programming languages. Once parsed, the lattice description is represented by the same abstraction of data types as when the lattice information was stored on disk. One problem of AML was, that the parsed lattice data, returned by the UAP, had a different structure than the stored XML file. So there were effectively two different representations of the same information.
+
+JSON provides a convenient way to serialize and deserialize generic data types. To make use of JSON, the description of the magnetic lattice has still to defined in terms of these generic data types. Such a definition can be done with a so called JSON schema [@json-schema]. A first definition of such a JSON based lattice file format was done and called LatticeJSON. The LatticeJSON schema file as well as more information on LatticeJSON is available at [@lattice-json].
+
+For example, the definition of a FODO lattice as LatticeJSON file is given by:
+
+```json
+{
+  "version": "2.0",
+  "title": "FODO Lattice",
+  "info": "This is the simplest possible strong focusing lattice.",
+  "root": "RING",
+  "elements": {
+    "D1": ["Drift", {"length": 0.55}],
+    "Q1": ["Quadrupole", {"length": 0.2, "k1": 1.2}],
+    "Q2": ["Quadrupole", {"length": 0.4, "k1": -1.2}],
+    "B1": ["Dipole", {"length": 1.5, "angle": 0.392701, "e1": 0.1963505, "e2": 0.1963505}]
+  },
+  "lattices": {
+    "CELL": ["Q1", "D1", "B1", "D1", "Q2", "D1", "B1", "D1", "Q1"],
+    "RING": ["CELL", "CELL", "CELL", "CELL", "CELL", "CELL", "CELL", "CELL"]
+  }
+}
+```
+
+To read the quadrupole strength of the Q1 quadrupole in Python one could use:
+
+```python
+import json
+
+with open("/path/to/lattice.json") as file:
+    lattice = json.load(file)
+
+type_, attributes = lattice["elements"]["Q1"]
+print("Quadrupole strength", attributes["k1"])
+```
+
+Or, one can use the latticejson library, which validates the lattice file and can load lattices files from URLs.
+
+```python
+import latticejson
+lattice = lattice.load("https://lattice-database.io/bessy2?mode=stduser")
+```
+
+The URL *lattice-database.io* is chosen as an illustrative filler in this example. But it should be a goal to establish a central database of magnetic lattice files, where the operation mode or file format can be passed as a URL parameter. This would give physisicts access to a large number of lattice files, without the overhead maintaining an own set of lattices. As it is straightforward to automatically generate different versions of a JSON file, LatticeJSON could simplify the implementation of such a database significantly.
