@@ -115,7 +115,7 @@ Further requirements are: The lattice file format should be independent of the s
 It should be easy to generate elegant and MAD-X files from this intermediate format.
 It should be taken into account, that the magnetic lattice has a tree-like structure (see @#fig:lattice-tree): The magnetic lattice consist of different elements, like drifts, magnets or cavities, as well as of sub-lattices, which by itself are made of other elements. A universal lattice file format should somehow take this structure into account.
 
-Storing the description of the magnetic lattice raises effectivly two questions (fig:lattice-representation):
+Storing the description of the magnetic lattice raises effectivly two questions (@fig:lattice-representation):
 
 1. How to store the lattice file persistently on disk?
 2. How to represent the lattice file within a programming language?

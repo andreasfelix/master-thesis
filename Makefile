@@ -48,7 +48,7 @@ tex: dist tex-pdfs tex-pngs
 	pandoc content/*.md \
 	--standalone \
 	-o _tex/thesis.tex \
-	--bibliography=../bibliography.bib \
+	--bibliography=bibliography.bib \
 	-V fontsize=12pt \
 	-V papersize=a4paper \
 	-V documentclass=report \
