@@ -2,8 +2,6 @@
 
 This chapter covers the challenges and consideration made of the implementation of the developed optics code. While time critical parts are written in C, most part of the optics code is implemnted in Python. Python has a huge ecosystem of different libaries and tools, which is growing day by day. It has become the go-to language for scientific computing and machine learning. One major drawback of major accelerator physics simulation codes is, that there exist no interface to Python.
 
-A typical workflow is to define a runfile, which is specific to the simulation software, run the simulation, save the results and subsequently loading these into Python to do the analysis. This raises the problem that one cannot leverage the Python's powerful optimization libaries is instead limited by optimization methods provided by the simulation software via the runfile. 
-
 The code is availabe at:
 
 https://github.com/andreasfelix/apace
