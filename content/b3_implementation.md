@@ -1,6 +1,12 @@
 # Implementation
 
-This chapter covers the challenges and consideration made of the implementation of the developed optics code. For a 
+This chapter covers the challenges and consideration made of the implementation of the developed optics code. While time critical parts are written in C, most part of the optics code is implemnted in Python. Python has a huge ecosystem of different libaries and tools, which is growing day by day. It has become the go-to language for scientific computing and machine learning. One major drawback of major accelerator physics simulation codes is, that there exist no interface to Python.
+
+A typical workflow is to define a runfile, which is specific to the simulation software, run the simulation, save the results and subsequently loading these into Python to do the analysis. This raises the problem that one cannot leverage the Python's powerful optimization libaries is instead limited by optimization methods provided by the simulation software via the runfile. 
+
+The code is availabe at:
+
+https://github.com/andreasfelix/apace
 
 ## Overview of Used Technology
 
@@ -60,7 +66,7 @@ TODO: add pythran and numba
 
 ## An Object-Orient Representation of the Magnetic Lattice
 
-This section gives a short overview of the purpose of the Python library *apace*. A comprehensive documentation can be found at: [https://apace.readthedocs.io](https://apace.readthedocs.io)
+This section gives a short overview of the functionality of the Python library *apace*. A comprehensive documentation can be found at: [https://apace.readthedocs.io](https://apace.readthedocs.io)
 
 A main difficutly besides of the implementation of the physical simulation methods is the representation of the particle accelerator within the simulation software. To leverage the exisiting optimization and learning algorithms it is benefical to have a digital version of the machine.
 
