@@ -234,7 +234,9 @@ $$ {#eq:emittance}
 
 ## Lattice Design {#sec:lattice-design}
 
-This sections discusses the concepts introduced using the example of a FODO, a DBA and a TBA lattice.
+This sections discusses the concepts introduced at the example of a FODO, a DBA and a TBA lattice.
+
+<!-- See Holzer, Lattice Design in High-Energy Particle Accelerators.pdf -->
 
 ### The FODO Lattice
 

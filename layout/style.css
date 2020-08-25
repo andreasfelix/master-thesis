@@ -21,6 +21,7 @@
   --nav-color: #fafbfc;
   --header-color: #fff;
   --page-color: #fff;
+  --page-highlight: #fafbfc;
   --border-color: #eaebec;
   --hover-color: #00000006;
   --active-color: #0000000c;
@@ -35,6 +36,7 @@
   --nav-color: #2f363d;
   --header-color: #2f363d;
   --page-color: #2f363d;
+  --page-highlight: #131313;
   --hover-color: #131313;
   --active-color: #050505;
   --border-color: #111;
@@ -437,6 +439,19 @@ figure figcaption {
   font-size: 0.875em;
 }
 
+table {
+  margin: 0 auto;
+  padding: 8px 16px;
+  background: var(--page-highlight);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+
+table > caption {
+  margin-bottom: 16px;
+}
+
 p {
   text-align: justify;
   margin-bottom: 0;
@@ -511,7 +526,7 @@ pre > code {
 
 #title-page .info {
   margin-top: 10px;
-  background: rgba(0, 0, 0, 0.02);
+  background: var(--page-color-highlight));
   border: 1px solid var(--border-color);
   border-left: 4px solid var(--accent-color);
   border-radius: 4px;

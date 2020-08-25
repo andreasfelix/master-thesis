@@ -51,6 +51,10 @@ multiknob
 4. High current test
 5. General effects on user operations
 
+<!-- extracted From old abstract
+
+A tool was developed which can change the minimum beta function within the given straight by interpolating between two different optics. The sextupoles were used to optimize the phase acceptance to such an extent that they were better than in the current standard optics. In another session the optics was successful audited for user operation by testing for high current, life time, kicker lifetime, bunch length and chromaticity. -->
+
 ## High Beta Functions in T2 (Emittance Exchange)
 
 Besides of the Q5T2-off optics, the developed Twiss optimization code was also used for an emittance exchange experiment. The experiment required a large and constant beta function of 15m along the whole T2 straight while retaining the beta function the same within the rest of the storage ring.

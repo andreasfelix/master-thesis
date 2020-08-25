@@ -1,6 +1,8 @@
 # Implementation
 
-This chapter covers the challenges and consideration made of the implementation of the developed optics code. While time critical parts are written in C, most part of the optics code is implemnted in Python. Python has a huge ecosystem of different libaries and tools, which is growing day by day. It has become the go-to language for scientific computing and machine learning. One major drawback of major accelerator physics simulation codes is, that there exist no interface to Python.
+This chapter covers the challenges and consideration made of the implementation of the developed optics code. While time critical parts are written in C, most part of the optics code is implemnted in Python.
+
+<!-- Python has a huge ecosystem of different libaries and tools, which is growing day by day. It has become the go-to language for scientific computing and machine learning. One major drawback of major accelerator physics simulation codes is, that there exist no interface to Python. -->
 
 The code is availabe at:
 
