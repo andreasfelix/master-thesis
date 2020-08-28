@@ -75,7 +75,7 @@ For certian experiments smaller adjustments of the beta functions are needed. In
 - Viel los in der Welt: MBA lattices worldwide as updates for lowest emittance, but no timing: https://www.maxiv.lu.se/science/accelerator-physics/current-projects/timing-modes-for-the-max-iv-storage-rings/
 
 
-## Motivation: The Need of a Python Interface to Particle Accelerator Simulations
+## Motivation: The Need for a Python Interface to Particle Accelerator Simulations
 
 MAD-X [@madx] and elegant [@elegant] are the most mature and commonly used accelerator physics simulation codes. Both programs a driven by an input file - often called run-file. This file defines various simulation parameters, but can also be used to define an optimization procedure. After the execution the results are stored in an output file. Over the years there emerged various tool-kits and programs to inspect, post-process and plot these results. Sometimes, for complex runs more flexibility is needed, which is the reason Python is commonly used for post-processing and analysis of the simulation data.
 

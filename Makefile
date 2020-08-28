@@ -4,7 +4,7 @@ SHELL := /bin/bash
 
 dist:
 	mkdir -p _dist
-	rsync -avu --delete figures layout/images layout/style.css _dist
+	rsync -avu --delete figures layout/images layout/css _dist
 
 tex-dir:
 	mkdir -p _tex/figures
@@ -21,11 +21,12 @@ html: dist
 	pandoc content/!(_*).md \
 	--standalone \
 	-o _dist/index.html \
-	--metadata title="Master Thesis" \
-	--metadata link-citations \
+	--metadata-file metadata.yml \
 	--bibliography bibliography.bib \
 	--template layout/template.html \
-	--css style.css \
+	--css css/variables.css \
+	--css css/ui.css \
+	--css css/page.css \
 	--number-sections \
 	--csl layout/ieee.csl \
 	--mathml \
@@ -33,16 +34,35 @@ html: dist
 	--filter pandoc-citeproc \
 	--toc
 
-# pdf: dist
-# 	pandoc content/*.md \
-# 	-o _dist/thesis.pdf \
-# 	--bibliography=bibliography.bib \
-# 	--number-sections \
-# 	--csl layout/ieee.csl \
-# 	--metadata link-citations \
-# 	--filter pandoc-crossref \
-# 	--filter pandoc-citeproc \
-# 	--verbose
+pdf: dist
+	pandoc content/!(_*).md \
+	--standalone \
+	-o _dist/thesis-pagedjs.html \
+	--metadata-file metadata.yml \
+	--bibliography bibliography.bib \
+	--template layout/template-pagedjs.html \
+	--css style-pagedjs.css \
+	--css css/variables.css \
+	--css css/page.css \
+	--css css/print.css \
+	--css css/ressources_interface-0.1.css \
+	--number-sections \
+	--csl layout/ieee.csl \
+	--mathml \
+	--filter pandoc-crossref \
+	--filter pandoc-citeproc \
+	--toc
+
+pdf-pandoc: dist
+	pandoc content/*.md \
+	-o _dist/thesis.pdf \
+	--bibliography=bibliography.bib \
+	--number-sections \
+	--csl layout/ieee.csl \
+	--metadata link-citations \
+	--filter pandoc-crossref \
+	--filter pandoc-citeproc \
+	--verbose
 
 tex: dist tex-pdfs tex-pngs
 	pandoc content/*.md \
@@ -69,7 +89,6 @@ epub: dist
 	--csl layout/ieee.csl \
 	--filter pandoc-crossref \
 	--filter pandoc-citeproc \
-	--metadata title:"Felix Andreas" \
 	--verbose
 
 .ONESHELL:

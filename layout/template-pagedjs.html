@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- TODO: clean up -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    $for(author-meta)$
+    <meta name="author" content="$author-meta$" />
+    $endfor$
+    <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+    <style>
+        $styles.html()$
+    </style>
+    $for(css)$
+    <link rel="stylesheet" href="$css$" />
+    $endfor$ $if(math)$ $math$ $endif$ $for(header-includes)$ $header-includes$
+    $endfor$
+    <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+</head>
+
+<body>
+    $for(include-before)$
+    $include-before$
+    $endfor$
+
+    <div id="title-page">
+        <img class="uni-logo" src="images/uni-logo-type.svg" />
+        <div class="thesis-type">Master Thesis</div>
+        <div class="thesis-title">
+            $title$
+        </div>
+        <div class="author-supervisor">
+            <div>
+                <div>Author:</div>
+                <div>$author$</div>
+            </div>
+            <div>
+                <div>Supervisors:</div>
+                <div>
+                    $supervisor-1st$<br>
+                    $supervisor-2nd$
+                </div>
+            </div>
+        </div>
+        <div class="thesis-and-institute">
+            <div class="thesis-requirements">
+                A thesis submitted in fulfillment of the requirements for the degree of
+                Master of Science (M.Sc)
+            </div>
+            <div class="in">in the</div>
+            <div class="institute">
+                Faculty of Mathematics and Natural Sciences
+                <br />Department of Physics
+            </div>
+        </div>
+        <div class="date">$date$</div>
+    </div>
+
+
+    <h1>Abstract</h1>
+    $abstract$
+
+    <h1 id="$idprefix$toc-title">Contents</h1>
+    <div id="toc">
+        $table-of-contents$
+    </div>
+
+    <!-- <h1>List of Figures</h1>>
+    $list-of-figures$
+
+    <h1>List of Tables</h1>>
+    $list-of-figures$ -->
+
+
+    $if(lof)$
+    <h1 id="$idprefix$lof-title">Contents</h1>
+    <div id="$idprefix$LOF">
+        $lof$
+    </div>
+    $endif$
+
+    $if(lot)$
+    <div id="$idprefix$LOT">
+        $lot$
+    </div>
+    $endif$
+
+    $body$
+
+    $for(include-after)$
+    $include-after$
+    $endfor$
+</body>
+
+</html>

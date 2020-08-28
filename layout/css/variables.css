@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+
+
+:root {
+    --sans-font: "Inter", sans-serif;
+    --serif-font: "Source Serif Pro", serif;
+    --content-font: var(--serif-font);
+    --ui-font: var(--sans-font);
+    --page-width: 210mm;
+    --padding: 20mm;
+    --header-height: 48px;
+    --font-size: 16px;
+    --nav-width: 250px;
+    --shadow: 0 0 0.3cm rgba(0, 0, 0, 0.025);
+    --style-transition: 400ms ease;
+}
+
+:root {
+    /* light theme variables */
+    --nav-color: #fafbfc;
+    --header-color: #fff;
+    --page-color: #fff;
+    --page-highlight: #fafbfc;
+    --border-color: #eaebec;
+    --hover-color: #00000006;
+    --active-color: #0000000c;
+    --code-color: #f5f5f5;
+    --text-color: #24292e;
+    --text-color-muted: #24292ece;
+    --icon-color: #24292eb0;
+    --accent-color: hsl(210, 100%, 50%);
+}
+
+[data-theme="dark"] {
+    --nav-color: #2f363d;
+    --header-color: #2f363d;
+    --page-color: #2f363d;
+    --page-highlight: #131313;
+    --hover-color: #131313;
+    --active-color: #050505;
+    --border-color: #111;
+    --code-color: #1e2227;
+    --text-color: white;
+    --text-color-muted: #f2f9ff;
+    --icon-color: #f2f9ff;
+    --accent-color: hsl(210, 100%, 65%);
+    --uni-logo-filter: invert(100%) hue-rotate(180deg);
+}

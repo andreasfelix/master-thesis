@@ -41,9 +41,7 @@ $$
 
 ## Equations of motion
 
-
-$$
-h = 1 + \kappa_\mathrm{x0} x + \kappa_\mathrm{y0} y
+$$ h = 1 + \kappa_\mathrm{x0} x + \kappa_\mathrm{y0} y
 $$
 
 $$
@@ -217,9 +215,6 @@ The five synchrotron radiation integrals give an overview of the radiation prope
 
 
 ![Quantum excitation of the betatron oscillation. When an electron with the reference momentum $p = p_0$ emits a photon within a bending magnet, it loses energy and will no longer be on the closed orbit. It will now perform betatron oscillations around a dispersive closed orbit $p < p_0$. (based on @wolski2018introduction)](figures/betatron-oscillation-excitation.svg){#fig:betatron-oscillation-excitation}
-
-
-
 
 $$ \mathcal{H}_x = \gamma_x \eta_x^2 + 2 \alpha_x \eta_x \eta_x' + \beta_x \eta_x'^2
 $$ {#eq:curly-h}

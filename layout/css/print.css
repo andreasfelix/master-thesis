@@ -1,0 +1,172 @@
+body {
+    font-family: "Source Serif Pro", serif;
+    hyphens: auto;
+}
+
+p {
+    text-align: justify;
+    hyphens: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    break-after: avoid;
+}
+
+h1 {
+    break-before: right;
+    string-set: heading-1 content(text);
+}
+
+h2 {
+    string-set: heading-2 content(text);
+}
+
+section.chapter {
+    page: chapter;
+    break-before: right;
+}
+
+figure {
+    margin: 1em 0;
+    display: flex;
+    flex-direction: column;
+}
+
+figure img {
+    /* necessary to avoid vertical spacing*/
+    max-width: 100%;
+}
+
+figure figcaption {
+    margin: 0.5em 0;
+    text-align: center;
+    font-size: 0.875em;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#title-page {
+    height: var(--pagedjs-pagebox-height);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+#title-page>.thesis-type {
+    font-size: 1.25em;
+    font-variant: small-caps;
+}
+
+#title-page>.thesis-title {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+#title-page>.author-supervisor {
+    display: flex;
+    justify-content: space-between;
+}
+
+#title-page>.author-supervisor>div:nth-child(1) {
+    text-align: left;
+}
+
+#title-page>.author-supervisor>div:nth-child(2) {
+    text-align: right;
+}
+
+#title-page>.author-supervisor>div>div:nth-child(1) {
+    font-style: italic;
+}
+
+#title-page>.author-supervisor>div>div:nth-child(2) {
+    font-variant: small-caps;
+}
+
+#title-page>.thesis-and-institute {
+    margin: 0 15mm;
+    font-style: italic;
+}
+
+#title-page>.thesis-and-institute>* {
+    margin-bottom: 0.5em;
+}
+
+#toc ul {
+    list-style-type: none;
+}
+
+#toc span.toc-section-number {
+    margin-right: 1em;
+}
+
+#toc>ul>li {
+    margin-bottom: 1em;
+}
+
+#toc>ul>li>a {
+    font-weight: 600;
+}
+
+#toc a::after {
+    content: target-counter(attr(href), page);
+    font-weight: normal;
+    float: right;
+}
+
+@media print {
+    @page {
+        size: A4;
+        margin: 25mm 20mm;
+    }
+
+    @page chapter:first {
+        @top-left {
+            content: none;
+        }
+    }
+
+    @page :left {
+        margin-left: 30mm;
+        margin-right: 20mm;
+
+        @top-left {
+            font-size: 0.875em;
+            content: counter(page);
+        }
+
+        @top-right {
+            font-size: 0.875em;
+            content: string(heading-1);
+            width: max-content;
+            font-style: italic;
+        }
+    }
+
+    @page :right {
+        margin-left: 20mm;
+        margin-right: 30mm;
+
+        @top-left {
+            font-size: 0.875em;
+            content: string(heading-2);
+            width: max-content;
+            font-style: italic;
+        }
+
+        @top-right {
+            font-size: 0.875em;
+            content: counter(page);
+        }
+    }
+}
