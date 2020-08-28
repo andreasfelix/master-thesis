@@ -26,11 +26,6 @@ h2 {
     string-set: heading-2 content(text);
 }
 
-section.chapter {
-    page: chapter;
-    break-before: right;
-}
-
 figure {
     margin: 1em 0;
     display: flex;
@@ -54,7 +49,7 @@ a {
 }
 
 #title-page {
-    height: var(--pagedjs-pagebox-height);
+    height: 240mm;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -124,22 +119,47 @@ a {
     float: right;
 }
 
+#title-page {
+    page: title-page;
+}
+
+.frontmatter {
+    page: frontmatter;
+}
+
+.main {
+    page: main;
+}
+
+#abstract {
+    counter-reset: page 1;
+}
+
+#introduction {
+    counter-reset: page 1;
+}
+
 @media print {
     @page {
         size: A4;
         margin: 25mm 20mm;
     }
 
-    @page chapter:first {
-        @top-left {
-            content: none;
-        }
+    @page :first {
+        margin: 25mm 20mm;
     }
 
     @page :left {
         margin-left: 30mm;
         margin-right: 20mm;
+    }
 
+    @page :right {
+        margin-left: 20mm;
+        margin-right: 30mm;
+    }
+
+    @page main :left {
         @top-left {
             font-size: 0.875em;
             content: counter(page);
@@ -153,10 +173,7 @@ a {
         }
     }
 
-    @page :right {
-        margin-left: 20mm;
-        margin-right: 30mm;
-
+    @page main :right {
         @top-left {
             font-size: 0.875em;
             content: string(heading-2);
@@ -167,6 +184,20 @@ a {
         @top-right {
             font-size: 0.875em;
             content: counter(page);
+        }
+    }
+
+    @page frontmatter :left {
+        @top-left {
+            font-size: 0.875em;
+            content: counter(page, lower-roman);
+        }
+    }
+
+    @page frontmatter :right {
+        @top-right {
+            font-size: 0.875em;
+            content: counter(page, lower-roman);
         }
     }
 }

@@ -57,36 +57,39 @@
         <div class="date">$date$</div>
     </div>
 
+    <div class="frontmatter">
+        <h1 id="abstract">Abstract</h1>
+        $abstract$
 
-    <h1>Abstract</h1>
-    $abstract$
+        <h1 id="$idprefix$toc-title">Contents</h1>
+        <div id="toc">
+            $table-of-contents$
+        </div>
 
-    <h1 id="$idprefix$toc-title">Contents</h1>
-    <div id="toc">
-        $table-of-contents$
+        <!-- <h1>List of Figures</h1>>
+        $list-of-figures$
+
+        <h1>List of Tables</h1>>
+        $list-of-figures$ -->
+
+
+        $if(lof)$
+        <h1 id="$idprefix$lof-title">Contents</h1>
+        <div id="$idprefix$LOF">
+            $lof$
+        </div>
+        $endif$
+
+        $if(lot)$
+        <div id="$idprefix$LOT">
+            $lot$
+        </div>
+        $endif$
     </div>
 
-    <!-- <h1>List of Figures</h1>>
-    $list-of-figures$
-
-    <h1>List of Tables</h1>>
-    $list-of-figures$ -->
-
-
-    $if(lof)$
-    <h1 id="$idprefix$lof-title">Contents</h1>
-    <div id="$idprefix$LOF">
-        $lof$
+    <div class="main">
+        $body$
     </div>
-    $endif$
-
-    $if(lot)$
-    <div id="$idprefix$LOT">
-        $lot$
-    </div>
-    $endif$
-
-    $body$
 
     $for(include-after)$
     $include-after$
