@@ -14,8 +14,8 @@ To describe the motion of a particle within an accelerator it is common to choos
 ![Co-moving Frenet-Serret coordinate system](figures/frenet-serret-coordinates.svg){#fig:frenet-serret-coordinates}
 
 The three basis vectors
-
-$$ \begin{aligned}
+$$
+\begin{aligned}
 \mathbf{\hat{e}}_s(s) &= \frac{d \mathbf{r}_0(s)}{d s} & \text{tangent basis vector} \\
 \mathbf{\hat{e}}_x(s) && \text{horizontal basis vector} \\
 \mathbf{\hat{e}}_y(s) &= \mathbf{\hat{e}}_s(s) \times\mathbf{\hat{e}}_x(s) & \text{vertical basis vector}
@@ -25,19 +25,13 @@ $$ {#eq:basis-vectors}
 span the coordinate system. While the $\mathbf{\hat{e}}_s(s)$ vector moves tangential to the orbit, the horizontal $\mathbf{\hat{e}}_x(s)$ and vertical $\mathbf{\hat{e}}_y(s)$ vectors are perpendicular to it. The distance covered on the ideal orbit is defined as the $s$ coordinate. The $z$ coordinate corresponds to the path length of the individual particle trajectory. The horizontal and vertical coordinates are labeled with $x$ and $y$. For statements which are valid for both transversal planes we will use the general variable $u$.
 
 The position of the individual particle in the laboratory frame is given as the sum of the orbit position $\mathbf{r}_0(s)$ and its $x$ and $y$ coordinates in the Frenet-Serret system:
-
-$$
-\mathbf{r}(x,y,s) =  \mathbf{r}_0(s) + x(s) \mathbf{\hat{e}}_x(s) + y(s) \mathbf{\hat{e}}_y(s)
+$$ \mathbf{r}(x,y,s) =  \mathbf{r}_0(s) + x(s) \mathbf{\hat{e}}_x(s) + y(s) \mathbf{\hat{e}}_y(s)
 $$ {#eq:position-vector}
-
-
 The curvature of the particle trajectory $\kappa_x = \frac{1}{\rho_x}$ can be expressed in terms of the individual multipole strengths:
 $$
 \kappa_x(x,p)
 = k_0(p) + k_1(p) x + \frac{1}{2} k_2(p) x^2 + \frac{1}{6} k_3(p) x^3 + ...
 $$
-
-
 
 ## Equations of motion
 

@@ -24,7 +24,7 @@
 
 # Introduction
 
-This thesis presents the development of a new lattice design tool. The first section of this chapter gives a brief overview of the third generation light source BESSY II. The second section covers the current lattice design task at HZB. The challenges of integrating existing simulation codes in a modern and high-level programming language are discussed in the third section and are the motivation for the development of the new lattice design tool.
+This thesis presents the development of a new lattice design tool and how it was used for lattice ... . The first section of this chapter gives a brief overview of the third generation light source BESSY II. The second section covers the current lattice design task at HZB. The challenges of integrating existing simulation codes in a modern and high-level programming language are discussed in the third section and are the motivation for the development of the new lattice design tool.
 
 ## BESSY II - A Third Generation Light Source
 

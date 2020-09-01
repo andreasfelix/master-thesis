@@ -2,11 +2,11 @@ h1,
 h2,
 h3,
 h4 {
-    font-family: var(--sans-font);
+    /* font-family: var(--sans-font); */
     font-weight: 600;
     margin: 2.5em 0 0.8em;
     position: relative;
-    font-variant: small-caps;
+    /* font-variant: small-caps; */
 }
 
 h1 {
@@ -46,10 +46,9 @@ h3 {
     margin-right: 0.25em;
 }
 
-math {
-    margin: 1.5em 0;
-    font-size: 0.875em;
+p>span>math {
     overflow: scroll;
+    margin: 1.5em 0;
 }
 
 figure {
@@ -107,8 +106,6 @@ a {
 
 div.sourceCode {
     background: var(--code-color);
-    /* border: 1px solid var(--border-color);
-border-radius: 4px; */
     padding: 1em;
     overflow: scroll;
     line-height: 1.5em;
@@ -121,9 +118,7 @@ code {
     margin: 0 0.25em;
     padding: 0 0.25em;
     white-space: nowrap;
-    /* border: 1px solid var(--border-color); */
     background: var(--code-color);
-    /* border-radius: 4px; */
 }
 
 pre.sourceCode {

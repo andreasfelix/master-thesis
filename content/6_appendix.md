@@ -1,8 +1,8 @@
-# Appendix
+# Appendix {.unnumbered}
 
 ## Developed Code {#sec:appendix-code}
 
-The source code is available at: [https://github.com/andreasfelix/apace]([https://github.com/andreasfelix/apace])
+The source code is available at: [*https://github.com/andreasfelix/apace*](https://github.com/andreasfelix/apace)
 
 **apace** is yet **a**nother **p**article **a**ccelerator **c**od**e** designed for the optimization of beam optics. It is available as Python package and aims to provide a convenient and straightforward API to make use of Python's numerous scientific libraries.
 
@@ -81,15 +81,15 @@ The grammar files are given in the Lark grammar language, which is based on the 
 
 ### Elegant Grammar File {#sec:elegant-grammar}
 
-This grammer is not 100% consistent with elegants parser:
+This grammar is not 100% consistent with elegants parser:
 
 * Elegants parser allows tokens to be split by the line continuation character "&". For example, it parses ANGLE=0.123&\n456 without an error. This is non-trivial to express with grammar rules and is therefore omitted.
 * Elegants parser allows a trailing " in attribute definitions. This means L=1.23" is parsed without an error. Seems like a bug and is left out.
 * Elegants parser allows unlimited trailing ",", which also seems like a bug.
 
 ```txt
-%ignore /!.*/            // ingore comments
-%ignore /[ \t\f]/+       // ingore whitespace
+%ignore /!.*/            // ignore comments
+%ignore /[ \t\f]/+       // ignore whitespace
 %ignore /&[ \t\f]*\r?\n/ // line continuation
 %import common (SIGNED_INT, SIGNED_FLOAT, SIGNED_NUMBER, ESCAPED_STRING, CNAME)
 
@@ -112,7 +112,7 @@ command     : name ["," word]
 
 #### RPN Expression
 
-Elegant used the so called reverse polish notation (RPN) for its arithmetic expressions. As there is no syntactic distinction between an escaped string and a variable, it is possible that a collison can happen. In this case a variable is wrongly identified as string.
+Elegant used the so called reverse polish notation (RPN) for its arithmetic expressions. As there is no syntactic distinction between an escaped string and a variable, it is possible that a collision can happen. In this case a variable is wrongly identified as string.
 
 ```txt
 assignment  : expr "sto" CNAME
@@ -153,7 +153,7 @@ ref_name    : [int "*"] [/-/] word
 command     : word ("," (word | string | attribute))*
 ```
 
-### Arithmeitc Expressions
+### Arithmetic Expressions
 
 As there is no syntactic distinction between a non-escaped word and a variable, we must parse words as variables and test afterwards if it is a variable or not.
 
@@ -178,3 +178,5 @@ assignment  : word ("=" | ":=") expr        -> assignment
             | "(" expr ")"
 ?start_artih : assignment | expr  // used to tested the arithmetic parser
 ```
+
+# Bibliography {.unnumbered}

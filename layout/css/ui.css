@@ -331,7 +331,7 @@ main {
 
 #title-page .info {
     margin-top: 10px;
-    background: var(--page-color-highlight));
+    background: var(--page-color-highlight);
     border: 1px solid var(--border-color);
     border-left: 4px solid var(--accent-color);
     border-radius: 4px;

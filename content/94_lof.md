@@ -1,4 +1,0 @@
-\listoffigures
-
-\listoftables
-

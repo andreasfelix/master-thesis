@@ -18,7 +18,7 @@ h6 {
 }
 
 h1 {
-    break-before: right;
+    /* break-before: right; */
     string-set: heading-1 content(text);
 }
 
@@ -47,6 +47,7 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
 
 #title-page {
     height: 240mm;
@@ -121,28 +122,32 @@ a {
 
 #title-page {
     page: title-page;
+    break-after: right;
 }
 
-.frontmatter {
+.frontmatter>section.level1 {
     page: frontmatter;
 }
 
-.main {
+main>section.level1 {
     page: main;
 }
 
-#abstract {
+section.level1 {
+    break-after: right;
+}
+
+#abstract>h1:first-child {
     counter-reset: page 1;
 }
 
-#introduction {
+#introduction>h1:first-child {
     counter-reset: page 1;
 }
 
 @media print {
     @page {
         size: A4;
-        margin: 25mm 20mm;
     }
 
     @page :first {
@@ -158,6 +163,12 @@ a {
         margin-left: 20mm;
         margin-right: 30mm;
     }
+
+    /* @page main :first {
+        @top-left {
+            content: none !important;
+        }
+    } */
 
     @page main :left {
         @top-left {

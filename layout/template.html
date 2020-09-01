@@ -132,16 +132,16 @@
                     <tr>
                         <th><strong>Title:</strong></th>
                         <th>
-                            Developing a Python-based Lattice Development Code
+                            $title$
                         </th>
                     </tr>
                     <tr>
                         <th><strong>Author:</strong></th>
-                        <th>Felix Andreas</th>
+                        <th>$author$</th>
                     </tr>
                     <tr>
                         <th><strong>Supervisors:</strong></th>
-                        <th>Prof. Dr. Andreas Jankowiak, Dr. Paul Goslawski</th>
+                        <th>$supervisor-1st$<br>$supervisor-2nd$</th>
                     </tr>
                     <tr>
                         <th><strong>Institution:</strong></th>
@@ -155,7 +155,7 @@
                     </tr>
                     <tr>
                         <th><strong>Date:</strong></th>
-                        <th>June 29, 2020</th>
+                        <th>$date$</th>
                     </tr>
                 </table>
             </div>
@@ -180,6 +180,7 @@
         let style = getComputedStyle(root, null);
         const nav = document.querySelector("nav");
         const overlay = document.querySelector("#overlay");
+
         function toggleNav() {
             nav.classList.toggle("show");
             overlay.classList.toggle("show");

@@ -2,21 +2,48 @@
 <html lang="en">
 
 <head>
-    <!-- TODO: clean up -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     $for(author-meta)$
     <meta name="author" content="$author-meta$" />
     $endfor$
     <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <style>
         $styles.html()$
     </style>
     $for(css)$
     <link rel="stylesheet" href="$css$" />
-    $endfor$ $if(math)$ $math$ $endif$ $for(header-includes)$ $header-includes$
+    $endfor$
+
+    $if(math)$
+    $math$
+    $endif$
+
+    $for(header-includes)$
+    $header-includes$
     $endfor$
     <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+
+    <!-- TODO:
+        Use TOC of pandoc or create with JS?
+        List of figures of pandoc-crossref has numbers??
+    -->
+    <!-- <script src="js/createToc.js"></script>
+    <script>
+        class handlers extends Paged.Handler {
+            constructor(chunker, polisher, caller) {
+                super(chunker, polisher, caller);
+            }
+
+            beforeParsed(content) {
+                console.log("before parsed!");
+                createToc(content, ['h1', 'h2', 'h3']);
+            }
+
+        }
+        Paged.registerHandlers(handlers);
+    </script> -->
 </head>
 
 <body>
@@ -58,42 +85,35 @@
     </div>
 
     <div class="frontmatter">
-        <h1 id="abstract">Abstract</h1>
-        $abstract$
+        <section id="abstract" class="level1">
+            <h1>Abstract</h1>
+            $abstract$
+        </section>
 
-        <h1 id="$idprefix$toc-title">Contents</h1>
-        <div id="toc">
+        <section id="acknowledgements" class="level1">
+            <h1>Acknowledgements</h1>
+            $acknowledgements$
+        </section>
+
+        <!-- TODO: create TOC, LOF, LOT with JS?? -->
+        <!-- <section id="my-toc" class="level1">
+            <h1>Contents</h1>
+            <ul></ul>
+        </section> -->
+
+        <section id="toc" class="level1">
+            <h1>Contents</h1>
             $table-of-contents$
-        </div>
-
-        <!-- <h1>List of Figures</h1>>
-        $list-of-figures$
-
-        <h1>List of Tables</h1>>
-        $list-of-figures$ -->
-
-
-        $if(lof)$
-        <h1 id="$idprefix$lof-title">Contents</h1>
-        <div id="$idprefix$LOF">
-            $lof$
-        </div>
-        $endif$
-
-        $if(lot)$
-        <div id="$idprefix$LOT">
-            $lot$
-        </div>
-        $endif$
+        </section>
     </div>
 
-    <div class="main">
-        $body$
-    </div>
+    <!-- Do not indent "body", because code tags are white-space sensitive! -->
+    <main>$body$</main>
 
     $for(include-after)$
     $include-after$
     $endfor$
+
 </body>
 
 </html>

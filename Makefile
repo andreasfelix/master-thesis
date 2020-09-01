@@ -4,7 +4,7 @@ SHELL := /bin/bash
 
 dist:
 	mkdir -p _dist
-	rsync -avu --delete figures layout/images layout/css _dist
+	rsync -avu --delete figures layout/images layout/css layout/js _dist
 
 tex-dir:
 	mkdir -p _tex/figures
@@ -27,6 +27,7 @@ html: dist
 	--css css/variables.css \
 	--css css/ui.css \
 	--css css/page.css \
+	--section-divs \
 	--number-sections \
 	--csl layout/ieee.csl \
 	--mathml \
@@ -37,19 +38,20 @@ html: dist
 pdf: dist
 	pandoc content/!(_*).md \
 	--standalone \
-	-o _dist/thesis-pagedjs.html \
+	-o _dist/print.html \
 	--metadata-file metadata.yml \
 	--bibliography bibliography.bib \
-	--template layout/template-pagedjs.html \
-	--css style-pagedjs.css \
+	--template layout/template-print.html \
 	--css css/variables.css \
 	--css css/page.css \
 	--css css/print.css \
 	--css css/ressources_interface-0.1.css \
 	--number-sections \
+	--section-divs \
 	--csl layout/ieee.csl \
 	--mathml \
 	--filter pandoc-crossref \
+	-M chapters \
 	--filter pandoc-citeproc \
 	--toc
 
