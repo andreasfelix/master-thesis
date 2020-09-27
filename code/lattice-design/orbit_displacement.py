@@ -26,4 +26,3 @@ plt.legend()
 aplot.draw_lattice(bessy2, annotate_elements=False)
 
 fig.savefig("tribs.pdf")
-

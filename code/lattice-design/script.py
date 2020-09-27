@@ -1,11 +1,12 @@
 #%%
 import json
 from math import pi
-import numpy as np
-import apace as ap
-import apace.plot as aplot
 
 import matplotlib.pyplot as plt
+import numpy as np
+
+import apace as ap
+import apace.plot as aplot
 
 energy = 1700  # mev
 n_cells = 16

@@ -1,6 +1,8 @@
 import math
+
 import matplotlib.pyplot as plt
 import numpy as np
+
 import apace as ap
 import apace.plot as aplot
 
@@ -72,4 +74,3 @@ for i, lattice in enumerate((fodo, dba, tba)):
 fig.tight_layout()
 fig.legend()
 fig.savefig(f"plots/lattice-design.pdf")
-
