@@ -237,15 +237,23 @@ The FODO cell is the simplest possible strong focusing lattice. It consists out 
 The periodic solution of the Twiss parameter $\beta$, $\alpha$, $\gamma$ and $\eta$ for a ring consisting out of 16 FODO cells is shown in @fig:fodo-twiss. The length of each element and the multipole strengths are listed in table ...
 
 <!-- add alpha, beta, gamma, dispersion -->
-TODO: bend should not be zero!!!
 
-![Twiss parameter of the FODO cell](figures/fodo-twiss.svg){#fig:fodo-twiss}
+![Twiss parameter of the FODO cell without and with dipoles](figures/fodo-twiss.svg){#fig:fodo-twiss}
 
 While the horizontal beta function $\beta_x$ reaches its maximum at the center of the horizontal focusing quadrupole *QF*, the vertical beta function $\beta_y$ has it maximum at the center of the vertical focusing quadrupole *QF*.
 
 <!-- Dispersion function is introduced by dipoles, maybe show plot without dipoles? -->
 
 <!-- alpha function should be zero at the when beta' is zero, bedeutung fuer phase space ellipse -->
+
+![The other optical functions: the betatron phase $\psi(s)$ and $\alpha(s)$](figures/fodo-twiss-2.svg){#fig:fodo-twiss-2}
+
+<!-- write something about usefulness of normalized coordinates see wille,235 -->
+
+When using normalized coordinates $\frac{u(s)}{\beta(s)}$, the particle trajectory has a perfect sinusoidal shape when plotted in dependence of the betatron phase $\psi(s)$ as show in @fig:fodo-twiss-floquet.
+
+![The envelope of the particle trajectories is defined by the beta function. When the particle offset is normalized by the beta function (floquet transformation) and plotted in dependence of the betatron phase one can the sinus oscillation.](figures/fodo-twiss-floquet.svg){#fig:fodo-twiss-floquet}
+
 
 Not all configurations of quadrupole strengths result in a stable lattice. One condition is that the focus length of a quadrupole must greater than its distance to the next quadrupole. Otherwise the transversal offset $u$ of a particle and its derivative $\frac{du}{ds}$ will have the same sign, which means that the deflection when passing through an defocusing quadrupole will be stronger and results in an unstable motion. The individual particle trajectories for two stable and to unstable FODO configurations are shown in ... .
 

@@ -3,7 +3,7 @@ import numpy as np
 import apace as ap
 from fodo import create_fodo, figure_path
 
-angles = [0, np.pi / 32]
+angles = [0, np.pi / 8]
 fodo = create_fodo(angle=angles[1])
 d1, b1, q1, q2 = (fodo[name] for name in ("d1", "b1", "q1", "q2"))
 twiss = ap.Twiss(fodo)
@@ -18,14 +18,13 @@ fig, axs = plt.subplots(
     gridspec_kw={"height_ratios": [0.01, 1, 1, 1]},
 )
 
-for ax, title in zip(axs[0], ["Without Dipoles", "With Dipoles"]):
+for ax, title, angle in zip(axs[0], ["Without Dipoles", "With Dipoles"], angles):
     ax.axis("off")
-    ax.set_title(title, fontweight="bold", pad=0)
+    ax.set_title(f"{title} ({np.degrees(angle)}° per cell)", fontweight="bold", pad=0)
 
 for column, angle in zip(axs[1:].T, angles):
     b1.angle = angle
-    b1.e1 = 0.5 * angle
-    b1.e2 = 0.5 * angle
+    b1.e1 = b1.e2 = 0.5 * angle
 
     for ax, length in zip(column, lengths):
         d1.length = length
