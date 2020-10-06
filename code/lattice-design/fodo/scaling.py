@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 steps = 50
 fodo_length = np.empty(50)
 beta_mean = np.empty(50)

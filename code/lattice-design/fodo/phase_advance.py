@@ -1,6 +1,6 @@
+import apace as ap
 import matplotlib.pyplot as plt
 import numpy as np
-import apace as ap
 
 from fodo import create_fodo, figure_path
 

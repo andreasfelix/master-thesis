@@ -1,13 +1,15 @@
 from math import pi
+
 import apace as ap
-from apace.plot import draw_lattice, plot_twiss, plt
 import numpy as np
+from apace.plot import draw_lattice, plot_twiss, plt
+
 from fodo import create_fodo, figure_path
 
 fodo = create_fodo(pi / 8)
 fodo = ap.Lattice("ring", 4 * [fodo])
 twiss = ap.Twiss(fodo, energy=1000)
-amplitude = 0.0001
+amplitude = 0.001
 beta_0 = twiss.beta_x[0]
 particles = np.array([[amplitude], [0], [0], [0], [0], [0]])
 tracking = ap.TrackingMatrix(fodo, particles)
@@ -28,13 +30,13 @@ envelope = tracking.x[0] / np.sqrt(twiss.beta_x[0])
 ax1.axhline(envelope, color="black", linestyle="--")
 ax1.axhline(-envelope, color="black", linestyle="--")
 ax1.plot(twiss.s, tracking.x.squeeze() / np.sqrt(twiss.beta_x))
-ax1.set_ylim(-4e-5, 4e-5)
+ax1.set_ylim(-4e-4, 4e-4)
 draw_lattice(fodo, location="bottom")
 ax1.set_xlabel("Orbit position $s$ / m")
 ax1.set_ylabel(r"$x(s) / \sqrt{\beta(s)}$")
 
 ax2.plot(twiss.psi_x, tracking.x.squeeze() / np.sqrt(twiss.beta_x))
-ax2.set_xlabel(r"Betatron phase $\psi_x(s) / Q_x$")
+ax2.set_xlabel(r"Betatron phase $\psi_x(s)$")
 ax2.set_ylabel(r"$x(s) / \sqrt{\beta(s)}$")
 plt.sca(ax2)
 plt.xticks(

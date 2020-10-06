@@ -3,8 +3,8 @@ SHELL := /bin/bash
 .PHONY: dist pdf html tex epub deploy
 
 dist:
-	mkdir -p _dist
-	rsync -avu --delete figures layout/images layout/css layout/js _dist
+	mkdir -p dist
+	rsync -avu --delete figures layout/images layout/css layout/js dist
 
 tex-dir:
 	mkdir -p _tex/figures
@@ -20,7 +20,7 @@ _tex/figures/%.pdf: figures/%.svg
 html: dist
 	pandoc content/!(_*).md \
 	--standalone \
-	-o _dist/index.html \
+	-o dist/index.html \
 	--metadata-file metadata.yml \
 	--bibliography bibliography.bib \
 	--template layout/template.html \
@@ -35,10 +35,10 @@ html: dist
 	--filter pandoc-citeproc \
 	--toc
 
-pdf: dist
+print: dist
 	pandoc content/!(_*).md \
 	--standalone \
-	-o _dist/print.html \
+	-o dist/print.html \
 	--metadata-file metadata.yml \
 	--bibliography bibliography.bib \
 	--template layout/template-print.html \
@@ -57,7 +57,7 @@ pdf: dist
 
 pdf-pandoc: dist
 	pandoc content/*.md \
-	-o _dist/thesis.pdf \
+	-o dist/thesis.pdf \
 	--bibliography=bibliography.bib \
 	--number-sections \
 	--csl layout/ieee.csl \
@@ -81,11 +81,11 @@ tex: dist tex-pdfs tex-pngs
 	--toc
 	sed -i 's/.svg/.pdf/g' _tex/thesis.tex
 	cd _tex; latexmk -pdf thesis.tex
-	mv thesis.pdf ../_dist/thesis-tex.pdf
+	mv thesis.pdf ../dist/thesis-tex.pdf
 
 epub: dist
 	pandoc content/*.md \
-	-o _dist/thesis.epub \
+	-o dist/thesis.epub \
 	--bibliography=bibliography.bib \
 	--number-sections \
 	--csl layout/ieee.csl \
@@ -95,7 +95,7 @@ epub: dist
 
 .ONESHELL:
 deploy: html
-	cd _dist
+	cd dist
 	git init
 	git add -A
 	git commit -m 'deploy'

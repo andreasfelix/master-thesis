@@ -1,5 +1,5 @@
-import numpy as np
 import apace as ap
+import numpy as np
 
 
 def create_fodo(angle, drift_length=4.0, bend_length=3.0, quad_length=1.0, k1=0.8):
@@ -15,8 +15,8 @@ def create_fodo(angle, drift_length=4.0, bend_length=3.0, quad_length=1.0, k1=0.
     return ap.Lattice("fodo-cell", sequence)
 
 
-from subprocess import check_output
 from pathlib import Path
+from subprocess import check_output
 
 base_path = Path(
     (check_output(["git", "rev-parse", "--show-toplevel"])).decode().strip()

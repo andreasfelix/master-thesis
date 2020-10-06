@@ -1,6 +1,7 @@
+import apace as ap
 import matplotlib.pyplot as plt
 import numpy as np
-import apace as ap
+
 from fodo import create_fodo, figure_path
 
 angles = [0, np.pi / 8]
@@ -39,8 +40,8 @@ for column, angle in zip(axs[1:].T, angles):
         heatmap = ax.imshow(
             value, extent=extent, origin="lower", vmin=0, vmax=30, cmap="cool"
         )
-        ax.set_xlabel(f"{q1.name}$_{{k1}}$")
-        ax.set_ylabel(f"{q2.name}$_{{k1}}$")
+        ax.set_xlabel(f"{q1.name}$_{{k1}}$ / m$^2$")
+        ax.set_ylabel(f"{q2.name}$_{{k1}}$ / m$^2$")
         ax.set_title(f"cell length: {fodo.length} m")
         colorbar = fig.colorbar(heatmap, ax=ax)
         colorbar.ax.set_title("$\\beta_{\\mathrm{mean}}$", fontsize=12, pad=10)
