@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Felix Andreas" />
+        <title>Developing a Python-based Lattice Development Tool</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        span.underline{text-decoration: underline;}
+        div.column{display: inline-block; vertical-align: top; width: 50%;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        ul.task-list{list-style: none;}
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {   }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+        code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #7d9029; } /* Attribute */
+        code span.bn { color: #40a070; } /* BaseN */
+        code span.bu { } /* BuiltIn */
+        code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4070a0; } /* Char */
+        code span.cn { color: #880000; } /* Constant */
+        code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+        code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+        code span.dt { color: #902000; } /* DataType */
+        code span.dv { color: #40a070; } /* DecVal */
+        code span.er { color: #ff0000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #40a070; } /* Float */
+        code span.fu { color: #06287e; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+        code span.op { color: #666666; } /* Operator */
+        code span.ot { color: #007020; } /* Other */
+        code span.pp { color: #bc7a00; } /* Preprocessor */
+        code span.sc { color: #4070a0; } /* SpecialChar */
+        code span.ss { color: #bb6688; } /* SpecialString */
+        code span.st { color: #4070a0; } /* String */
+        code span.va { color: #19177c; } /* Variable */
+        code span.vs { color: #4070a0; } /* VerbatimString */
+        code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="css/variables.css" />
+        <link rel="stylesheet" href="css/page.css" />
+        <link rel="stylesheet" href="css/print.css" />
+        <link rel="stylesheet" href="css/ressources_interface-0.1.css" />
+    
+    
+        <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+
+    <!-- TODO:
+        Use TOC of pandoc or create with JS?
+        List of figures of pandoc-crossref has numbers??
+    -->
+    <!-- <script src="js/createToc.js"></script>
+    <script>
+        class handlers extends Paged.Handler {
+            constructor(chunker, polisher, caller) {
+                super(chunker, polisher, caller);
+            }
+
+            beforeParsed(content) {
+                console.log("before parsed!");
+                createToc(content, ['h1', 'h2', 'h3']);
+            }
+
+        }
+        Paged.registerHandlers(handlers);
+    </script> -->
+</head>
+
+<body>
+    
+    <div id="title-page">
+        <img class="uni-logo" src="images/uni-logo-type.svg" />
+        <div class="thesis-type">Master Thesis</div>
+        <div class="thesis-title">
+            Developing a Python-based Lattice Development Tool
+        </div>
+        <div class="author-supervisor">
+            <div>
+                <div>Author:</div>
+                <div>Felix Andreas</div>
+            </div>
+            <div>
+                <div>Supervisors:</div>
+                <div>
+                    Prof. Dr. Andreas Jankowiak<br>
+                    Dr. Paul Goslawski
+                </div>
+            </div>
+        </div>
+        <div class="thesis-and-institute">
+            <div class="thesis-requirements">
+                A thesis submitted in fulfillment of the requirements for the degree of
+                Master of Science (M.Sc)
+            </div>
+            <div class="in">in the</div>
+            <div class="institute">
+                Faculty of Mathematics and Natural Sciences
+                <br />Department of Physics
+            </div>
+        </div>
+        <div class="date">September 29, 2020</div>
+    </div>
+
+    <div class="frontmatter">
+        <section id="abstract" class="level1">
+            <h1>Abstract</h1>
+            <p>Due to the BESSY-VSR upgrade and the design of the next synchrotron radiation facility BESSY III there are several lattice development tasks at HZB. Within the last several years there was a large shift in the physics community from standalone plotting programs, optimization routines and numerical libraries towards the Python programming language, which absorbed these tools into different packages. At HZB Python is the main programming language and is used to set up the execution of simulations and to post-process their results. The issue with existing and mature particle accelerator simulation codes that is not trivial to integrate them into an ordinary Python workflow. To still leverage the power of Python’s rich ecosystem of scientific tools, many physicists have written several wrapper scripts around the existing simulation codes. The issue with this wrappers is that there are often not reusable, because they are very specific to a certain task, and often rely on string manipulation of the lattice files or run files, which can be very error-prone and is computational inefficient. Furthermore these wrapper scripts only give access to the simulation results and not to the underlying internal models of the simulation codes, like the magnetic lattice or information about individual magnets. Therefore it was decided to develop a new Python package which generates an object-oriented model of the accelerator from a given lattice file. This model can be queried for information on individual magnets but also on properties of composed structures like the length of a straight. It is designed in such an extensible way, that it can be used as a foundation for different simulation methods which can be build on top of it. Such a method, which is capable of computing the Twiss parameter, dispersion function, chromaticity, emittance and synchrotron radiation integrals, was implemented. This thesis covers how this new tool was developed and then used to optimize the O5T2off optics for the BESSY-VSR project, adapt the beta functions of the BESSY II storage ring for an emittance exchange experiment and how it could be used for the development of a future BESSY III lattice. The goal of this new code is not to replace the more mature and full-featured particle accelerator codes, but extending the ecosystem of accelerator tools by enabling interactive basic lattice development using Python.</p>
+        </section>
+
+        <section id="acknowledgements" class="level1">
+            <h1>Acknowledgements</h1>
+            <p>Blablabla</p>
+        </section>
+
+        <!-- TODO: create TOC, LOF, LOT with JS?? -->
+        <!-- <section id="my-toc" class="level1">
+            <h1>Contents</h1>
+            <ul></ul>
+        </section> -->
+
+        <section id="toc" class="level1">
+            <h1>Contents</h1>
+            <ul>
+            <li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a>
+            <ul>
+            <li><a href="#bessy-ii---a-third-generation-light-source"><span class="toc-section-number">1.1</span> BESSY II - A Third Generation Light Source</a></li>
+            <li><a href="#lattice-development-at-hzb"><span class="toc-section-number">1.2</span> Lattice Development at HZB</a>
+            <ul>
+            <li><a href="#enlarging-the-available-installation-length-for-vsr-cryomodule"><span class="toc-section-number">1.2.1</span> Enlarging the Available Installation Length for VSR Cryomodule</a></li>
+            <li><a href="#adapting-the-beta-functions-of-the-bessy-ii-storage-ring"><span class="toc-section-number">1.2.2</span> Adapting the Beta Functions of the BESSY II Storage Ring</a></li>
+            <li><a href="#development-of-the-bessy-iii-lattice"><span class="toc-section-number">1.2.3</span> Development of the BESSY III Lattice</a></li>
+            </ul></li>
+            <li><a href="#motivation-the-need-for-a-python-interface-to-particle-accelerator-simulations"><span class="toc-section-number">1.3</span> Motivation: The Need for a Python Interface to Particle Accelerator Simulations</a></li>
+            </ul></li>
+            <li><a href="#beam-dynamics-in-electron-storage-rings"><span class="toc-section-number">2</span> Beam Dynamics in Electron Storage Rings</a>
+            <ul>
+            <li><a href="#the-co-moving-coordinate-system"><span class="toc-section-number">2.1</span> The Co-moving coordinate system</a></li>
+            <li><a href="#equations-of-motion"><span class="toc-section-number">2.2</span> Equations of motion</a></li>
+            <li><a href="#sec:linear-beam-dynamics"><span class="toc-section-number">2.3</span> Linear Beam Dynamics</a>
+            <ul>
+            <li><a href="#linearized-equations-of-motion"><span class="toc-section-number">2.3.1</span> Linearized Equations of Motion</a></li>
+            <li><a href="#sec:betatron-oscillation"><span class="toc-section-number">2.3.2</span> Betatron oscillation</a></li>
+            <li><a href="#sec:transformation-twiss-parameter"><span class="toc-section-number">2.3.3</span> Transformation of the Twiss parameter</a></li>
+            <li><a href="#dispersion"><span class="toc-section-number">2.3.4</span> Dispersion</a></li>
+            <li><a href="#momentum-compaction"><span class="toc-section-number">2.3.5</span> Momentum Compaction</a></li>
+            </ul></li>
+            <li><a href="#sec:chromaticity"><span class="toc-section-number">2.4</span> Chromaticity</a>
+            <ul>
+            <li><a href="#natural-chromaticity-in-a-storage-ring"><span class="toc-section-number">2.4.1</span> Natural Chromaticity in a Storage Ring</a></li>
+            <li><a href="#chromaticity-correction"><span class="toc-section-number">2.4.2</span> Chromaticity Correction</a></li>
+            </ul></li>
+            <li><a href="#synchrotron-radiation"><span class="toc-section-number">2.5</span> Synchrotron Radiation</a>
+            <ul>
+            <li><a href="#radiation-damping"><span class="toc-section-number">2.5.1</span> Radiation damping</a></li>
+            <li><a href="#quantum-excitation"><span class="toc-section-number">2.5.2</span> Quantum Excitation</a></li>
+            <li><a href="#sec:emittance"><span class="toc-section-number">2.5.3</span> Natural Emittance</a></li>
+            </ul></li>
+            <li><a href="#sec:lattice-design"><span class="toc-section-number">2.6</span> Lattice Design</a>
+            <ul>
+            <li><a href="#the-fodo-lattice"><span class="toc-section-number">2.6.1</span> The FODO Lattice</a></li>
+            <li><a href="#the-dba-lattice"><span class="toc-section-number">2.6.2</span> The DBA Lattice</a></li>
+            <li><a href="#the-tba-lattice"><span class="toc-section-number">2.6.3</span> The TBA Lattice</a></li>
+            </ul></li>
+            </ul></li>
+            <li><a href="#implementation"><span class="toc-section-number">3</span> Implementation</a>
+            <ul>
+            <li><a href="#overview-of-used-technology"><span class="toc-section-number">3.1</span> Overview of Used Technology</a></li>
+            <li><a href="#improving-the-performance-of-the-twiss-calculation"><span class="toc-section-number">3.2</span> Improving the Performance of the Twiss Calculation</a></li>
+            <li><a href="#an-object-orient-representation-of-the-magnetic-lattice"><span class="toc-section-number">3.3</span> An Object-Orient Representation of the Magnetic Lattice</a></li>
+            <li><a href="#latticejson-an-attempt-towards-a-universal-lattice-file-format"><span class="toc-section-number">3.4</span> LatticeJSON: An Attempt towards a Universal Lattice File Format</a></li>
+            </ul></li>
+            <li><a href="#applications"><span class="toc-section-number">4</span> Applications</a>
+            <ul>
+            <li><a href="#adjusting-the-bessy-ii-optics-for-the-vsr-project"><span class="toc-section-number">4.1</span> Adjusting the BESSY II Optics for the VSR project</a>
+            <ul>
+            <li><a href="#optimizing-the-q5t2-optics-in-simulations"><span class="toc-section-number">4.1.1</span> Optimizing the Q5T2 Optics in Simulations</a></li>
+            <li><a href="#user-operation-acceptance-test-of-the-q5t2-optics"><span class="toc-section-number">4.1.2</span> User Operation Acceptance Test of the Q5T2 Optics</a></li>
+            </ul></li>
+            <li><a href="#high-beta-functions-in-t2-emittance-exchange"><span class="toc-section-number">4.2</span> High Beta Functions in T2 (Emittance Exchange)</a></li>
+            <li><a href="#future-applications"><span class="toc-section-number">4.3</span> Future Applications</a></li>
+            </ul></li>
+            <li><a href="#conclusion"><span class="toc-section-number">5</span> Conclusion</a></li>
+            <li><a href="#appendix">Appendix</a>
+            <ul>
+            <li><a href="#sec:appendix-code"><span class="toc-section-number">5.1</span> Developed Code</a>
+            <ul>
+            <li><a href="#installing"><span class="toc-section-number">5.1.1</span> Installing</a></li>
+            <li><a href="#requirements"><span class="toc-section-number">5.1.2</span> Requirements</a></li>
+            <li><a href="#quick-start"><span class="toc-section-number">5.1.3</span> Quick Start</a></li>
+            <li><a href="#links"><span class="toc-section-number">5.1.4</span> Links</a></li>
+            <li><a href="#license"><span class="toc-section-number">5.1.5</span> License</a></li>
+            </ul></li>
+            <li><a href="#grammar-files-of-common-lattice-file-formats"><span class="toc-section-number">5.2</span> Grammar Files of Common Lattice File Formats</a>
+            <ul>
+            <li><a href="#sec:elegant-grammar"><span class="toc-section-number">5.2.1</span> Elegant Grammar File</a></li>
+            <li><a href="#sec:madx-grammar"><span class="toc-section-number">5.2.2</span> MADX Grammar File</a></li>
+            <li><a href="#arithmetic-expressions"><span class="toc-section-number">5.2.3</span> Arithmetic Expressions</a></li>
+            </ul></li>
+            </ul></li>
+            <li><a href="#bibliography">Bibliography</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Do not indent "body", because code tags are white-space sensitive! -->
+    <main><!-- \listoffigures
+
+\listoftables -->
+<!-- ## old stuff
+
+- Simulation tool to optimize the BESSY II optics with regard to the VSR Optics was developed in the Bachelors thesis. This tool was improved significantly and was used to further optimize the best solution of the BA. This tool can also be used for other LatticeDesign related tasks:
+
+- Beam Physics of lightsource lattices (auch MBA): Comparing the most important lattices & parameters (emittance, Einheitszelle Twiss(betax/y, dispx)) of a few exemplary lattices
+- The goal is to use this tool to develop a lattice of the BESSY II successor in the phd
+
+- The goal of this thesis was to further enhance this tool. Discuss its capabitlites at the example of canonical lattices FODO, DBA, TBA. Its application for real world use cases is descirbed in  ...
+- Fuer die optimierung von BESSY II lattice und fuer die entwicklung von BESSY3 lattice wird ein lattice development tool gebraucht! Da alle Python nutzen, waere es wuenschenswert, wenn diese ein native Python anbindung hat! -->
+<!-- - Complex filling pattern and low alpha -> VSR and using TRIBs to separate bunches
+- vsr module benotiegt mehr platz. BA hat eine loesung fuer gefunden. diese optics muss wieter verbessert werden.
+
+- Q5t2 und andre lattice modifications brauchen ein optimierungs program fuer twiss. warum eine neue software geschrieben wude anstatt exisiterende zu nutzen is in motivations erklaert.
+- ein Python API/Wrapper fuer die complexen C programme elegant und MADX zu schreiben, scheint schwieriger zu sein, als ein simpleren optics optimierer in python von scrztch zu schreiben. fuer lattice design erstmal nur twiss, tune, emittance synch integrals wichtig. --->
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This thesis presents the development of a new lattice design tool and how it was used for lattice … . The first section of this chapter gives a brief overview of the third generation light source BESSY II. The second section covers the current lattice design task at HZB. The challenges of integrating existing simulation codes in a modern and high-level programming language are discussed in the third section and are the motivation for the development of the new lattice design tool.</p>
+<section id="bessy-ii---a-third-generation-light-source" class="level2" data-number="1.1">
+<h2 data-number="1.1"><span class="header-section-number">1.1</span> BESSY II - A Third Generation Light Source</h2>
+<p>The third generation synchrotron light source BESSY II is located in Berlin Adlershof and is operated by the research institute HZB since 1998. Its purpose is to provide extremely brilliant synchrotron light pulses in the range from long terahertz radiation to hard X-rays. The storage ring has a circumference of 240 m and is equipped with 50 beam-lines. A graphic overview of BESSY II is shown in fig. 1.1. The most important parameters of the storage ring are listed in tbl. 1.1.</p>
+<figure>
+<img src="../figures/bessy2-floorplan.svg" id="fig:bessy2-floorplan" alt="Figure 1.1: Floor plan of the synchrotron light source BESSY II" /><figcaption aria-hidden="true">Figure 1.1: Floor plan of the synchrotron light source BESSY II</figcaption>
+</figure>
+<div id="tbl:bessy2-parameters">
+<table>
+<caption>Table 1.1: Parameters of the BESSY II storage ring</caption>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>nominal energy</td>
+<td>1.7 GeV</td>
+</tr>
+<tr class="even">
+<td>circumference</td>
+<td>240 m</td>
+</tr>
+<tr class="odd">
+<td>RF-frequency</td>
+<td>500 MHz</td>
+</tr>
+<tr class="even">
+<td>revolution time</td>
+<td>800 ns</td>
+</tr>
+<tr class="odd">
+<td>beam current</td>
+<td>300 mA</td>
+</tr>
+<tr class="even">
+<td>number of cells</td>
+<td>16</td>
+</tr>
+<tr class="odd">
+<td>number of bending magnets</td>
+<td>32</td>
+</tr>
+<tr class="even">
+<td>bending radius</td>
+<td>4.361 m</td>
+</tr>
+<tr class="odd">
+<td>beam-lines</td>
+<td>≈50</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The electrons are emitted by a DC grid cathode and are accelerated up to 90 keV. In the following linac their energy is increased up to 50 MeV <span class="citation" data-cites="linac">[<a href="#ref-linac" role="doc-biblioref">1</a>]</span>. Next the electrons are transferred to the booster synchrotron, where they are accelerated up to 1.7 GeV and are than injected to the storage ring cumulatively, so that a beam current of 300 mA is maintained (<em>top-up</em>). The electrons can be saved for up to 10 hours and emit, depending on the type of deflection (bending magnet, wiggler or undulator), photon energies up to 15 keV.</p>
+<p>At BESSY II it is possible to operate the machine in two different modes. Most of the time the storage ring is set to the standard user optics with 15 ps bunch length. During two weeks of the year the lattice is changed to the low alpha optics, which provide buckets with 3 ps bunch length <span class="citation" data-cites="vsrstudy">[<a href="#ref-vsrstudy" role="doc-biblioref">2</a>]</span>. This can be realized by reducing the momentum compaction factor <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mstyle mathvariant="normal"><mi>c</mi></mstyle></msub><annotation encoding="application/x-tex">\alpha_{\mathrm{c}}</annotation></semantics></math> from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><mo>⋅</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">7 \cdot 10^{-4}</annotation></semantics></math> to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>⋅</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>5</mn></mrow></msup></mrow><annotation encoding="application/x-tex">4 \cdot 10^{-5}</annotation></semantics></math>. The coherent synchrotron radiation instability leads to a limiting bursting threshold current, which scales with~<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mstyle mathvariant="normal"><mi>c</mi></mstyle></msub><annotation encoding="application/x-tex">\alpha_{\mathrm{c}}</annotation></semantics></math>. Therefore the photon flux has to be reduced significantly in comparison to the standard optics. In this time high flux user are not able to run experiments, which is the reason that the low alpha mode can only be provided for short periods.</p>
+</section>
+<section id="lattice-development-at-hzb" class="level2" data-number="1.2">
+<h2 data-number="1.2"><span class="header-section-number">1.2</span> Lattice Development at HZB</h2>
+<p>At HZB there a several lattice development tasks which require convenient and interactive tools.</p>
+<section id="enlarging-the-available-installation-length-for-vsr-cryomodule" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1"><span class="header-section-number">1.2.1</span> Enlarging the Available Installation Length for VSR Cryomodule</h3>
+<p>AT the HZB superconducting cavities are developed for the generation of long and short electron bunches. A cavity module, consisting of two 1.5 GHz and 1.75 GHz cavities each, can be assembled into a straight of the BESSY II storage ring, if the space for the module can be enlarged by modifying the beam optics. One possible solution is to remove two quadrupoles to gain the required installation length. With a self-developed code the two quadruples were turned off in simulations and the obtained optics was transferred to the storage ring. To avoid coupled bunch instabilities low beta functions within the VSR-module are required.</p>
+<figure>
+<img src="figures/vsr-cavity-voltage.svg" id="fig:vsr-cavity-voltage" alt="Figure 1.2: Voltage of the VSR cavities and their sum. The alternating large (blue) and small (red) gradients lead to short and longer bunches, respectively. (based on [2] and [3])" /><figcaption aria-hidden="true">Figure 1.2: Voltage of the VSR cavities and their sum. The alternating large (blue) and small (red) gradients lead to short and longer bunches, respectively. (based on <span class="citation" data-cites="vsrstudy">[<a href="#ref-vsrstudy" role="doc-biblioref">2</a>]</span> and <span class="citation" data-cites="rubprecht-phd">[<a href="#ref-rubprecht-phd" role="doc-biblioref">3</a>]</span>)</figcaption>
+</figure>
+<figure>
+<img src="figures/vsr-installation-length.svg" id="fig:vsr-installation-length" alt="Figure 1.3: The currently available space within the T2 section of the storage ring. If the Q5 quadrupoles would be removed one would gain 0.7 m for a larger cryomodule. (yellow - Dipole, red - Quadrupole, green - Sextupole)" /><figcaption aria-hidden="true">Figure 1.3: The currently available space within the T2 section of the storage ring. If the Q5 quadrupoles would be removed one would gain 0.7 m for a larger cryomodule. (yellow - Dipole, red - Quadrupole, green - Sextupole)</figcaption>
+</figure>
+</section>
+<section id="adapting-the-beta-functions-of-the-bessy-ii-storage-ring" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2"><span class="header-section-number">1.2.2</span> Adapting the Beta Functions of the BESSY II Storage Ring</h3>
+<p>For certian experiments smaller adjustments of the beta functions are needed. In the case of an emittance exchange erxperiment …</p>
+<!-- Picture of beta function in straight -->
+</section>
+<section id="development-of-the-bessy-iii-lattice" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3"><span class="header-section-number">1.2.3</span> Development of the BESSY III Lattice</h3>
+<ul>
+<li>Viel los in der Welt: MBA lattices worldwide as updates for lowest emittance, but no timing: https://www.maxiv.lu.se/science/accelerator-physics/current-projects/timing-modes-for-the-max-iv-storage-rings/</li>
+</ul>
+</section>
+</section>
+<section id="motivation-the-need-for-a-python-interface-to-particle-accelerator-simulations" class="level2" data-number="1.3">
+<h2 data-number="1.3"><span class="header-section-number">1.3</span> Motivation: The Need for a Python Interface to Particle Accelerator Simulations</h2>
+<p>MAD-X <span class="citation" data-cites="madx">[<a href="#ref-madx" role="doc-biblioref">4</a>]</span> and elegant <span class="citation" data-cites="elegant">[<a href="#ref-elegant" role="doc-biblioref">5</a>]</span> are the most mature and commonly used accelerator physics simulation codes. Both programs a driven by an input file - often called run-file. This file defines various simulation parameters, but can also be used to define an optimization procedure. After the execution the results are stored in an output file. Over the years there emerged various tool-kits and programs to inspect, post-process and plot these results. Sometimes, for complex runs more flexibility is needed, which is the reason Python is commonly used for post-processing and analysis of the simulation data.</p>
+<p>Python has a rich ecosystem of numerical libraries and optimization tools, which is growing day by day. It has become the go-to language for scientific computing and machine learning. A typical workflow of using MAD-X or elegant with Python would be (see fig. 1.4):</p>
+<ol type="1">
+<li>Create a run file</li>
+<li>Run the simulation defined by the run-file</li>
+<li>Store the results as file.</li>
+<li>Load the simulation results into Python and post-process the data.</li>
+<li>Output the post-processed data. (e.g. a plot or a new optics file)</li>
+</ol>
+<figure>
+<img src="figures/workflow-analysis-python.svg" id="fig:workflow-analysis-python" alt="Figure 1.4: An exemplary workflow for using MAD-X or elegant from Python." /><figcaption aria-hidden="true">Figure 1.4: An exemplary workflow for using MAD-X or elegant from Python.</figcaption>
+</figure>
+<p>One issue of this workflow is that not all information contained within the data-structures and models of the simulation software is included in the output files. For example MAD-X and elegant do not include complete model of the accelerator’s lattice, but only an arrays of elements for the simulated orbit positions. Another issue is that the execution of MAD-X and elegant can only be driven be their respective run-file. Although both run-files provide basic features of a programming language, such as variables, loops or if-else statements, their capabilities are extremely limited in comparison to Python. Therefore it would be desirable to drive the execution of the simulation using Python. Full access to the accelerator model of these simulations softwares would require to implemented a Python interface for MAD-X or elegant. PyMAD <span class="citation" data-cites="pymad">[<a href="#ref-pymad" role="doc-biblioref">6</a>]</span> was an attempt to create a Python API for MAD-X. As Python is a highly object oriented language an MAD-X is mainly written in C and Fortran, it is not trivial to design an API which fits the different programming paradigms of these languages. The PyMAD project is unmaintained since 2017.</p>
+<p>To still leverage the powerful optimizers of the Python ecosystem one common workaroud is to use a template lattice-file or run-file: At the beginning of each iteration Python is used to generate a unique input file by inserting the values of the optimization parameters into the template file. Using this new run-file Python then starts the simulation software as sub-process, parses the results, calculates the values of the fitness function and lets the optimizer compute the values of the optimization arguments for the next iteration. This is repeated until the terminating condition of the optimizer is met. Afterwards the final results are saved to a file. This workflow is illustrated in fig. 1.5</p>
+<figure>
+<img src="figures/workflow-python-driven.svg" id="fig:workflow-python-driven" alt="Figure 1.5: Driving the execution of MAD-X or elegant using Python. A new run-file is generated for each iteration of the optimization process." /><figcaption aria-hidden="true">Figure 1.5: Driving the execution of MAD-X or elegant using Python. A new run-file is generated for each iteration of the optimization process.</figcaption>
+</figure>
+<p>has several drawbacks:</p>
+<ul>
+<li>It is computationally very inefficient: The simulation software has to parse the run-file and rebuild the accelerator model for each iteration, because the memory is freed after the program terminates.</li>
+<li>Storing simulation results in a file and loading them into Python for each iteration is another performance issue: Hard disks are many magnitudes slower then computer memory. Even though this could be enhanced by using a RAM disk, serializing and deserializing the simulation results for each iteration is still not optimal.</li>
+<li>Substituting strings in a run-file is very error prone and can lead to hard to find bugs.</li>
+</ul>
+<p>For these reasons it would be desirable to have an direct Python API to drive the execution of accelerator simulations. As discussed above, integrating one of the existing simulation codes in Python is a difficult task. It was therefore decided to develop a new optics code as native Python package. As Python is a dynamically typed language and its major implementation CPython does not convert the source code directly into native machine instruction, ordinary Python programs execute slower than programs written in lower level languages like C or Fortran. To ensure extremely fast calculation of the Twiss parameter, which are necessary because high-dimensional optimizations often require millions of iterations, time-critical parts were implemented using the C language.</p>
+<p>The code is partially based on scripts written for the Q5T2-off optics of my Bachelor’s thesis. At the time of this thesis, the code is capable of calculating most of the linear parameters like the Twiss parameters, the dispersion function, the betatron phase and tune, the momentum compaction factor, the natural chromaticity, emittance and synchrotron radiation integrals. Particle tracking is implemented by the matrix method. There is an experimental branch which is able to do particle tracking by integrating the equations of motion, which is used for some plots in this thesis, but not well tested.</p>
+<p>A main feature of the developed code is its accelerator model, which includes an internal dependency graph between the elements of the accelerator: Whenever an element changes on of its attributes it automatically notifies all its dependents. For example if an magnet changes its length it notifies its containing lattice that its length has to be recomputed, which then again notifies then a simulation method, that for example the linear optics parameter have to be recalculated the next time their accessed. This is not only convenient for the users, because they do not have to keep track complex dependency relations, but also ensures, that only outdated properties are recomputed and no performance is wasted on calculating already known values.</p>
+<p>Furthermore this accelerator model provides an extensible foundation for future simulation methods. At HZB there is currently work going on to enable particle tracking using Lie maps [reference tom/jernej], which could be implemented on top of this accelerator model.</p>
+<p>An introduction to the physical foundation of the developed code is provided in the next chapter.</p>
+</section>
+</section>
+<section id="beam-dynamics-in-electron-storage-rings" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Beam Dynamics in Electron Storage Rings</h1>
+<p>This chapter introduces the basics of electron beam dynamics in ciruclar accelerators. The books of H. Wiedemann <span class="citation" data-cites="wiedemann">[<a href="#ref-wiedemann" role="doc-biblioref">7</a>]</span>, A. Wolski <span class="citation" data-cites="wolski2018introduction">[<a href="#ref-wolski2018introduction" role="doc-biblioref">8</a>]</span>, K. Wille <span class="citation" data-cites="wille">[<a href="#ref-wille" role="doc-biblioref">9</a>]</span> and F. Hinterberger <span class="citation" data-cites="hinterberger">[<a href="#ref-hinterberger" role="doc-biblioref">10</a>]</span> were the key sources of the following sections.</p>
+<p>sec. 2.3 covers the linear optics. In sec. 2.4 the effect of energy derivations of the particle beam on the betatron tune is discussed. Sectionq</p>
+<p>All covered concepts are implemented in the developed beam optics code.</p>
+<section id="the-co-moving-coordinate-system" class="level2" data-number="2.1">
+<h2 data-number="2.1"><span class="header-section-number">2.1</span> The Co-moving coordinate system</h2>
+<p>To describe the motion of a particle within an accelerator it is common to choose the co-moving Frenet-Serret coordinates, whose origin follows the trajectory of the reference particle.</p>
+<figure>
+<img src="figures/frenet-serret-coordinates.svg" id="fig:frenet-serret-coordinates" alt="Figure 2.1: Co-moving Frenet-Serret coordinate system" /><figcaption aria-hidden="true">Figure 2.1: Co-moving Frenet-Serret coordinate system</figcaption>
+</figure>
+<p>The three basis vectors <span id="eq:basis-vectors"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mrow><mi>d</mi><msub><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle><mn>0</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd><mtd columnalign="right"><mtext mathvariant="normal">tangent basis vector</mtext></mtd></mtr><mtr><mtd columnalign="right"><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left"></mtd><mtd columnalign="right"><mtext mathvariant="normal">horizontal basis vector</mtext></mtd></mtr><mtr><mtd columnalign="right"><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>y</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left"><mo>=</mo><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>×</mo><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="right"><mtext mathvariant="normal">vertical basis vector</mtext></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\begin{aligned}
+\mathbf{\hat{e}}_s(s) &amp;= \frac{d \mathbf{r}_0(s)}{d s} &amp; \text{tangent basis vector} \\
+\mathbf{\hat{e}}_x(s) &amp;&amp; \text{horizontal basis vector} \\
+\mathbf{\hat{e}}_y(s) &amp;= \mathbf{\hat{e}}_s(s) \times\mathbf{\hat{e}}_x(s) &amp; \text{vertical basis vector}
+\end{aligned}
+\qquad(2.1)</annotation></semantics></math></span></p>
+<p>span the coordinate system. While the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{\hat{e}}_s(s)</annotation></semantics></math> vector moves tangential to the orbit, the horizontal <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{\hat{e}}_x(s)</annotation></semantics></math> and vertical <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>y</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{\hat{e}}_y(s)</annotation></semantics></math> vectors are perpendicular to it. The distance covered on the ideal orbit is defined as the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> coordinate. The <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math> coordinate corresponds to the path length of the individual particle trajectory. The horizontal and vertical coordinates are labeled with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>. For statements which are valid for both transversal planes we will use the general variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math>.</p>
+<p>The position of the individual particle in the laboratory frame is given as the sum of the orbit position <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle><mn>0</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{r}_0(s)</annotation></semantics></math> and its <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math> coordinates in the Frenet-Serret system: <span id="eq:position-vector"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>,</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle><mn>0</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><msub><mstyle mathvariant="bold"><mover><mi>𝐞</mi><mo accent="true">̂</mo></mover></mstyle><mi>y</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.2</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \mathbf{r}(x,y,s) =  \mathbf{r}_0(s) + x(s) \mathbf{\hat{e}}_x(s) + y(s) \mathbf{\hat{e}}_y(s)
+\qquad(2.2)</annotation></semantics></math></span> The curvature of the particle trajectory <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>κ</mi><mi>x</mi></msub><mo>=</mo><mfrac><mn>1</mn><msub><mi>ρ</mi><mi>x</mi></msub></mfrac></mrow><annotation encoding="application/x-tex">\kappa_x = \frac{1}{\rho_x}</annotation></semantics></math> can be expressed in terms of the individual multipole strengths: <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>κ</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>k</mi><mn>0</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>k</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mi>x</mi><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>k</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><msub><mi>k</mi><mn>3</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mi>.</mi><mi>.</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\kappa_x(x,p)
+= k_0(p) + k_1(p) x + \frac{1}{2} k_2(p) x^2 + \frac{1}{6} k_3(p) x^3 + ...
+</annotation></semantics></math></p>
+</section>
+<section id="equations-of-motion" class="level2" data-number="2.2">
+<h2 data-number="2.2"><span class="header-section-number">2.2</span> Equations of motion</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mn>1</mn><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi><mn>0</mn></mstyle></msub><mi>x</mi><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi><mn>0</mn></mstyle></msub><mi>y</mi></mrow><annotation encoding="application/x-tex"> h = 1 + \kappa_\mathrm{x0} x + \kappa_\mathrm{y0} y
+</annotation></semantics></math></p>
+<p><span id="eq:lorentz-force"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle></mrow><mrow><mi>d</mi><msup><mi>z</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>e</mi><mi>c</mi></mrow><mrow><mi>β</mi><mi>E</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>d</mi><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle></mrow><mrow><mi>d</mi><mi>z</mi></mrow></mfrac><mo>×</mo><mstyle mathvariant="bold"><mi>𝐁</mi></mstyle><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.3</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\frac{d^2 \mathbf{r}}{d z^2} = \frac{ec}{\beta E} \left( \frac{d \mathbf{r}}{d z} \times \mathbf{B} \right)
+\qquad(2.3)</annotation></semantics></math></span></p>
+<p><span id="eq:eom-1"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle><mi>″</mi><mo>−</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>e</mi><mi>c</mi></mrow><mrow><mi>β</mi><mi>E</mi></mrow></mfrac><mi>z</mi><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mstyle mathvariant="bold"><mi>𝐫</mi></mstyle><mi>′</mi><mo>×</mo><mstyle mathvariant="bold"><mi>𝐁</mi></mstyle><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.4</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\mathbf{r}&#39;&#39; - \frac{1}{2z&#39;^2}\frac{d \mathbf{r}}{d s}\frac{d z&#39;^2}{d s} = \frac{ec}{\beta E} z&#39;\left( \mathbf{r}&#39; \times \mathbf{B} \right)
+\qquad(2.4)</annotation></semantics></math></span></p>
+<p><span id="eq:eom-2"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><mi>x</mi><mi>″</mi><mo>=</mo><mfrac><mrow><mi>e</mi><mi>c</mi></mrow><mrow><mi>β</mi><mi>E</mi></mrow></mfrac><mi>z</mi><mi>′</mi><mo stretchy="false" form="prefix">(</mo><mi>y</mi><mi>′</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>z</mi></mstyle></msub><mo>−</mo><mi>h</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>y</mi></mstyle></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi><mn>0</mn></mstyle></msub><mi>h</mi><mo>+</mo><mfrac><mrow><mi>x</mi><mi>′</mi></mrow><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi><mi>″</mi><mo>=</mo><mfrac><mrow><mi>e</mi><mi>c</mi></mrow><mrow><mi>β</mi><mi>E</mi></mrow></mfrac><mi>z</mi><mi>′</mi><mo stretchy="false" form="prefix">(</mo><mi>h</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>x</mi></mstyle></msub><mo>−</mo><mi>x</mi><mi>′</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>z</mi></mstyle></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi><mn>0</mn></mstyle></msub><mi>h</mi><mo>+</mo><mfrac><mrow><mi>y</mi><mi>′</mi></mrow><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.5</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\begin{aligned}
+x&#39;&#39; = \frac{e c}{\beta E} z&#39; (y&#39;B_{\mathrm{z}} - h B_\mathrm{y}) + \kappa_\mathrm{x0}h + \frac{x&#39;}{2 z&#39;^2}\frac{d z&#39;^2}{d s} \\
+y&#39;&#39; = \frac{e c}{\beta E} z&#39; (h B_\mathrm{x} - x&#39;B_{\mathrm{z}}) + \kappa_\mathrm{y0}h + \frac{y&#39;}{2 z&#39;^2}\frac{d z&#39;^2}{d s}
+\end{aligned}
+\qquad(2.5)</annotation></semantics></math></span></p>
+<p>Exakte Bewegungsgleichung mit $ E = p c$ <span id="eq:eom-3"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><mi>x</mi><mi>″</mi><mo>=</mo><mfrac><mi>c</mi><mi>p</mi></mfrac><mi>z</mi><mi>′</mi><mo stretchy="false" form="prefix">(</mo><mi>y</mi><mi>′</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>z</mi></mstyle></msub><mo>−</mo><mi>h</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>y</mi></mstyle></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi><mn>0</mn></mstyle></msub><mi>h</mi><mo>+</mo><mfrac><mrow><mi>x</mi><mi>′</mi></mrow><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi><mi>″</mi><mo>=</mo><mfrac><mi>c</mi><mi>p</mi></mfrac><mi>z</mi><mi>′</mi><mo stretchy="false" form="prefix">(</mo><mi>h</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>x</mi></mstyle></msub><mo>−</mo><mi>x</mi><mi>′</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>z</mi></mstyle></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi><mn>0</mn></mstyle></msub><mi>h</mi><mo>+</mo><mfrac><mrow><mi>y</mi><mi>′</mi></mrow><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.6</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\begin{aligned}
+x&#39;&#39; = \frac{c}{p} z&#39; (y&#39;B_{\mathrm{z}} - h B_\mathrm{y}) + \kappa_\mathrm{x0}h + \frac{x&#39;}{2 z&#39;^2}\frac{d z&#39;^2}{d s} \\
+y&#39;&#39; = \frac{c}{p} z&#39; (h B_\mathrm{x} - x&#39;B_{\mathrm{z}}) + \kappa_\mathrm{y0}h + \frac{y&#39;}{2 z&#39;^2}\frac{d z&#39;^2}{d s}
+\end{aligned}
+\qquad(2.6)</annotation></semantics></math></span></p>
+<p>Approximation 1: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mstyle mathvariant="normal"><mi>z</mi></mstyle></msub><mo>≈</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">B_\mathrm{z} \approx 0</annotation></semantics></math></p>
+<p><span id="eq:eom-4"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><mi>x</mi><mi>″</mi><mo>=</mo><mo>−</mo><mfrac><mi>e</mi><mi>p</mi></mfrac><mi>z</mi><mi>′</mi><mi>h</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>y</mi></mstyle></msub><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi><mn>0</mn></mstyle></msub><mi>h</mi><mo>+</mo><mfrac><mrow><mi>x</mi><mi>′</mi></mrow><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi><mi>″</mi><mo>=</mo><mfrac><mi>e</mi><mi>p</mi></mfrac><mi>z</mi><mi>′</mi><mi>h</mi><msub><mi>B</mi><mstyle mathvariant="normal"><mi>x</mi></mstyle></msub><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi><mn>0</mn></mstyle></msub><mi>h</mi><mo>+</mo><mfrac><mrow><mi>y</mi><mi>′</mi></mrow><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.7</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\begin{aligned}
+x&#39;&#39; = - \frac{e}{p} z&#39; h B_\mathrm{y} + \kappa_\mathrm{x0}h + \frac{x&#39;}{2 z&#39;^2}\frac{d z&#39;^2}{d s} \\
+y&#39;&#39; = \frac{e}{p} z&#39; h B_\mathrm{x} + \kappa_\mathrm{y0}h + \frac{y&#39;}{2 z&#39;^2}\frac{d z&#39;^2}{d s}
+\end{aligned}
+\qquad(2.7)</annotation></semantics></math></span></p>
+<p>Approximation 2: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mi>′</mi><mo>≈</mo><mi>h</mi><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo stretchy="false" form="prefix">(</mo><mi>x</mi><msup><mi>′</mi><mn>2</mn></msup><mo>+</mo><mi>y</mi><msup><mi>′</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mi>κ</mi><mi>x</mi></msub><mi>x</mi><mo>−</mo><msub><mi>κ</mi><mi>y</mi></msub><mi>y</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>.</mi><mi>.</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">z&#39; \approx h + \frac{1}{2}(x&#39;^2 + y&#39;^2)(1 - \kappa_x x - \kappa_y y) + ...</annotation></semantics></math> nur ersten Term mitnehmen <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mi>′</mi><mo>≈</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">z&#39; \approx h</annotation></semantics></math> <span id="eq:eom-5"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><mi>x</mi><mi>″</mi><mo>=</mo><mo>−</mo><mfrac><mi>e</mi><mi>p</mi></mfrac><msup><mi>h</mi><mn>2</mn></msup><msub><mi>B</mi><mstyle mathvariant="normal"><mi>y</mi></mstyle></msub><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi><mn>0</mn></mstyle></msub><mi>h</mi><mo>+</mo><mfrac><mrow><mi>x</mi><mi>′</mi></mrow><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi><mi>″</mi><mo>=</mo><mfrac><mi>e</mi><mi>p</mi></mfrac><msup><mi>h</mi><mn>2</mn></msup><msub><mi>B</mi><mstyle mathvariant="normal"><mi>x</mi></mstyle></msub><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi><mn>0</mn></mstyle></msub><mi>h</mi><mo>+</mo><mfrac><mrow><mi>y</mi><mi>′</mi></mrow><mrow><mn>2</mn><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow></mfrac><mfrac><mrow><mi>d</mi><mi>z</mi><msup><mi>′</mi><mn>2</mn></msup></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.8</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\begin{aligned}
+x&#39;&#39; = - \frac{e}{p} h^2 B_\mathrm{y} + \kappa_\mathrm{x0}h + \frac{x&#39;}{2 z&#39;^2}\frac{d z&#39;^2}{d s} \\
+y&#39;&#39; = \frac{e}{p} h^2 B_\mathrm{x} + \kappa_\mathrm{y0}h + \frac{y&#39;}{2 z&#39;^2}\frac{d z&#39;^2}{d s}
+\end{aligned}
+\qquad(2.8)</annotation></semantics></math></span></p>
+<p>Approximation 3: dritten Term vernachlässigen <span id="eq:eom-6"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><mi>x</mi><mi>″</mi><mo>=</mo><mo>−</mo><mfrac><mi>e</mi><mi>p</mi></mfrac><msup><mi>h</mi><mn>2</mn></msup><msub><mi>B</mi><mstyle mathvariant="normal"><mi>y</mi></mstyle></msub><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi><mn>0</mn></mstyle></msub><mi>h</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi><mi>″</mi><mo>=</mo><mfrac><mi>e</mi><mi>p</mi></mfrac><msup><mi>h</mi><mn>2</mn></msup><msub><mi>B</mi><mstyle mathvariant="normal"><mi>x</mi></mstyle></msub><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi><mn>0</mn></mstyle></msub><mi>h</mi></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.9</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \begin{aligned}
+x&#39;&#39; = - \frac{e}{p} h^2 B_\mathrm{y} + \kappa_\mathrm{x0}h \\
+y&#39;&#39; = \frac{e}{p} h^2 B_\mathrm{x} + \kappa_\mathrm{y0}h
+\end{aligned}
+\qquad(2.9)</annotation></semantics></math></span></p>
+<p>Umschreiben <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mfrac><mi>p</mi><msub><mi>p</mi><mn>0</mn></msub></mfrac><mo>⋅</mo><msub><mi>p</mi><mn>0</mn></msub><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>δ</mi><mo stretchy="false" form="postfix">)</mo><msub><mi>p</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">p = \frac{p}{p_0} \cdot p_0 = (1 + \delta) p_0</annotation></semantics></math> und <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>e</mi><msub><mi>p</mi><mn>0</mn></msub></mfrac><msub><mi>B</mi><mstyle mathvariant="normal"><mi>y</mi></mstyle></msub><mo>=</mo><msub><mi>κ</mi><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">\frac{e}{p_0}B_\mathrm{y} = \kappa_x</annotation></semantics></math> und <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>e</mi><msub><mi>p</mi><mn>0</mn></msub></mfrac><msub><mi>B</mi><mstyle mathvariant="normal"><mi>x</mi></mstyle></msub><mo>=</mo><msub><mi>κ</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\frac{e}{p_0}B_\mathrm{x} = \kappa_y</annotation></semantics></math></p>
+<p><span id="eq:eom-7"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><mi>x</mi><mi>″</mi><mo>=</mo><mo>−</mo><mfrac><msup><mi>h</mi><mn>2</mn></msup><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>δ</mi><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi></mstyle></msub><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi><mn>0</mn></mstyle></msub><mi>h</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi><mi>″</mi><mo>=</mo><mfrac><msup><mi>h</mi><mn>2</mn></msup><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>δ</mi><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi></mstyle></msub><mo>+</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi><mn>0</mn></mstyle></msub><mi>h</mi></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.10</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \begin{aligned}
+x&#39;&#39; = -  \frac{h^2}{(1 + \delta)}  \kappa_\mathrm{x} + \kappa_\mathrm{x0}h \\
+y&#39;&#39; =  \frac{ h^2}{(1 + \delta)} \kappa_\mathrm{y} + \kappa_\mathrm{y0}h
+\end{aligned}
+\qquad(2.10)</annotation></semantics></math></span></p>
+<p>mit</p>
+<p><span id="eq:eom-8"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi></mstyle></msub><mo>=</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>x</mi><mn>0</mn></mstyle></msub><mo>+</mo><mi>k</mi><mi>x</mi><mo>+</mo><mi>m</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>.</mi><mi>.</mi><mi>.</mi></mtd></mtr><mtr><mtd columnalign="right"><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi></mstyle></msub><mo>=</mo><msub><mi>κ</mi><mstyle mathvariant="normal"><mi>y</mi><mn>0</mn></mstyle></msub><mo>+</mo><mi>k</mi><mi>y</mi><mo>+</mo><mi>m</mi><mi>x</mi><mi>y</mi><mo>+</mo><mi>.</mi><mi>.</mi><mi>.</mi></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.11</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \begin{aligned}
+\kappa_\mathrm{x} =  \kappa_\mathrm{x0} + k x + m(x^2-y^2) + ... \\
+\kappa_\mathrm{y} =  \kappa_\mathrm{y0} + k y + mxy + ...
+\end{aligned}
+\qquad(2.11)</annotation></semantics></math></span></p>
+<p>The particle trajectory within non linear elements can be obtained by integrating eq. 2.10 numerically. This method was for example used to created the plots in sec. 2.4.</p>
+<p>… But it is rather computational expensive and only allos for a numerical investigation. It would be desireable to habe an analytical formalism. Courant and Synder <span class="citation" data-cites="courantsnyder">[<a href="#ref-courantsnyder" role="doc-biblioref">11</a>]</span> developed an analytical formalism for the linearized equations of motion which is covered in the next section.</p>
+</section>
+<section id="sec:linear-beam-dynamics" class="level2" data-number="2.3">
+<h2 data-number="2.3"><span class="header-section-number">2.3</span> Linear Beam Dynamics</h2>
+<p>As the linear order of beam optics was thourghly described in my Bachelor’s Thesis <span class="citation" data-cites="andreas_ba">[<a href="#ref-andreas_ba" role="doc-biblioref">12</a>]</span>, this section skips all derivations and provides only a summary of the most important results.</p>
+<section id="linearized-equations-of-motion" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1"><span class="header-section-number">2.3.1</span> Linearized Equations of Motion</h3>
+<ul>
+<li>how to get linearized eom</li>
+<li>linear eom are matrices</li>
+<li>hard ede modell and</li>
+</ul>
+<p>X = R * X</p>
+<p>transfer matrizen in den Anhang</p>
+</section>
+<section id="sec:betatron-oscillation" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2"><span class="header-section-number">2.3.2</span> Betatron oscillation</h3>
+<figure>
+<img src="figures/betatron-oscillation.svg" id="fig:betatron-oscillation" alt="Figure 2.2: The envelope of a particle beam at the example of a FODO cell. The betatron oscillation for 33 electrons with an emittance of 5 nm rad is shown in the right graphic." /><figcaption aria-hidden="true">Figure 2.2: The envelope of a particle beam at the example of a FODO cell. The betatron oscillation for 33 electrons with an emittance of 5 nm rad is shown in the right graphic.</figcaption>
+</figure>
+<p>By neglecting the off-momentum terms and substituting <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>K</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msubsup><mi>k</mi><mn>0</mn><mn>2</mn></msubsup><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>k</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">K_x(s) = k_0^2(s) + k_1(s)</annotation></semantics></math> for the horizontal and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>K</mi><mi>y</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo>−</mo><msub><mi>k</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">K_y(s) = - k_1(s)</annotation></semantics></math> for the vertical plane, the linear equations of motion</p>
+<p><span id="eq:hill-equation"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mi>″</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>K</mi><mi>u</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mi>u</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0</mn><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.12</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+u&#39;&#39;(s) + K_u(s) u(s) = 0
+\qquad(2.12)</annotation></semantics></math></span></p>
+<p>The offset in linear order is given by eq. 2.13</p>
+<p><span id="eq:betatron-oscillation"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msqrt><mrow><msub><mi>ϵ</mi><mi>u</mi></msub><msub><mi>β</mi><mi>u</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow></msqrt><mo>cos</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>ψ</mi><mi>u</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>ψ</mi><mrow><mi>u</mi><mn>0</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.13</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> u(s) = \sqrt{\epsilon_u \beta_u (s)} \cos(\psi_u(s) + \psi_{u0})
+\qquad(2.13)</annotation></semantics></math></span></p>
+<p><span id="eq:betatron-phase"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ψ</mi><mi>u</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mi>s</mi></msubsup><mfrac><mrow><mi>d</mi><mover><mi>s</mi><mo accent="true">‾</mo></mover></mrow><mrow><msub><mi>β</mi><mi>u</mi></msub><mo stretchy="false" form="prefix">(</mo><mover><mi>s</mi><mo accent="true">‾</mo></mover><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mi>.</mi><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.14</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \psi_u(s) = \int_0^s \frac{d \bar{s}}{\beta_u(\bar{s})}.
+\qquad(2.14)</annotation></semantics></math></span></p>
+<p><span id="eq:tune"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Q</mi><mi>u</mi></msub><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><msubsup><mo>∫</mo><mi>s</mi><mrow><mi>s</mi><mo>+</mo><mi>C</mi></mrow></msubsup><mfrac><mrow><mi>d</mi><mover><mi>s</mi><mo accent="true">‾</mo></mover></mrow><mrow><msub><mi>β</mi><mi>u</mi></msub><mo stretchy="false" form="prefix">(</mo><mover><mi>s</mi><mo accent="true">‾</mo></mover><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.15</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> Q_u = \frac{1}{2 \pi}\int_s^{s+C} \frac{d \bar{s}}{\beta_u (\bar{s})}
+\qquad(2.15)</annotation></semantics></math></span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>:=</mo><mfrac><mrow><mo>−</mo><mi>β</mi><mi>′</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex"> \alpha(s) := \frac{-\beta&#39;(s)}{2}
+</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>:=</mo><mfrac><mrow><mn>1</mn><mo>+</mo><msup><mi>α</mi><mn>2</mn></msup><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex"> \gamma(s) := \frac{1 + \alpha^2(s)}{\beta(s)}
+</annotation></semantics></math></p>
+<p>the ellipse equation:</p>
+<p><span id="eq:phase-space-ellipse"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><msup><mi>u</mi><mn>2</mn></msup><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>2</mn><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mi>u</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mi>u</mi><mi>′</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mi>u</mi><msup><mi>′</mi><mn>2</mn></msup><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>ϵ</mi><mi>.</mi><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.16</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \gamma(s) u^2(s) + 2 \alpha(s) u(s)u&#39;(s) + \beta(s) u&#39;^2(s) = \epsilon .
+\qquad(2.16)</annotation></semantics></math></span></p>
+</section>
+<section id="sec:transformation-twiss-parameter" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3"><span class="header-section-number">2.3.3</span> Transformation of the Twiss parameter</h3>
+<p><span id="eq:beta-matrix"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="bold"><mi>𝐁</mi></mstyle><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="center"><mo>−</mo><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="center"><mo>−</mo><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="center"><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.17</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \mathbf{B}(s) =
+    \begin{pmatrix}
+        \beta(s) &amp; -\alpha(s) \\
+        -\alpha(s) &amp; \gamma(s)
+    \end{pmatrix}
+\qquad(2.17)</annotation></semantics></math></span></p>
+<p><span id="eq:transformation-beta-matrix"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="bold"><mi>𝐁</mi></mstyle><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo>+</mo><mi>L</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mstyle mathvariant="bold"><mi>𝐑</mi></mstyle><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo>,</mo><mi>L</mi><mo stretchy="false" form="postfix">)</mo><mo>⋅</mo><mstyle mathvariant="bold"><mi>𝐁</mi></mstyle><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>⋅</mo><msup><mstyle mathvariant="bold"><mi>𝐑</mi></mstyle><mi>T</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo>,</mo><mi>L</mi><mo stretchy="false" form="postfix">)</mo><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.18</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \mathbf{B}(s+L) = \mathbf{R}(s,L) \cdot  \mathbf{B}(s) \cdot  \mathbf{R}^T(s,L)
+\qquad(2.18)</annotation></semantics></math></span></p>
+</section>
+<section id="dispersion" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4"><span class="header-section-number">2.3.4</span> Dispersion</h3>
+</section>
+<section id="momentum-compaction" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5"><span class="header-section-number">2.3.5</span> Momentum Compaction</h3>
+</section>
+</section>
+<section id="sec:chromaticity" class="level2" data-number="2.4">
+<h2 data-number="2.4"><span class="header-section-number">2.4</span> Chromaticity</h2>
+<section id="natural-chromaticity-in-a-storage-ring" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1"><span class="header-section-number">2.4.1</span> Natural Chromaticity in a Storage Ring</h3>
+</section>
+<section id="chromaticity-correction" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2"><span class="header-section-number">2.4.2</span> Chromaticity Correction</h3>
+</section>
+</section>
+<section id="synchrotron-radiation" class="level2" data-number="2.5">
+<h2 data-number="2.5"><span class="header-section-number">2.5</span> Synchrotron Radiation</h2>
+<p>The previous sections discussed the particle motion while neglecting any emission of synchrotron radition. However the random emission of photons has an influence on the amplitude of the betatron and synchrotron oscillations, which changes the beam emittance. At first this might seem like a violation of the Liouville’s theorem [reference to previous section]: It states that the phase space distribution of non-interacting particles in conservatives systems is constant along any path. Consequently the occupied volume in phase space must be conserved. The emittance corresponds to the occupied phase space volume of the electron beam. But as soon as an electron emits a photon, the beam emittance only occupies a sub-volume of the total electron-photon phase space, which is spaned by the coordinates of the electron and photon. Thus due to the synchrotron radiation and consistent with the Liouville’s theorem the beam emittance can change. The Liouville’s theorem still holds true for the entire electron-photon system.</p>
+<p>To describe the effects of synchrotron radiation on the beam properties it useful to define the five so-called synchrtoron radiation integrals:</p>
+<p><span id="eq:i1"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mn>1</mn></msub><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><msub><mi>C</mi><mn>0</mn></msub></msubsup><mfrac><msub><mi>η</mi><mi>x</mi></msub><mi>ρ</mi></mfrac><mstyle mathvariant="normal"><mi>d</mi></mstyle><mi>s</mi><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.19</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> I_1 = \int_0^{C_0} \frac{\eta_x}{\rho} \mathrm{d}s
+\qquad(2.19)</annotation></semantics></math></span></p>
+<p><span id="eq:i2"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mn>2</mn></msub><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><msub><mi>C</mi><mn>0</mn></msub></msubsup><mfrac><mn>1</mn><msup><mi>ρ</mi><mn>2</mn></msup></mfrac><mstyle mathvariant="normal"><mi>d</mi></mstyle><mi>s</mi><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.20</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> I_2 = \int_0^{C_0} \frac{1}{\rho^2} \mathrm{d}s
+\qquad(2.20)</annotation></semantics></math></span></p>
+<p><span id="eq:i3"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mn>3</mn></msub><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><msub><mi>C</mi><mn>0</mn></msub></msubsup><mfrac><mn>1</mn><mrow><mo stretchy="false" form="prefix">|</mo><mi>ρ</mi><msup><mo stretchy="false" form="prefix">|</mo><mn>3</mn></msup></mrow></mfrac><mstyle mathvariant="normal"><mi>d</mi></mstyle><mi>s</mi><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.21</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> I_3 = \int_0^{C_0} \frac{1}{|\rho|^3} \mathrm{d}s
+\qquad(2.21)</annotation></semantics></math></span></p>
+<p>TODO: include poleface effect (see MAD-X source code or SLAC-Pub-1193) <span id="eq:i4"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mn>4</mn></msub><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><msub><mi>C</mi><mn>0</mn></msub></msubsup><mfrac><msub><mi>η</mi><mi>x</mi></msub><mi>ρ</mi></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msup><mi>ρ</mi><mn>2</mn></msup></mfrac><mo>+</mo><mn>2</mn><msub><mi>k</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mstyle mathvariant="normal"><mi>d</mi></mstyle><mi>s</mi><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.22</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> I_4 = \int_0^{C_0} \frac{\eta_x}{\rho}\left(\frac{1}{\rho^2} + 2k_1\right)\mathrm{d}s
+\qquad(2.22)</annotation></semantics></math></span></p>
+<p><span id="eq:i5"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mn>5</mn></msub><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><msub><mi>C</mi><mn>0</mn></msub></msubsup><mfrac><msub><mi>H</mi><mi>x</mi></msub><mrow><mi>r</mi><mi>h</mi><msup><mi>o</mi><mn>3</mn></msup></mrow></mfrac><mstyle mathvariant="normal"><mi>d</mi></mstyle><mi>s</mi><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.23</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> I_5 = \int_0^{C_0} \frac{H_x}{rho^3} \mathrm{d}s
+\qquad(2.23)</annotation></semantics></math></span></p>
+<section id="radiation-damping" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1"><span class="header-section-number">2.5.1</span> Radiation damping</h3>
+<figure>
+<img src="figures/betatron-oscillation-damping.svg" id="fig:betatron-oscillation-damping" alt="Figure 2.3: Radiation damping of the betatron oscillation. When a photon is emitted within a magnet in the direction of the particle movement, it reduces the transversal and longitudinal component of the electron’s momentum. As the cavity only refills the longitudinal component, the transversal components decreases over time." /><figcaption aria-hidden="true">Figure 2.3: Radiation damping of the betatron oscillation. When a photon is emitted within a magnet in the direction of the particle movement, it reduces the transversal and longitudinal component of the electron’s momentum. As the cavity only refills the longitudinal component, the transversal components decreases over time.</figcaption>
+</figure>
+</section>
+<section id="quantum-excitation" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2"><span class="header-section-number">2.5.2</span> Quantum Excitation</h3>
+<p>But the betatron oscillation amplitude does not damp to zero. The damping is counteracted by the quantum excitation. Due to the quantum nature of the photons, the radiation is not continuous, but happens in discrete chunks of energy.</p>
+<p>The five synchrotron radiation integrals give an overview of the radiation properties of a given lattice:</p>
+<figure>
+<img src="figures/betatron-oscillation-excitation.svg" id="fig:betatron-oscillation-excitation" alt="Figure 2.4: Quantum excitation of the betatron oscillation. When an electron with the reference momentum p = p_0 emits a photon within a bending magnet, it loses energy and will no longer be on the closed orbit. It will now perform betatron oscillations around a dispersive closed orbit p &lt; p_0. (based on 8)" /><figcaption aria-hidden="true">Figure 2.4: Quantum excitation of the betatron oscillation. When an electron with the reference momentum <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><msub><mi>p</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">p = p_0</annotation></semantics></math> emits a photon within a bending magnet, it loses energy and will no longer be on the closed orbit. It will now perform betatron oscillations around a dispersive closed orbit <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>&lt;</mo><msub><mi>p</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">p &lt; p_0</annotation></semantics></math>. (based on <span class="citation" data-cites="wolski2018introduction"><a href="#ref-wolski2018introduction" role="doc-biblioref">8</a></span>)</figcaption>
+</figure>
+<p><span id="eq:curly-h"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mstyle mathvariant="script"><mi>ℋ</mi></mstyle><mi>x</mi></msub><mo>=</mo><msub><mi>γ</mi><mi>x</mi></msub><msubsup><mi>η</mi><mi>x</mi><mn>2</mn></msubsup><mo>+</mo><mn>2</mn><msub><mi>α</mi><mi>x</mi></msub><msub><mi>η</mi><mi>x</mi></msub><msub><mi>η</mi><mi>x</mi></msub><mi>′</mi><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><msub><mi>η</mi><mi>x</mi></msub><msup><mi>′</mi><mn>2</mn></msup><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.24</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \mathcal{H}_x = \gamma_x \eta_x^2 + 2 \alpha_x \eta_x \eta_x&#39; + \beta_x \eta_x&#39;^2
+\qquad(2.24)</annotation></semantics></math></span></p>
+<p><span id="eq:horizontal-damping-partition-number"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>x</mi></msub><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><msub><mi>I</mi><mn>4</mn></msub><msub><mi>I</mi><mn>2</mn></msub></mfrac><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.25</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> j_x = 1 - \frac{I_4}{I_2}
+\qquad(2.25)</annotation></semantics></math></span></p>
+</section>
+<section id="sec:emittance" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3"><span class="header-section-number">2.5.3</span> Natural Emittance</h3>
+<p><span id="eq:emittance"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϵ</mi><mi>x</mi></msub><mo>=</mo><msub><mi>C</mi><mi>q</mi></msub><msup><mi>γ</mi><mn>2</mn></msup><mfrac><msub><mi>I</mi><mn>5</mn></msub><mrow><msub><mi>j</mi><mi>x</mi></msub><msub><mi>I</mi><mn>2</mn></msub></mrow></mfrac><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2.26</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \epsilon_x = C_q \gamma^2 \frac{I_5}{j_x I_2}
+\qquad(2.26)</annotation></semantics></math></span></p>
+</section>
+</section>
+<section id="sec:lattice-design" class="level2" data-number="2.6">
+<h2 data-number="2.6"><span class="header-section-number">2.6</span> Lattice Design</h2>
+<p>The previous sections introduced the most important analytical parameters of particle beam dynamics. This sections discusses the concepts introduced at the example of different periodic lattices. At first we cover the FODO lattice, which is the most simple strong focusing lattice, then we move on to the double bend achromat lattice (DBA), which can be used to produce dispersion free straights, and finally look how the dispersion and emittance can be reduced further by the multi-bend achromat lattice (MBA). All plots are generated by the developed code.</p>
+<!-- See Holzer, Lattice Design in High-Energy Particle Accelerators.pdf -->
+<section id="the-fodo-lattice" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1"><span class="header-section-number">2.6.1</span> The FODO Lattice</h3>
+<p>The FODO cell is the simplest possible strong focusing lattice. It consists out of alternating horizontal and vertical quadrupoles with drift spaces in between, which gives the cell its name: A horizontal <strong>F</strong>ocusing quadrupole, a drift space (<strong>0</strong> force), a horizontal <strong>D</strong>efocusing and a drift space (<strong>0</strong> force). A schematic of the FODO lattice is shown in fig. 2.5.</p>
+<figure>
+<img src="figures/fodo-schematic.svg" id="fig:fodo-schematic" alt="Figure 2.5: Schematic of a FODO cell" /><figcaption aria-hidden="true">Figure 2.5: Schematic of a FODO cell</figcaption>
+</figure>
+<p>We can use the periodic condition of sec. 2.3.3 to calculate the optical functions <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta(s)</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\eta(s)</annotation></semantics></math>. The periodic solution of the Twiss parameter <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta(s)</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\eta(s)</annotation></semantics></math> for a FODO lattice without dipoles (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">R = 0</annotation></semantics></math>) are shown in the upper plot of fig. 2.6.</p>
+<figure>
+<img src="figures/fodo-twiss.svg" id="fig:fodo-twiss" alt="Figure 2.6: Top: Twiss parameter of the FODO cell without dipoles. Bottom: Twiss Parameter of a FODO cell with dipoles." /><figcaption aria-hidden="true">Figure 2.6: Top: Twiss parameter of the FODO cell without dipoles. Bottom: Twiss Parameter of a FODO cell with dipoles.</figcaption>
+</figure>
+<p>While the horizontal beta function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta_x(s)</annotation></semantics></math> reaches its maximum at the center of the horizontal focusing quadrupole <em>Q1</em>, the vertical beta function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>y</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta_y(s)</annotation></semantics></math> has it maximum at the center of the vertical focusing quadrupole <em>Q2</em>. As the dispersion is introduced by bending magnets, this FODO cell has a vanishing dispersion function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>η</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\eta_x(s)</annotation></semantics></math>. A high dispersion function is especially undesirable at the location of insertion devices. A circular accelerator must have bending magnets, as - by definition - it has to close at some point, which makes a non-vanishing dispersion function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>η</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\eta_x(s)</annotation></semantics></math> inevitable. But, as discussed in the next subsection, it is still possible to design a lattice which has no dispersion within certain sections of the ring.</p>
+<p>The simplest way to create a FODO-based circular accelerator is to put a bending magnet in center of every drift space. The Twiss parameter <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta(s)</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\eta(s)</annotation></semantics></math> for such a FODO cell with dipoles (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mfrac><mi>π</mi><mn>8</mn></mfrac></mrow><annotation encoding="application/x-tex">R = \frac{\pi}{8}</annotation></semantics></math>) are shown in the lower plot of fig. 2.6. A comparison of various parameters for both FODO cells is listed in tbl. 2.1.</p>
+<div id="tbl:fodo-parameter">
+<table>
+<caption>Table 2.1: FODO cell parameters</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">without dipoles</th>
+<th style="text-align: right;">with dipoles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cell length <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math></td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: right;">8.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bending angle <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>φ</mi><annotation encoding="application/x-tex">\varphi</annotation></semantics></math></td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Quadrupole strength <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mn>1</mn></msub><annotation encoding="application/x-tex">k_1</annotation></semantics></math></td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">0.80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Horizontal tune <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Q</mi><mi>x</mi></msub><annotation encoding="application/x-tex">Q_x</annotation></semantics></math></td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vertical tune <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Q</mi><mi>y</mi></msub><annotation encoding="application/x-tex">Q_y</annotation></semantics></math></td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maximum horizontal beta <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mrow><mi>x</mi><mo>,</mo><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><annotation encoding="application/x-tex">\beta_{x,max}</annotation></semantics></math></td>
+<td style="text-align: right;">14.11</td>
+<td style="text-align: right;">14.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Maximum vertical beta <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mrow><mi>y</mi><mo>,</mo><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><annotation encoding="application/x-tex">\beta_{y,max}</annotation></semantics></math></td>
+<td style="text-align: right;">14.11</td>
+<td style="text-align: right;">13.82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maximum dispersion <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>η</mi><mrow><mi>x</mi><mo>,</mo><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><annotation encoding="application/x-tex">\eta_{x,max}</annotation></semantics></math></td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.85</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>As one can see, the dipoles introduced a non-zero dispersion function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>η</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\eta_x(s)</annotation></semantics></math> with a graph similar to the horizontal beta function: A maximum of 1.8 meters at the center of the horizontal focusing quadrupole <em>q1</em> and minimum of 0.8 meters at the center of the vertical focusing quadrupole <em>q2</em>. Due to the horizontal weak focusing of the dipoles and vertical focusing of the dipole edges the maxima of the horizontal and vertical beta functions are slightly smaller in comparison to the FODO cell without dipoles. For the same reasons the vertical tune <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Q</mi><mi>y</mi></msub><annotation encoding="application/x-tex">Q_y</annotation></semantics></math> is a bit larger.</p>
+<p>As discussed in sec. 2.3.2, the evolution of phase space ellipse of the beam is fully defined by the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta(s)</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\alpha(s)</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\gamma(s)</annotation></semantics></math> functions, which are shown in fig. 2.7.</p>
+<!-- alpha function should be zero at the when beta' is zero, bedeutung fuer phase space ellipse -->
+<figure>
+<img src="figures/fodo-twiss-2.svg" id="fig:fodo-twiss-2" alt="Figure 2.7: Top: The horizontal and vertical beta functions \beta(s). Middle: The horizontal and vertical alpha functions \alpha(s). Bottom: The betatron phase \psi(s)" /><figcaption aria-hidden="true">Figure 2.7: Top: The horizontal and vertical beta functions <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta(s)</annotation></semantics></math>. Middle: The horizontal and vertical alpha functions <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\alpha(s)</annotation></semantics></math>. Bottom: The betatron phase <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ψ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\psi(s)</annotation></semantics></math></figcaption>
+</figure>
+<!-- write something about usefulness of normalized coordinates see wille,235 -->
+<p>The trajectory of a particle in a strictly linear lattice is given by the superposition of two periodic functions</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msqrt><mrow><mi>ϵ</mi><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow></msqrt><mo>cos</mo><mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>ψ</mi><mn>0</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex"> u(s) = \sqrt{\epsilon\beta(s)}\cos{(\psi(s) + \psi_0)},
+</annotation></semantics></math></p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mrow><mi>ϵ</mi><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow></msqrt><annotation encoding="application/x-tex">\sqrt{\epsilon\beta(s)}</annotation></semantics></math> is the envelope of the particle beam. When using Floquet’s coordinates <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>u</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><annotation encoding="application/x-tex">\frac{u(s)}{\beta(s)}</annotation></semantics></math>, the particle trajectory has a perfect sinusoidal shape when plotted in dependence of the betatron phase <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ψ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\psi(s)</annotation></semantics></math> as shown in fig. 2.8.</p>
+<figure>
+<img src="figures/fodo-twiss-floquet.svg" id="fig:fodo-twiss-floquet" alt="Figure 2.8: Top: exemplary trajectory of a single particle and beam envelope. Middle: Normalized particle trajectory along the orbit position (floquet transformation). Bottom: Normalized particle trajectory in dependnce of the betatron phase." /><figcaption aria-hidden="true">Figure 2.8: Top: exemplary trajectory of a single particle and beam envelope. Middle: Normalized particle trajectory along the orbit position (floquet transformation). Bottom: Normalized particle trajectory in dependnce of the betatron phase.</figcaption>
+</figure>
+<p>Not all configurations of quadrupole strengths result in a stable lattice. One condition is that the focal length of a quadrupole must greater than its distance to the next quadrupole. Otherwise the transversal offset <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math> of a particle and its derivative <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>d</mi><mi>u</mi></mrow><mrow><mi>d</mi><mi>s</mi></mrow></mfrac><annotation encoding="application/x-tex">\frac{du}{ds}</annotation></semantics></math> will have the same sign at the start of the next quadruple, which means that the deflection when passing through a defocusing quadrupole will be stronger and results in an unstable motion. A scan over possible quadrupole settings for different cell lengths of a FODO cell with and without dipoles is shown in fig:necktie-plot.</p>
+<figure>
+<img src="figures/necktie-plot.svg" id="fig:necktie-plot" alt="Figure 2.9: Mean beta function for different configurations of a FODO cell. For the FODO lattice, the space of stable quadrupole configurations has the form of a necktie and is therefore often called Necktie-Plot." /><figcaption aria-hidden="true">Figure 2.9: Mean beta function for different configurations of a FODO cell. For the FODO lattice, the space of stable quadrupole configurations has the form of a necktie and is therefore often called Necktie-Plot.</figcaption>
+</figure>
+<p>The area of stable solutions for a FODO cell without bending magnets is symmetrical to the diagonal. For low quadrupole strengths both quadrupoles need to have a similar strength to create a stable lattice. With increasing quadrupole strength a larger deviation of both quadrupole strengths is possible, which leads to the necktie shape of the stable area. The maximum quadrupole strength is limited by the condition, that the focal length of the quadrupoles must be greater than their distance from each other. The smallest average beta function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mrow><mi>m</mi><mi>e</mi><mi>a</mi><mi>n</mi></mrow></msub><annotation encoding="application/x-tex">\beta_{mean}</annotation></semantics></math> for a FODO cell with a length of 6 meters is achieved when both quadrupoles are set to about 1.1 m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mo>−</mo><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">^{-2}</annotation></semantics></math>.</p>
+<p>With increasing cell length the area of stable solutions decreases. This is again due to the requirement that the focal length of the quadrupoles must be larger than their distance. This means setting quadrupoles closer together allows for greater field strengths.</p>
+<p>The area of stable solutions for a FODO cell with dipoles is shifted in the direction of smaller quadrupole strengths for the horizontal focusing quadrupole <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">Q1</annotation></semantics></math>. Also the area of stable solutions is a bit larger for smaller quadrupole strengths. This is due to the weak focusing of the dipole magnets. The smallest average beta function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mrow><mi>m</mi><mi>e</mi><mi>a</mi><mi>n</mi></mrow></msub><annotation encoding="application/x-tex">\beta_{mean}</annotation></semantics></math> for a FODO cell with a length of 6 meters is achieved when the horizontal focusing quadrupole is set to 0.8 m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mo>−</mo><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">^{-2}</annotation></semantics></math> and the vertical focusing quadrupole is set to 1.1 m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mo>−</mo><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">^{-2}</annotation></semantics></math>. Just like the FODO cell without quadrupoles the area of stable solutions is decreased when the cell length increases.</p>
+<!-- wiedemann: scaling of twiss parameter from  the analytical expression of the one turn matrix we get the following should see scaling of the twiss parameters, which was verified with the code -->
+</section>
+<section id="the-dba-lattice" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2"><span class="header-section-number">2.6.2</span> The DBA Lattice</h3>
+<p>As the canonical FODO cell always has a finite dispersion function …</p>
+<p>Compare wiedemann 241 vs wolski 3-21</p>
+</section>
+<section id="the-tba-lattice" class="level3" data-number="2.6.3">
+<h3 data-number="2.6.3"><span class="header-section-number">2.6.3</span> The TBA Lattice</h3>
+<p>Compare wiedemann 244</p>
+</section>
+</section>
+</section>
+<section id="implementation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Implementation</h1>
+<p>This chapter covers the challenges and consideration made of the implementation of the developed optics code. While time critical parts are written in C, most part of the optics code is implemnted in Python.</p>
+<!-- Python has a huge ecosystem of different libaries and tools, which is growing day by day. It has become the go-to language for scientific computing and machine learning. One major drawback of major accelerator physics simulation codes is, that there exist no interface to Python. -->
+<p>The code is availabe at:</p>
+<p>https://github.com/andreasfelix/apace</p>
+<section id="overview-of-used-technology" class="level2" data-number="3.1">
+<h2 data-number="3.1"><span class="header-section-number">3.1</span> Overview of Used Technology</h2>
+</section>
+<section id="improving-the-performance-of-the-twiss-calculation" class="level2" data-number="3.2">
+<h2 data-number="3.2"><span class="header-section-number">3.2</span> Improving the Performance of the Twiss Calculation</h2>
+<ul>
+<li>rewrite time critical part in c</li>
+<li>instead of matrix multiplication use ausmulitplizierten term</li>
+</ul>
+<p>A relativey simple but effective optimization is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="bold"><mi>𝐁</mi></mstyle><mo stretchy="false" form="prefix">(</mo><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mstyle mathvariant="bold"><mi>𝐑</mi></mstyle><mo stretchy="false" form="prefix">(</mo><msub><mi>s</mi><mn>0</mn></msub><mo>,</mo><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>⋅</mo><mstyle mathvariant="bold"><mi>𝐁</mi></mstyle><mo stretchy="false" form="prefix">(</mo><msub><mi>s</mi><mn>0</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>⋅</mo><msup><mstyle mathvariant="bold"><mi>𝐑</mi></mstyle><mi>T</mi></msup><mo stretchy="false" form="prefix">(</mo><msub><mi>s</mi><mn>0</mn></msub><mo>,</mo><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex"> \mathbf{B}(s_1) = \mathbf{R}(s_0,s_1) \cdot \mathbf{B}(s_0) \cdot \mathbf{R}^T(s_0,s_1)
+</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><msub><mi>β</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><mo>−</mo><msub><mi>α</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><mo>−</mo><msub><mi>α</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><msub><mi>γ</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><msub><mi>β</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><mo>−</mo><msub><mi>α</mi><mi>x</mi></msub></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mo>−</mo><msub><mi>α</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><msub><mi>γ</mi><mi>x</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><msub><mi>R</mi><mn>11</mn></msub></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>12</mn></msub></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><msub><mi>R</mi><mn>21</mn></msub></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>22</mn></msub></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>33</mn></msub></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>34</mn></msub></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>43</mn></msub></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>44</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><msub><mi>β</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><mo>−</mo><msub><mi>α</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><mo>−</mo><msub><mi>α</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><msub><mi>γ</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><msub><mi>β</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><mo>−</mo><msub><mi>α</mi><mi>x</mi></msub></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mo>−</mo><msub><mi>α</mi><mi>x</mi></msub></mtd><mtd columnalign="center"><msub><mi>γ</mi><mi>x</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><msub><mi>R</mi><mn>11</mn></msub></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>12</mn></msub></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><msub><mi>R</mi><mn>21</mn></msub></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>22</mn></msub></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>33</mn></msub></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>34</mn></msub></mtd></mtr><mtr><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><mn>0</mn></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>43</mn></msub></mtd><mtd columnalign="center"><msub><mi>R</mi><mn>44</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mstyle mathvariant="normal"><mi>T</mi></mstyle></msup></mrow><annotation encoding="application/x-tex">
+\begin{pmatrix}
+    \beta_x &amp; -\alpha_x &amp; 0 &amp; 0 \\
+    -\alpha_x &amp; \gamma_x &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; \beta_x &amp; -\alpha_x \\
+    0 &amp; 0 &amp; -\alpha_x &amp; \gamma_x
+\end{pmatrix} =
+\begin{pmatrix}
+    R_{11} &amp; R_{12} &amp; 0 &amp; 0 \\
+    R_{21} &amp; R_{22} &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; R_{33} &amp; R_{34} \\
+    0 &amp; 0 &amp; R_{43} &amp; R_{44}
+\end{pmatrix}
+\begin{pmatrix}
+    \beta_x &amp; -\alpha_x &amp; 0 &amp; 0 \\
+    -\alpha_x &amp; \gamma_x &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; \beta_x &amp; -\alpha_x \\
+    0 &amp; 0 &amp; -\alpha_x &amp; \gamma_x
+\end{pmatrix}
+\begin{pmatrix}
+    R_{11} &amp; R_{12} &amp; 0 &amp; 0 \\
+    R_{21} &amp; R_{22} &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; R_{33} &amp; R_{34} \\
+    0 &amp; 0 &amp; R_{43} &amp; R_{44}
+\end{pmatrix}^\mathrm{T}
+</annotation></semantics></math></p>
+<p><span id="eq:betatron-function-transformation"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right"><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left"><mspace width="1.0em"></mspace><mo>=</mo></mtd><mtd columnalign="right"><msubsup><mi>R</mi><mn>11</mn><mn>2</mn></msubsup><mspace width="0.222em"></mspace><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="left"><mo>−</mo></mtd><mtd columnalign="right"><mn>2</mn><msub><mi>R</mi><mn>11</mn></msub><msub><mi>R</mi><mn>12</mn></msub><mspace width="0.222em"></mspace><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="left"><mo>+</mo></mtd><mtd columnalign="right"><msubsup><mi>R</mi><mn>12</mn><mn>2</mn></msubsup><mspace width="0.222em"></mspace><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right"><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left"><mspace width="1.0em"></mspace><mo>=</mo></mtd><mtd columnalign="right"><mo>−</mo><msub><mi>R</mi><mn>11</mn></msub><msub><mi>R</mi><mn>12</mn></msub><mspace width="0.222em"></mspace><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="left"><mo>+</mo></mtd><mtd columnalign="right"><mo stretchy="false" form="prefix">(</mo><msub><mi>R</mi><mn>11</mn></msub><msub><mi>R</mi><mn>22</mn></msub><mo>+</mo><msubsup><mi>R</mi><mn>12</mn><mn>2</mn></msubsup><mo stretchy="false" form="postfix">)</mo><mspace width="0.222em"></mspace><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="left"><mo>+</mo></mtd><mtd columnalign="right"><msub><mi>R</mi><mn>12</mn></msub><msub><mi>R</mi><mn>22</mn></msub><mspace width="0.222em"></mspace><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right"><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left"><mspace width="1.0em"></mspace><mo>=</mo></mtd><mtd columnalign="right"><msubsup><mi>R</mi><mn>12</mn><mn>2</mn></msubsup><mspace width="0.222em"></mspace><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="left"><mo>−</mo></mtd><mtd columnalign="right"><mn>2</mn><msub><mi>R</mi><mn>12</mn></msub><msub><mi>R</mi><mn>22</mn></msub><mspace width="0.222em"></mspace><mi>α</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="left"><mo>+</mo></mtd><mtd columnalign="right"><msubsup><mi>R</mi><mn>22</mn><mn>2</mn></msubsup><mspace width="0.222em"></mspace><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mtd></mtr></mtable><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>3.1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\begin{aligned}
+    \beta(s)  &amp; \quad= &amp; R_{11}^2 \:\beta(s) \quad        &amp; - &amp; 2 R_{11} R_{12} \:\alpha(s)\quad            &amp; + &amp; R_{12}^2 \:\gamma(s)     \\
+    \alpha(s) &amp; \quad= &amp; - R_{11} R_{12} \:\beta(s) \quad &amp; + &amp; (R_{11}R_{22} + R_{12}^2)\: \alpha(s) \quad &amp; + &amp; R_{12}R_{22} \:\gamma(s) \\
+    \gamma(s) &amp; \quad= &amp; R_{12}^2 \:\beta (s) \quad       &amp; - &amp; 2 R_{12} R_{22} \:\alpha(s) \quad           &amp; + &amp; R_{22}^2 \:\gamma(s) ,
+\end{aligned}
+\qquad(3.1)</annotation></semantics></math></span></p>
+<p>Twiss product is a R^n -&gt; R^m …: write twiss multiplication in index notation (similar to einsum)</p>
+<p>TODO: add pythran and numba</p>
+<figure>
+<img src="figures/benchmark-twiss-calculation.svg" id="fig:benchmark-twiss-calculation" alt="Figure 3.1: Performance comparison of different twiss calulation implementations." /><figcaption aria-hidden="true">Figure 3.1: Performance comparison of different twiss calulation implementations.</figcaption>
+</figure>
+</section>
+<section id="an-object-orient-representation-of-the-magnetic-lattice" class="level2" data-number="3.3">
+<h2 data-number="3.3"><span class="header-section-number">3.3</span> An Object-Orient Representation of the Magnetic Lattice</h2>
+<p>This section gives a short overview of the functionality of the Python library <em>apace</em>. A comprehensive documentation can be found at: <a href="https://apace.readthedocs.io">https://apace.readthedocs.io</a></p>
+<p>A main difficutly besides of the implementation of the physical simulation methods is the representation of the particle accelerator within the simulation software. To leverage the exisiting optimization and learning algorithms it is benefical to have a digital version of the machine.</p>
+<p>This digital representation is often called an <em>environment</em> which the optimizer or agents can act on. The different tracking or twiss calculation implementations are build on top of this enviroment. If the agent changes the environment, by for example changing the value of a magnet, the enviroment informs the simulation method that it needs to recompute the new state of the particle beam. Once the the new state is computed the optimizer can observe the new state and take a new action on the environment. These steps are repeated until a satisfying state is reached. (See fig. 3.2)</p>
+<figure>
+<img src="figures/workflow-optimizer.svg" id="fig:workflow-optimizer" alt="Figure 3.2: Relationship between the lattice file, the digital representation of the accelerator, the simulation methods and the optimizer." /><figcaption aria-hidden="true">Figure 3.2: Relationship between the lattice file, the digital representation of the accelerator, the simulation methods and the optimizer.</figcaption>
+</figure>
+<p>The description of accelerator is stored in a so called lattices file. This file has to be parsed by the simulation software and the different constituents of the accelerator have to be represented by data types which are availalbe in the given programming language.</p>
+<p>As Python is predominantly used at HZB and it was chosen to implement the digital representation of the accelerator. To provide a convenient interface this was done by done in a object-oriented way primarliy using two base classes:</p>
+<ol type="1">
+<li><code>Element</code> class</li>
+<li><code>Lattice</code> class</li>
+</ol>
+<p>An instance of <code>Element</code> class is a fundamental building block of the particle accerlator. This could be for example a <code>Drift</code> space, a <code>Dipole</code> magnet or a <code>Cavity</code> object. On the other hand, an instance of the <code>Lattice</code> class is a sequence of <code>Element</code> objects or even other (sub-)<code>Lattice</code> objects.</p>
+<p>Each different element type is a subclasss of the <code>Element</code> class, which provides common attributes like a <code>length</code> or <code>name</code>, which uniquely identifies the element. Each subclass implements additional attributes to describe the given element type. This</p>
+<p>As this object-orient way comes at a price, the simulation methods itself should use more primitve data structures like arrays. Only the interface to digital version of the particle accelerator should use this higher-level data structures. The simulation methods should be implemented as fast as possible.</p>
+<p>The representation of the particle accelerator can be thought of as a tree-like structure, as shown in fig. 3.3, where the <code>Element</code> objects are the leafs, the sublattices are the nodes and the main lattices is the root the tree.</p>
+<figure>
+<img src="figures/lattice-tree.svg" id="fig:lattice-tree" alt="Figure 3.3: A representation of the BESSY II storage ring design lattice. At the top tree is the BESSY II lattice, which consists out of the the Doublet and Triplet sub-lattices. The Doublet and Triplet again consist out of two Achromat sub-lattices, one Straight sub-lattice and two dipole elements." /><figcaption aria-hidden="true">Figure 3.3: A representation of the BESSY II storage ring design lattice. At the top tree is the <em>BESSY II</em> lattice, which consists out of the the <em>Doublet</em> and <em>Triplet</em> sub-lattices. The <em>Doublet</em> and <em>Triplet</em> again consist out of two <em>Achromat</em> sub-lattices, one <em>Straight</em> sub-lattice and two dipole elements.</figcaption>
+</figure>
+</section>
+<section id="latticejson-an-attempt-towards-a-universal-lattice-file-format" class="level2" data-number="3.4">
+<h2 data-number="3.4"><span class="header-section-number">3.4</span> LatticeJSON: An Attempt towards a Universal Lattice File Format</h2>
+<p>The definition of the magnetic lattice is stored in a so called lattice file. At the moment there are several of these data formats and all can only be processed by the corresponding simulation software. This variety of different lattice file format is an ongoing issue of accelerator physics and has even its on dedicated wikipedia section <span class="citation" data-cites="lattice-file-issues">[<a href="#ref-lattice-file-issues" role="doc-biblioref">13</a>]</span>. There exist several converters between these files, which are able to do the heavy lifiting, but often still require manual adjustments made by a human. But even if the lattice file is availiabe in all common formats, there is still no straightfoward way to load the data into the programming language of your choice. As the most mature accelerator simulations codes come bundled with several optimization routines and a scripting language, this was a smaller problem in the past. But in the last several years, there was an uprise of powerful scripting languages and modern optimization libraries. To leverage these tools it would be is necessary to have convenient access to the lattice data.</p>
+<p>As at HZB and for this thesis Python was used, one solution would be to write a robust parser for an existing lattice file format. Candidates would be the MADX<span class="citation" data-cites="madx">[<a href="#ref-madx" role="doc-biblioref">4</a>]</span> or elegant<span class="citation" data-cites="elegant">[<a href="#ref-elegant" role="doc-biblioref">5</a>]</span> lattice file format, which are very similar but not compatible. Both file formats have the problem that syntax is ambiguous: Without further context the parser cannot infer the type of an attribute. For example in</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>TWISS, FILE=optics;</span></code></pre></div>
+<p><code>optics</code> is a string and not a variable name. In another case</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>RFC: RFCAVITY, HARMON = num;</span></code></pre></div>
+<p><code>num</code> refers to a variable and not a string. In these cases the parser has to know the type of <code>FILE</code> and <code>HARMON</code> to parse the file correctly. This makes the implementation of a parser non-trivial and ties the file format specific the simulation software. Both lattice file formats also support variables and arithmetic expressions. MADX even supports more advanced constructs like loops, macros and if-else statements. This makes the implementation of such a parser even more difficult and error-prone. If the goal is to be 100% compatible one would have to reimplement a whole programming language, just to load the lattice data. A more feasible solution would be to define a restricted subset of the MADX input file, which would contain only data and no logic. Grammar files which allow to load basic elegant and a subset of MADX lattice files into Python are given in the appendix sec. 5.2.1 and sec. 5.2.2, respectively. These work for simple cases but fail for more advanced lattice files, because of the above mentioned reasons.</p>
+<p>A better solution for plain lattice data format would be to define a schema for an existing data format, which already has parsers for the the most popular programming languages. One attempt of such an universal lattice file format was the Accelerator Markup language (AML)<span class="citation" data-cites="aml">[<a href="#ref-aml" role="doc-biblioref">14</a>]</span> and the Universal Accelerator Parser (UAP)<span class="citation" data-cites="uap">[<a href="#ref-uap" role="doc-biblioref">15</a>]</span>. The AML is based on the eXtensible Markup Language (XML), which is syntactically similar to HTML, the standard markup language for web documents. AML’s goal was to support the evaluation of arithmetic expressions and two different representations of the magnetic lattice: A “unevaluated” representation with contains nested beamlines as well as variables and a “flat” representaiton, where the sub-lattices are expanded into a flattend array of lattice elements. Furthermore it aimed to support information beyond the lattice description, like control system configurations, magnet history or other documentary data. This way AML could be used as an all-in-one solution for an accelerator facilities’s database. As of March 2020, AML and the UAP are no longer maintained.</p>
+<p>The AML had high ambitions, which made it difficult to implement. The large amount of feature, like variables and a complex representation of the magnetic lattice, made it, even though it is based on XML, necessary to implement a custom parser for every programming langugage.</p>
+<p>This thesis takes a simpler approach: Variables or other dependency relations should not be implemented by the lattice file. This functionality is already availabe in programming languages, and should not be reimplemented in the lattice file. The definition of lattice file should not rely on different representations of the magnetic lattice. The lattice file should be easy to load and should not require an additional parser. The main purpose of this lattice file should be simulation code and the implementation should not be complicated by making it suitable for control system usage.</p>
+<p>Further requirements are: The lattice file format should be independent of the simulation tool and programming language. The file format should be commonly used, so there is no need to implemented it for different programming languages. It should be easy to generate elegant and MAD-X files from this intermediate format. It should be taken into account, that the magnetic lattice has a tree-like structure (see @#fig:lattice-tree): The magnetic lattice consist of different elements, like drifts, magnets or cavities, as well as of sub-lattices, which by itself are made of other elements. A universal lattice file format should somehow take this structure into account.</p>
+<p>Storing the description of the magnetic lattice raises effectivly two questions (fig. 3.4):</p>
+<ol type="1">
+<li>How to store the lattice file persistently on disk?</li>
+<li>How to represent the lattice file within a programming language?</li>
+</ol>
+<p>As data structures and object types a specifically tied to a programming language it is not possible to choose arbitary data types. But practically every programming language supports primitives like <em>strings</em>, <em>numbers</em>, <em>bools</em>, <em>null</em> and some type of containers structures like <em>arrays</em> and <em>key-value stores</em>. The goal should be to provide a consistent way to represent the information stored in the lattice files using these generic data types. This representation should not try to invent the next scripting language, but it should be a pure data format. This way the lattice data can be used by any programming language.</p>
+<figure>
+<img src="figures/lattice-representation.svg" id="fig:lattice-representation" alt="Figure 3.4: The lattice file has to be stored on disk. Therefore the representation of the lattice file within the programming language has to be serialize into a format that can be stored permanently. Conversely, this persistent data format has to be deserialize into a data structure when the lattice is loaded into a program." /><figcaption aria-hidden="true">Figure 3.4: The lattice file has to be stored on disk. Therefore the representation of the lattice file within the programming language has to be serialize into a format that can be stored permanently. Conversely, this persistent data format has to be deserialize into a data structure when the lattice is loaded into a program.</figcaption>
+</figure>
+<p>Fortunately this issues is already solved by JSON <span class="citation" data-cites="json">[<a href="#ref-json" role="doc-biblioref">16</a>]</span>, which is an acronym for JavaScript Object Notation. Even though it has its origins in JavaScript, it is a language-independent and open data file format. It is able to describe complex data and is the de-facto standard for exchanging data between web applications. There already exist an huge amount of tools for validating and working with JSON.</p>
+<p>JSON effectlify answers both questions as the is a 1:1 correspondence between JSON data types and the generic data types available in almost all programming languages. Once parsed, the lattice description is represented by the same abstraction of data types as when the lattice information was stored on disk. One problem of AML was, that the parsed lattice data, returned by the UAP, had a different structure than the stored XML file. So there were effectively two different representations of the same information.</p>
+<p>JSON provides a convenient way to serialize and deserialize generic data types. To make use of JSON, the description of the magnetic lattice has still to defined in terms of these generic data types. Such a definition can be done with a so called JSON schema <span class="citation" data-cites="json-schema">[<a href="#ref-json-schema" role="doc-biblioref">17</a>]</span>. A first definition of such a JSON based lattice file format was done and called LatticeJSON. The LatticeJSON schema file as well as more information on LatticeJSON is available at <span class="citation" data-cites="lattice-json">[<a href="#ref-lattice-json" role="doc-biblioref">18</a>]</span>.</p>
+<p>For example, the definition of a FODO lattice as LatticeJSON file is given by:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;2.0&quot;</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;FODO Lattice&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  <span class="dt">&quot;info&quot;</span><span class="fu">:</span> <span class="st">&quot;This is the simplest possible strong focusing lattice.&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  <span class="dt">&quot;root&quot;</span><span class="fu">:</span> <span class="st">&quot;RING&quot;</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="dt">&quot;elements&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>    <span class="dt">&quot;D1&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Drift&quot;</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">&quot;length&quot;</span><span class="fu">:</span> <span class="fl">0.55</span><span class="fu">}</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>    <span class="dt">&quot;Q1&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Quadrupole&quot;</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">&quot;length&quot;</span><span class="fu">:</span> <span class="fl">0.2</span><span class="fu">,</span> <span class="dt">&quot;k1&quot;</span><span class="fu">:</span> <span class="fl">1.2</span><span class="fu">}</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>    <span class="dt">&quot;Q2&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Quadrupole&quot;</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">&quot;length&quot;</span><span class="fu">:</span> <span class="fl">0.4</span><span class="fu">,</span> <span class="dt">&quot;k1&quot;</span><span class="fu">:</span> <span class="fl">-1.2</span><span class="fu">}</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>    <span class="dt">&quot;B1&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Dipole&quot;</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">&quot;length&quot;</span><span class="fu">:</span> <span class="fl">1.5</span><span class="fu">,</span> <span class="dt">&quot;angle&quot;</span><span class="fu">:</span> <span class="fl">0.392701</span><span class="fu">,</span> <span class="dt">&quot;e1&quot;</span><span class="fu">:</span> <span class="fl">0.1963505</span><span class="fu">,</span> <span class="dt">&quot;e2&quot;</span><span class="fu">:</span> <span class="fl">0.1963505</span><span class="fu">}</span><span class="ot">]</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>  <span class="fu">},</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>  <span class="dt">&quot;lattices&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>    <span class="dt">&quot;CELL&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Q1&quot;</span><span class="ot">,</span> <span class="st">&quot;D1&quot;</span><span class="ot">,</span> <span class="st">&quot;B1&quot;</span><span class="ot">,</span> <span class="st">&quot;D1&quot;</span><span class="ot">,</span> <span class="st">&quot;Q2&quot;</span><span class="ot">,</span> <span class="st">&quot;D1&quot;</span><span class="ot">,</span> <span class="st">&quot;B1&quot;</span><span class="ot">,</span> <span class="st">&quot;D1&quot;</span><span class="ot">,</span> <span class="st">&quot;Q1&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>    <span class="dt">&quot;RING&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;CELL&quot;</span><span class="ot">,</span> <span class="st">&quot;CELL&quot;</span><span class="ot">,</span> <span class="st">&quot;CELL&quot;</span><span class="ot">,</span> <span class="st">&quot;CELL&quot;</span><span class="ot">,</span> <span class="st">&quot;CELL&quot;</span><span class="ot">,</span> <span class="st">&quot;CELL&quot;</span><span class="ot">,</span> <span class="st">&quot;CELL&quot;</span><span class="ot">,</span> <span class="st">&quot;CELL&quot;</span><span class="ot">]</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>  <span class="fu">}</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>To read the quadrupole strength of the Q1 quadrupole in Python one could use:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="im">import</span> json</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;/path/to/lattice.json&quot;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>    lattice <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>type_, attributes <span class="op">=</span> lattice[<span class="st">&quot;elements&quot;</span>][<span class="st">&quot;Q1&quot;</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Quadrupole strength&quot;</span>, attributes[<span class="st">&quot;k1&quot;</span>])</span></code></pre></div>
+<p>Or, one can use the latticejson library, which validates the lattice file and can load lattices files from URLs.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="im">import</span> latticejson</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>lattice <span class="op">=</span> lattice.load(<span class="st">&quot;https://lattice-database.io/bessy2?mode=stduser&quot;</span>)</span></code></pre></div>
+<p>The URL <em>lattice-database.io</em> is chosen as an illustrative filler in this example. But it should be a goal to establish a central database of magnetic lattice files, where the operation mode or file format can be passed as a URL parameter. This would give physisicts access to a large number of lattice files, without the overhead maintaining an own set of lattices. As it is straightforward to automatically generate different versions of a JSON file, LatticeJSON could simplify the implementation of such a database significantly.</p>
+</section>
+</section>
+<section id="applications" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Applications</h1>
+<p>This chapter covers the applications of the developed optics simulation progam at the BESSY II storage ring. The first section comprises the development of the Q5T2-off optics with regard to the VSR project. In the second section the shows how the code was used to adapt the beta functions within a straight for a emittance exchange experiment. Possible future applications are discussed in the third chapter.</p>
+<section id="adjusting-the-bessy-ii-optics-for-the-vsr-project" class="level2" data-number="4.1">
+<h2 data-number="4.1"><span class="header-section-number">4.1</span> Adjusting the BESSY II Optics for the VSR project</h2>
+<p>The cavity module needs more space than initially assumed …</p>
+<section id="optimizing-the-q5t2-optics-in-simulations" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1"><span class="header-section-number">4.1.1</span> Optimizing the Q5T2 Optics in Simulations</h3>
+<p>The first steps towards a Q5T2 optics are described in my bachelor’s thesis <span class="citation" data-cites="andreas_ba">[<a href="#ref-andreas_ba" role="doc-biblioref">12</a>]</span>. With the best solution found it was possible to achieve a working machine with reasonable injection efficency and lifetime. An issue was the relatively high beta beat along the storage ring. As the sextupole settings is carefully finetuned for the current standard user mode and to avoid confilicitng with previous made considerations, the goal should be to reduce the beta beat as much as possible.</p>
+<p>Due to the improvements made to the Twiss calculation code, it was now possible to do much more iterations in a much shorter time span: An</p>
+<p><span id="eq:objectiv-function"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>β</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>L</mi></mfrac><msubsup><mo>∫</mo><mn>0</mn><mi>L</mi></msubsup><mi>R</mi><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>β</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><msub><mi>β</mi><mstyle mathvariant="normal"><mi>r</mi><mi>e</mi><mi>f</mi></mstyle></msub><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mstyle mathvariant="normal"><mi>d</mi></mstyle><mi>s</mi><mspace width="1.0em"></mspace><mrow><mtext mathvariant="normal">with </mtext><mspace width="0.333em"></mspace></mrow><mi>R</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left"><mn>1</mn><mo>,</mo></mtd><mtd columnalign="left"><mrow><mtext mathvariant="normal">for </mtext><mspace width="0.333em"></mspace></mrow><mi>x</mi><mo>&lt;</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="left"><mi>x</mi><mo>,</mo></mtd><mtd columnalign="left"><mtext mathvariant="normal">else</mtext></mtd></mtr></mtable></mrow><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>4.1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+F(\beta) = \frac{1}{L} \int_0^L R\left(\frac{\beta(s)}{\beta_{\mathrm{ref}}(s)}\right)^2 \mathrm{d}s \quad \textrm{with } R(x) = \begin{cases} 1, &amp;\textrm{for } x &lt; 1\\ x, &amp;\textrm{else} \end{cases}
+\qquad(4.1)</annotation></semantics></math></span></p>
+<p>With the developed code this roughly translates to: (TODO: update!!)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">def</span> fitness(params):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>    <span class="cf">for</span> element, attribute, param <span class="kw">in</span> <span class="bu">zip</span>(elements, attributes, params):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>        <span class="bu">setattr</span>(element, attribute, param)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>        twiss <span class="op">=</span> lin.get_twiss()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>        betaxres <span class="op">=</span> twiss.betax <span class="op">/</span> ref_twiss.betax</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>        betayres <span class="op">=</span> twiss.betay <span class="op">/</span> ref_twiss.betay</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>        betaxres[betaxres <span class="op">&lt;</span> <span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>        betayres[betayres <span class="op">&lt;</span> <span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>        betaxres <span class="op">=</span> betaxres <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>        betayres <span class="op">=</span> betayres <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>        <span class="cf">return</span> np.mean([betaxres, betayres])</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>scipy.optimize.minimize(fitness, initial_values)</span></code></pre></div>
+<p><strong>Ausflug der nichts damit zu tun hat (Exkurs): Splitting the D2/D3 families</strong></p>
+</section>
+<section id="user-operation-acceptance-test-of-the-q5t2-optics" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2"><span class="header-section-number">4.1.2</span> User Operation Acceptance Test of the Q5T2 Optics</h3>
+<p>The new obtained opitcs was</p>
+<p>multiknob</p>
+<ol type="1">
+<li>Injection Efficiency</li>
+<li>Kicker Lifetime</li>
+<li>IDs, bumps</li>
+<li>High current test</li>
+<li>General effects on user operations</li>
+</ol>
+<!-- extracted From old abstract
+
+A tool was developed which can change the minimum beta function within the given straight by interpolating between two different optics. The sextupoles were used to optimize the phase acceptance to such an extent that they were better than in the current standard optics. In another session the optics was successful audited for user operation by testing for high current, life time, kicker lifetime, bunch length and chromaticity. -->
+</section>
+</section>
+<section id="high-beta-functions-in-t2-emittance-exchange" class="level2" data-number="4.2">
+<h2 data-number="4.2"><span class="header-section-number">4.2</span> High Beta Functions in T2 (Emittance Exchange)</h2>
+<p>Besides of the Q5T2-off optics, the developed Twiss optimization code was also used for an emittance exchange experiment. The experiment required a large and constant beta function of 15m along the whole T2 straight while retaining the beta function the same within the rest of the storage ring.</p>
+<figure>
+<img src="figures/emittance-exchange-optics-1.png" id="fig:emittance-exchange-optics-1" alt="Figure 4.1: High horizontal and low vertical beta and function in the T2 straight." /><figcaption aria-hidden="true">Figure 4.1: High horizontal and low vertical beta and function in the T2 straight.</figcaption>
+</figure>
+<figure>
+<img src="figures/emittance-exchange-optics-2.png" id="fig:emittance-exchange-optics-2" alt="Figure 4.2: High horizontal and hight vertical function in the T2 straight." /><figcaption aria-hidden="true">Figure 4.2: High horizontal and hight vertical function in the T2 straight.</figcaption>
+</figure>
+</section>
+<section id="future-applications" class="level2" data-number="4.3">
+<h2 data-number="4.3"><span class="header-section-number">4.3</span> Future Applications</h2>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
+<p>This is the conclusion</p>
+</section>
+<section id="appendix" class="level1 unnumbered">
+<h1 class="unnumbered">Appendix</h1>
+<section id="sec:appendix-code" class="level2" data-number="5.1">
+<h2 data-number="5.1"><span class="header-section-number">5.1</span> Developed Code</h2>
+<p>The source code is available at: <a href="https://github.com/andreasfelix/apace"><em>https://github.com/andreasfelix/apace</em></a></p>
+<p><strong>apace</strong> is yet <strong>a</strong>nother <strong>p</strong>article <strong>a</strong>ccelerator <strong>c</strong>od<strong>e</strong> designed for the optimization of beam optics. It is available as Python package and aims to provide a convenient and straightforward API to make use of Python’s numerous scientific libraries.</p>
+<section id="installing" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1"><span class="header-section-number">5.1.1</span> Installing</h3>
+<p>Install and update using pip:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">pip</span> install -U apace</span></code></pre></div>
+</section>
+<section id="requirements" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2"><span class="header-section-number">5.1.2</span> Requirements</h3>
+<ul>
+<li>Python 3.6 or higher (CPython or PyPy)</li>
+<li>CFFI 1.0.0 or higher</li>
+<li>NumPy/SciPy</li>
+<li>Matplotlib</li>
+</ul>
+</section>
+<section id="quick-start" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3"><span class="header-section-number">5.1.3</span> Quick Start</h3>
+<p>Write some <code>code</code> within normal <code>Text</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">def</span> foo(lala):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>    x <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>    y <span class="op">=</span> x <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>    <span class="cf">return</span> y</span></code></pre></div>
+<p>Import apace:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="im">import</span> apace <span class="im">as</span> ap</span></code></pre></div>
+<p>Create a ring consisting out of 8 FODO cells:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>d1 <span class="op">=</span> ap.Drift(<span class="st">&#39;D1&#39;</span>, length<span class="op">=</span><span class="fl">0.55</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>b1 <span class="op">=</span> ap.Dipole(<span class="st">&#39;B1&#39;</span>, length<span class="op">=</span><span class="fl">1.5</span>, angle<span class="op">=</span><span class="fl">0.392701</span>, e1<span class="op">=</span><span class="fl">0.1963505</span>, e2<span class="op">=</span><span class="fl">0.1963505</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>q1 <span class="op">=</span> ap.Quadrupole(<span class="st">&#39;Q1&#39;</span>, length<span class="op">=</span><span class="fl">0.2</span>, k1<span class="op">=</span><span class="fl">1.2</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>q2 <span class="op">=</span> ap.Quadrupole(<span class="st">&#39;Q2&#39;</span>, length<span class="op">=</span><span class="fl">0.4</span>, k1<span class="op">=-</span><span class="fl">1.2</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>fodo_cell <span class="op">=</span> ap.Lattice(<span class="st">&#39;FODO&#39;</span>, [q1, d1, b1, d1, q2, d1, b1, d1, q1])</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>fodo_ring <span class="op">=</span> ap.Lattice(<span class="st">&#39;RING&#39;</span>, [fodo_cell] <span class="op">*</span> <span class="dv">8</span>)</span></code></pre></div>
+<p>Calculate the Twiss parameters:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>twiss <span class="op">=</span> ap.Twiss(fodo_ring)</span></code></pre></div>
+<p>Plot horizontal and vertical beta functions using matplotlib:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>plt.plot(twiss.s, twiss.beta_x, twiss.s, twiss.beta_y)</span></code></pre></div>
+</section>
+<section id="links" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4"><span class="header-section-number">5.1.4</span> Links</h3>
+<ul>
+<li>Documentation: https://apace.readthedocs.io</li>
+<li>API Reference: https://apace.readthedocs.io/en/stable/reference/apace/index.html</li>
+<li>Examples: https://apace.readthedocs.io/en/docs/examples/index.html</li>
+<li>Releases: https://pypi.org/project/apace/</li>
+<li>Code: https://github.com/andreasfelix/apace</li>
+<li>Issue tracker: https://github.com/andreasfelix/apace/issues</li>
+</ul>
+</section>
+<section id="license" class="level3" data-number="5.1.5">
+<h3 data-number="5.1.5"><span class="header-section-number">5.1.5</span> License</h3>
+<p><a href="https://github.com/andreasfelix/apace/blob/master/LICENSE">GNU General Public License v3.0</a></p>
+</section>
+</section>
+<section id="grammar-files-of-common-lattice-file-formats" class="level2" data-number="5.2">
+<h2 data-number="5.2"><span class="header-section-number">5.2</span> Grammar Files of Common Lattice File Formats</h2>
+<p>The grammar files are given in the Lark grammar language, which is based on the Extended Backus–Naur Form.</p>
+<section id="sec:elegant-grammar" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1"><span class="header-section-number">5.2.1</span> Elegant Grammar File</h3>
+<p>This grammar is not 100% consistent with elegants parser:</p>
+<ul>
+<li>Elegants parser allows tokens to be split by the line continuation character “&amp;”. For example, it parses ANGLE=0.123&amp; without an error. This is non-trivial to express with grammar rules and is therefore omitted.</li>
+<li>Elegants parser allows a trailing " in attribute definitions. This means L=1.23" is parsed without an error. Seems like a bug and is left out.</li>
+<li>Elegants parser allows unlimited trailing “,”, which also seems like a bug.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>%ignore /!.*/            // ignore comments</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>%ignore /[ \t\f]/+       // ignore whitespace</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>%ignore /&amp;[ \t\f]*\r?\n/ // line continuation</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>%import common (SIGNED_INT, SIGNED_FLOAT, SIGNED_NUMBER, ESCAPED_STRING, CNAME)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a>int         : SIGNED_INT</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>float       : SIGNED_FLOAT</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a>string      : ESCAPED_STRING</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a>word        : /\w+/</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a>name        : /\w+/ | &quot;\&quot;&quot; /[\w:]+/ &quot;\&quot;&quot;</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a>start        : _NEWLINE* (statement _NEWLINE+)*</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a>_NEWLINE    : /[ \t\f]*\r?\n[ \t\f]*/</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a>?statement  : element | lattice | command | &quot;%&quot; assignment</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a>element     : name &quot;:&quot; [name] (&quot;,&quot; attribute)* &quot;,&quot;?</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a>attribute   : word &quot;=&quot; (int | float | string | word)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a>lattice     : name &quot;:&quot; &quot;LINE&quot;i &quot;=&quot; arrangement</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a>arrangement : [int &quot;*&quot;] [/-/] &quot;(&quot; object (&quot;,&quot;+ object)* &quot;)&quot;</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a>?object     : ref_name | arrangement</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a>ref_name    : [int &quot;*&quot;] [/-/] [&quot;\&quot;&quot;] /[\w:]+/ [&quot;\&quot;&quot;]</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a>command     : name [&quot;,&quot; word]</span></code></pre></div>
+<section id="rpn-expression" class="level4" data-number="5.2.1.1">
+<h4 data-number="5.2.1.1"><span class="header-section-number">5.2.1.1</span> RPN Expression</h4>
+<p>Elegant used the so called reverse polish notation (RPN) for its arithmetic expressions. As there is no syntactic distinction between an escaped string and a variable, it is possible that a collision can happen. In this case a variable is wrongly identified as string.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>assignment  : expr &quot;sto&quot; CNAME</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>?expr       : SIGNED_NUMBER -&gt; number</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>            | CNAME         -&gt; variable</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>            | function</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>            | binary</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>!function   : expr (&quot;exp&quot; | &quot;sin&quot; | &quot;cos&quot; | &quot;tan&quot; | &quot;asin&quot; | &quot;acos&quot; | &quot;atan&quot;)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>?binary     : expr expr &quot;+&quot; -&gt; add</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a>            | expr expr &quot;-&quot; -&gt; sub</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>            | expr expr &quot;*&quot; -&gt; mul</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>            | expr expr &quot;/&quot; -&gt; div</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a>?start_rpn  : assignment | expr // used to tested the rpn parser</span></code></pre></div>
+</section>
+</section>
+<section id="sec:madx-grammar" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2"><span class="header-section-number">5.2.2</span> MADX Grammar File</h3>
+<p>This is an restricted subset of MADX which should be sufficient to parse basic lattice files.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>%ignore /\s+/  // whitespace</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>%ignore &quot;&amp;&quot; // backwards compatiable line continuation</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>%ignore /(!|\/\/).*/  // single line comments</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>%ignore /\/\*(\*(?!\/)|[^*])*\*\//  // multiline comment</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a>%import common (SIGNED_INT, NUMBER, ESCAPED_STRING)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true"></a>int         : SIGNED_INT</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a>string      : ESCAPED_STRING</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a>word        : /[\w\.]+/</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a>start       : (_statement &quot;;&quot;)*</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a>_statement  : element | lattice | command | assignment</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true"></a>element     : word &quot;:&quot; [word] (&quot;,&quot; attribute)* &quot;,&quot;?</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true"></a>attribute   : word (&quot;=&quot; | &quot;:=&quot;) (expr | string)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true"></a>lattice     : word &quot;:&quot; &quot;LINE&quot;i &quot;=&quot; arrangement</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true"></a>arrangement : [int &quot;*&quot;] [/-/] &quot;(&quot; object (&quot;,&quot; object)* &quot;)&quot;</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true"></a>?object     : ref_name | arrangement</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true"></a>ref_name    : [int &quot;*&quot;] [/-/] word</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true"></a>command     : word (&quot;,&quot; (word | string | attribute))*</span></code></pre></div>
+</section>
+<section id="arithmetic-expressions" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3"><span class="header-section-number">5.2.3</span> Arithmetic Expressions</h3>
+<p>As there is no syntactic distinction between a non-escaped word and a variable, we must parse words as variables and test afterwards if it is a variable or not.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>assignment  : word (&quot;=&quot; | &quot;:=&quot;) expr        -&gt; assignment</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>?expr       : item</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>            | &quot;{&quot; expr (&quot;,&quot; expr)* &quot;,&quot;? &quot;}&quot; -&gt; array</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>?item       : term</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>            | expr &quot;+&quot; term                 -&gt; add</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a>            | expr &quot;-&quot; term                 -&gt; sub</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>?term       : factor</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>            | term &quot;*&quot; factor               -&gt; mul</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a>            | term &quot;/&quot; factor               -&gt; div</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a>?factor     : power</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a>            | &quot;+&quot; factor                    -&gt; identity</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true"></a>            | &quot;-&quot; factor                    -&gt; neg</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true"></a>?power      : atom</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true"></a>            | power (&quot;^&quot; | &quot;**&quot;) power      -&gt; pow</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true"></a>?atom       : NUMBER                        -&gt; number</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true"></a>            | word                          -&gt; variable // see 1.</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true"></a>            | word &quot;(&quot; expr &quot;)&quot;             -&gt; function</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true"></a>            | &quot;(&quot; expr &quot;)&quot;</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true"></a>?start_artih : assignment | expr  // used to tested the arithmetic parser</span></code></pre></div>
+</section>
+</section>
+</section>
+<section id="bibliography" class="level1 unnumbered">
+<h1 class="unnumbered">Bibliography</h1>
+<div id="refs" class="references" role="doc-bibliography">
+<div id="ref-linac">
+<p>[1] T. A. et al., “Commissioning of the 50 mev preinjector linac for the bessy ii facility,” <em>Proceedings of IPAC2011, San Sebastián, Spain</em>, pp. 3140–3142, 2011.</p>
+</div>
+<div id="ref-vsrstudy">
+<p>[2] A. J. et al., <em>BESSY vsr – technical design study</em>. Helmholtz-Zentrum Berlin für Materialien und Energie GmbH, 2015.</p>
+</div>
+<div id="ref-rubprecht-phd">
+<p>[3] M. Rubrecht, <em>Calculation of coupled bunch effects in the synchrotron light source bessy vsr</em>. Helmholtz-Zentrum Berlin (HZB), 2016.</p>
+</div>
+<div id="ref-madx">
+<p>[4] F. S. et al. Hans Grote and L. Deniau, <em>Methodical accelerator design</em>. CERN, 2020.</p>
+</div>
+<div id="ref-elegant">
+<p>[5] M. Borland, <em>Elegant: A flexible sdds-compliant code for accelerator simulation</em>. Argonne National Laboratory, 2017.</p>
+</div>
+<div id="ref-pymad">
+<p>[6] Y. I. L. K. Fuchsberger, “PyMad – integration of madx in python,” <em>Proceedings of IPAC2011, San Sebastián, Spain</em>, 2011.</p>
+</div>
+<div id="ref-wiedemann">
+<p>[7] H. Wiedemann, <em>Particle accelerator physics</em>. Springer, 2007.</p>
+</div>
+<div id="ref-wolski2018introduction">
+<p>[8] A. Wolski, I. of Physics (Great Britain), and M. &amp; Claypool Publishers, <em>Introduction to beam dynamics in high-energy electron storage rings</em>. Morgan &amp; Claypool Publishers, 2018.</p>
+</div>
+<div id="ref-wille">
+<p>[9] K. Wille, <em>The physics of particle accelerators: An introduction</em>. Clarendon Press, 2001.</p>
+</div>
+<div id="ref-hinterberger">
+<p>[10] F. Hinterberger, <em>Physik der teilchenbeschleuniger und ionenoptik</em>, 2. Aufl. Berlin Heidelberg New York: Springer-Verlag, 2008.</p>
+</div>
+<div id="ref-courantsnyder">
+<p>[11] E. D. Courant and H. S. Snyder, “Theory of the alternating-gradient synchrotron,” <em>Annals of Physics</em>, pp. 1–49, 1954.</p>
+</div>
+<div id="ref-andreas_ba">
+<p>[12] F. Andreas, <em>Optimization of the bessy ii optics for the vsr project - increase the installation length for the vsr cryomodule in the t2 section of the bessy ii storage ring</em>. 2017.</p>
+</div>
+<div id="ref-lattice-file-issues">
+<p>[13] Wikipedia, “Lattice file format and data interchange issues,” Accessed: Jul. 21, 2020. [Online]. Available: <a href="https://en.wikipedia.org/wiki/Accelerator_physics_codes#Lattice_file_format_and_data_interchange_issues">https://en.wikipedia.org/wiki/Accelerator_physics_codes#Lattice_file_format_and_data_interchange_issues</a>.</p>
+</div>
+<div id="ref-aml">
+<p>[14] M. F. et. al. D. Sagan, “The accelerator markup language and the universal accelerator parser,” <em>Proceedings of EPAC 2006, Edinburgh, Scotland</em>, 2006.</p>
+</div>
+<div id="ref-uap">
+<p>[15] A. W. D. Bates D. Sagan, “The accelerator markup language and the universal accelerator parser,” <em>Proceedings of ICAP 2006, Chamonix, France</em>, 2006.</p>
+</div>
+<div id="ref-json">
+<p>[16] D. Crockford, “JSON (javascript object notation),” Accessed: Jul. 21, 2020. [Online]. Available: <a href="https://www.json.org">https://www.json.org</a>.</p>
+</div>
+<div id="ref-json-schema">
+<p>[17] “JSON schema,” Accessed: Jul. 21, 2020. [Online]. Available: <a href="https://json-schema.org/">https://json-schema.org/</a>.</p>
+</div>
+<div id="ref-lattice-json">
+<p>[18] F. A. et. al., “LatticeJSON - a json based lattice file format,” Accessed: Jul. 29, 2020. [Online]. Available: <a href="https://github.com/nobeam/latticejson">https://github.com/nobeam/latticejson</a>.</p>
+</div>
+</div>
+</section></main>
+
+    
+</body>
+
+</html>

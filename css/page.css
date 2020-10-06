@@ -1,0 +1,134 @@
+h1,
+h2,
+h3,
+h4 {
+    /* font-family: var(--sans-font); */
+    font-weight: 600;
+    margin: 2.5em 0 0.8em;
+    position: relative;
+    /* font-variant: small-caps; */
+}
+
+h1 {
+    font-size: 2em;
+    top: 2px;
+    /* TODO: make h1 sticky */
+    /* position: sticky; */
+    /* z-index: 2;
+    background-color: white; */
+    padding-bottom: 1em;
+    border-bottom: 2px solid var(--border-color);
+    transition: border-bottom var(--style-transition);
+}
+
+h2 {
+    font-size: 1.75em;
+}
+
+h2:before,
+h3:before,
+h4:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -1.5em;
+    height: 1px;
+    width: 100%;
+    background-color: var(--border-color);
+    transition: background-color var(--style-transition);
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+.header-section-number {
+    margin-right: 0.25em;
+}
+
+p>span>math {
+    overflow: scroll;
+    margin: 1.5em 0;
+}
+
+figure {
+    margin: 1em 0;
+    display: flex;
+    flex-direction: column;
+}
+
+figure img {
+    filter: var(--uni-logo-filter);
+    /* background-color: var(--page-color); */
+    /* necessary to avoid vertical spacing*/
+    max-width: 100%;
+}
+
+figure figcaption {
+    margin: 0.5em 0;
+    text-align: center;
+    font-size: 0.875em;
+}
+
+table {
+    margin: 0 auto;
+    padding: 8px 16px;
+    background: var(--page-highlight);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.875em;
+}
+
+table>caption {
+    margin-bottom: 16px;
+}
+
+p {
+    text-align: justify;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+p+p {
+    margin-top: 0;
+    text-indent: 6mm;
+}
+
+p>span>span.math.display {
+    margin-top: 0;
+    display: block;
+    text-align: center;
+}
+
+a {
+    color: var(--accent-color);
+}
+
+div.sourceCode {
+    background: var(--code-color);
+    padding: 1em;
+    overflow: scroll;
+    line-height: 1.5em;
+}
+
+code {
+    overflow: auto;
+    font-size: 0.75em;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    margin: 0 0.25em;
+    padding: 0 0.25em;
+    white-space: nowrap;
+    background: var(--code-color);
+}
+
+pre.sourceCode {
+    display: flex;
+}
+
+pre>code {
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+    border: 0;
+    background: transparent;
+}
