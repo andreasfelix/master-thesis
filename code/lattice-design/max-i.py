@@ -65,7 +65,7 @@ for i in range(1, n_iterations + 1):
         ele.length = vi * (1 - factor) + vf * factor
         twiss_plot = aplot.TwissPlot(
             twiss,
-            sections=(0, cell.length),
+            sections=[(0, cell.length)],
             y_min=-5,
             pairs=[(q1, "k1"), (q2, "k1"), (q3, "k1"),],
         )

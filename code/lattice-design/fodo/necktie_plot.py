@@ -2,10 +2,10 @@ import apace as ap
 import matplotlib.pyplot as plt
 import numpy as np
 
-from fodo import create_fodo, figure_path
+from fodo import make_fodo, figure_path
 
 angles = [0, np.pi / 8]
-fodo = create_fodo(angle=angles[1])
+fodo = make_fodo(angle=angles[1])
 d1, b1, q1, q2 = (fodo[name] for name in ("d1", "b1", "q1", "q2"))
 twiss = ap.Twiss(fodo)
 

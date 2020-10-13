@@ -3,13 +3,13 @@
     "root": "max-i",
     "info": "",
     "elements": {
-        "d3": ["Drift", {"length": 0.657, "info": ""}],
-        "q3": ["Quadrupole", {"length": 0.2, "k1": 4.254032258064516, "info": ""}],
-        "q2": ["Quadrupole", {"length": 0.2, "k1": -3.14, "info": ""}],
-        "d2": ["Drift", {"length": 0.275, "info": ""}],
-        "q1": ["Quadrupole", {"length": 0.2, "k1": 4.42, "info": ""}],
+        "q2": ["Quadrupole", {"length": 0.2, "k1": -3.1250000000000004, "info": ""}],
         "d1": ["Drift", {"length": 1.2000000000000002, "info": ""}],
-        "b1": ["Dipole", {"length": 1, "angle": 0.7853981633974483, "e1": 0.39269908169872414, "e2": 0.39269908169872414, "info": ""}]
+        "d3": ["Drift", {"length": 0.657, "info": ""}],
+        "q3": ["Quadrupole", {"length": 0.2, "k1": 4.39516129032258, "info": ""}],
+        "b1": ["Dipole", {"length": 1, "angle": 0.7853981633974483, "e1": 0.39269908169872414, "e2": 0.39269908169872414, "info": ""}],
+        "d2": ["Drift", {"length": 0.35000000000000003, "info": ""}],
+        "q1": ["Quadrupole", {"length": 0.2, "k1": 4.39516129032258, "info": ""}]
     },
     "lattices": {
         "cell": ["d1", "q1", "d2", "q2", "d2", "b1", "d3", "q3", "q3", "d3", "b1", "d2", "q2", "d2", "q1", "d1"],

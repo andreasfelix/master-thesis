@@ -2,9 +2,9 @@ import apace as ap
 import matplotlib.pyplot as plt
 import numpy as np
 
-from fodo import create_fodo, figure_path
+from fodo import make_fodo, figure_path
 
-fodo = create_fodo(np.pi / 32)
+fodo = make_fodo(np.pi / 32)
 twiss = ap.Twiss(fodo)
 
 steps = 50

@@ -5,12 +5,12 @@ import numpy as np
 import pandas as pd
 from apace.plot import draw_lattice, plot_twiss, plt
 
-from fodo import create_fodo, figure_path
+from fodo import make_fodo, figure_path
 
 config = dict(drift_length=4, bend_length=3, quad_length=1, k1=0.8)
 fig, axs = plt.subplots(2, figsize=(6.4, 6.4))
 angles = 0, math.pi / 8
-twiss_list = [ap.Twiss(create_fodo(angle=angle, **config)) for angle in angles]
+twiss_list = [ap.Twiss(make_fodo(angle=angle, **config)) for angle in angles]
 
 for ax, twiss in zip(axs, twiss_list):
     lattice = twiss.lattice

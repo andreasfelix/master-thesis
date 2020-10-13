@@ -1,8 +1,7 @@
 import apace as ap
-import numpy as np
 
 
-def create_fodo(angle, drift_length=4.0, bend_length=3.0, quad_length=1.0, k1=0.8):
+def make_fodo(angle, drift_length=4.0, bend_length=3.0, quad_length=1.0, k1=0.8):
     q1 = ap.Quadrupole("q1", quad_length / 4, k1)
     q2 = ap.Quadrupole("q2", quad_length / 2, -k1)
     if angle != 0:

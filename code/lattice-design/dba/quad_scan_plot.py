@@ -2,6 +2,7 @@ import pickle
 
 import matplotlib.pyplot as plt
 import numpy as np
+from dba import figure_path
 
 #%% plot: scan 2 families
 
@@ -29,7 +30,7 @@ for ax, (title, value) in zip(
 
 
 plt.tight_layout()
-plt.savefig("../plots/dba_quad_scan_2_families.pdf")
+plt.savefig(figure_path / "dba-quad_scan_2_families.svg")
 
 
 #%% plot: scan 3 families
@@ -40,13 +41,15 @@ n_cols = 3
 n_rows = int(np.ceil(len(results) / n_cols))
 fig, axs = plt.subplots(nrows=n_rows, ncols=n_cols, figsize=(12, 10 * n_rows / n_cols))
 for ax, (q3_k1, (extent, beta_mean, eta_straight)) in zip(axs.flatten(), results):
+    # value = beta_mean
+    value = eta_straight
     heatmap = ax.imshow(
-        beta_mean,
+        value,
         cmap="rainbow",
         extent=extent,
         origin="lower",
         vmin=0,
-        vmax=np.nanmedian(beta_mean),
+        vmax=np.nanmedian(value),
     )
     ax.set_xlabel(f"Q1$_{{k1}}$")
     ax.set_ylabel(f"Q2$_{{k1}}$")
@@ -54,7 +57,7 @@ for ax, (q3_k1, (extent, beta_mean, eta_straight)) in zip(axs.flatten(), results
     plt.gcf().colorbar(heatmap, ax=ax)
 
 plt.tight_layout()
-plt.savefig("../plots/dba_quad_scan_3_families.pdf")
+plt.savefig(figure_path / "dba-quad_scan_3_families.svg")
 
 # #%% plot 3d
 # fig = plt.figure()

@@ -16,22 +16,23 @@ $$
 F(\beta) = \frac{1}{L} \int_0^L R\left(\frac{\beta(s)}{\beta_{\mathrm{ref}}(s)}\right)^2 \mathrm{d}s \quad \textrm{with } R(x) = \begin{cases} 1, &\textrm{for } x < 1\\ x, &\textrm{else} \end{cases}
 $$ {#eq:objectiv-function}
 
-With the developed code this roughly translates to: (TODO: update!!)
+With the developed code this roughly translates to:
 
 ```python
 def fitness(params):
     for element, attribute, param in zip(elements, attributes, params):
         setattr(element, attribute, param)
 
-        twiss = lin.get_twiss()
+        if not twiss_fit.stable:
+            return float("inf")
 
-        betaxres = twiss.betax / ref_twiss.betax
-        betayres = twiss.betay / ref_twiss.betay
-        betaxres[betaxres < 1] = 1
-        betayres[betayres < 1] = 1
-        betaxres = betaxres ** 2
-        betayres = betayres ** 2
-        return np.mean([betaxres, betayres])
+        beta_x_beat = twiss.beta_x / ref_twiss.beta_x
+        beta_y_beat = twiss.beta_y / ref_twiss.beta_y
+        beta_x_beat[beta_x_beat < 1] = 1
+        beta_y_beat[beta_y_beat < 1] = 1
+        beta_x_beat **= 2
+        beta_y_beat **= 2
+        return np.mean([beta_x_beat, beta_y_beat])
 
 scipy.optimize.minimize(fitness, initial_values)
 ```

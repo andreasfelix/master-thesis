@@ -4,9 +4,9 @@ import apace as ap
 import numpy as np
 from apace.plot import draw_lattice, plot_twiss, plt
 
-from fodo import create_fodo, figure_path
+from fodo import make_fodo, figure_path
 
-fodo = create_fodo(pi / 8)
+fodo = make_fodo(pi / 8)
 fodo = ap.Lattice("ring", 4 * [fodo])
 twiss = ap.Twiss(fodo, energy=1000)
 amplitude = 0.001

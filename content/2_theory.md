@@ -201,7 +201,7 @@ $$ {#eq:i5}
 ![Radiation damping of the betatron oscillation. When a photon is emitted within a magnet in the direction of the particle movement, it reduces the transversal and longitudinal component of the electron's momentum. As the cavity only refills the longitudinal component, the transversal components decreases over time.](figures/betatron-oscillation-damping.svg){#fig:betatron-oscillation-damping}
 
 
-### Quantum Excitation
+### Quantum Excitation {#sec:quantum-excitation}
 
 But the betatron oscillation amplitude does not damp to zero. The damping is counteracted by the quantum excitation. Due to the quantum nature of the photons, the radiation is not continuous, but happens in discrete chunks of energy.
 
@@ -274,7 +274,7 @@ where $\sqrt{\epsilon\beta(s)}$ is the envelope of the particle beam. When using
 
 ![Top: exemplary trajectory of a single particle and beam envelope. Middle: Normalized particle trajectory along the orbit position (floquet transformation). Bottom: Normalized particle trajectory in dependnce of the betatron phase.](figures/fodo-twiss-floquet.svg){#fig:fodo-twiss-floquet}
 
-Not all configurations of quadrupole strengths result in a stable lattice. One condition is that the focal length of a quadrupole must greater than its distance to the next quadrupole. Otherwise the transversal offset $u$ of a particle and its derivative $\frac{du}{ds}$ will have the same sign at the start of the next quadruple, which means that the deflection when passing through a defocusing quadrupole will be stronger and results in an unstable motion. A scan over possible quadrupole settings for different cell lengths of a FODO cell with and without dipoles is shown in fig:necktie-plot.
+Not all configurations of quadrupole strengths result in a stable lattice. One condition is that the focal length of a quadrupole must greater than its distance to the next quadrupole. Otherwise the transversal offset $u$ of a particle and its derivative $\frac{du}{ds}$ will have the same sign at the start of the next quadrupole, which means that the deflection when passing through a defocusing quadrupole will be stronger and results in an unstable motion. A scan over possible quadrupole settings for different cell lengths of a FODO cell with and without dipoles is shown in @fig:necktie-plot.
 
 ![Mean beta function for different configurations of a FODO cell. For the FODO lattice, the space of stable quadrupole configurations has the form of a necktie and is therefore often called Necktie-Plot.](figures/necktie-plot.svg){#fig:necktie-plot}
 
@@ -288,10 +288,39 @@ The area of stable solutions for a FODO cell with dipoles is shifted in the dire
 
 ### The DBA Lattice
 
-As the canonical FODO cell always has a finite dispersion function ...
+As discussed in @sec:quantum-excitation quantum excitation increases the emittance of the particle beam, which is an important quantity for users of synchrotron radiation. Therefore it is desirable to place the insertion devices at locations where the dispersion function is zero. One type of lattice which provides dispersion-free sections is the *double bend achromat* lattice (DBA), also known as *Chasman–Green lattice* [@Chasman1975].
 
-Compare wiedemann 241 vs wolski 3-21
+![Schematic of the DBA. The dispersive particle trajectories are highlighted in red.](figures/dba-schematic.svg){#fig:dba-schematic}
+
+A schematic of the most basic DBA cell is shown in @fig:dba-schematic: A horizontal focusing quadrupole is placed in between two bending magnets. The quadruple strength is chosen in such a way that it reverses the gradient of the dispersion function $\frac{d \eta_x(s)}{d s}$ so that the dispersion $\eta_x(s)$ introduced by the first dipole is canceled by the second bending magnet.
+
+![Twiss parameter of the DBA cell](figures/dba-twiss.svg){#fig:dba-twiss}
+
+|                                         |   DBA |
+|:----------------------------------------|------:|
+| Cell length $L$                         | 10.00 |
+| Bending angle $\varphi$                 |  0.39 |
+| Quadrupole strength Q1 $k_1$            |  2.16 |
+| Quadrupole strength Q2 $k_1$            | -1.24 |
+| Quadrupole strength Q3 $k_1$            |  2.78 |
+| Horizontal tune $Q_x$                   |  0.76 |
+| Vertical tune $Q_y$                     |  0.31 |
+| Maximum horizontal beta $\beta_{x,max}$ | 28.28 |
+| Maximum vertical beta $\beta_{y,max}$   | 17.96 |
+| Maximum dispersion $\eta_{x,max}$       |  0.59 |
+
+:DBA cell parameters {#tbl:dba-parameter}
+
+
+![Quadrupole scan for a DBA with three quadrupole families.]{figures/dba-quad_scan_3_families.svg}{#fig:dba-quad-scan}
+
+<!-- One of the hardest probelms in  lattice design are the disconnetnuites -->
+
+<!-- Compare wiedemann 241 vs wolski 3-21 -->
 
 ### The TBA Lattice
 
-Compare wiedemann 244
+<!-- Compare wiedemann 244 -->
+why is there no text??
+
+![Twiss parameter for different MBA cells.](figures/mba-twiss.svg){#fig:mba-twiss}
