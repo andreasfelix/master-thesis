@@ -23,15 +23,6 @@ pip install -U apace
 
 ### Quick Start
 
-Write some `code` within normal `Text`.
-
-```python
-def foo(lala):
-    x = 10
-    y = x ** 2
-    return y
-```
-
 Import apace:
 
 ```python

@@ -12,7 +12,7 @@ def make_dba(
     three_famlies=True,
 ):
     d1 = ap.Drift("d1", drift_length / 8)
-    b1 = ap.Dipole("b1", bend_length / 2, angle=angle, e1=angle / 2, e2=angle / 2)
+    b1 = ap.Dipole("b1", bend_length / 2, angle=angle / 2, e1=angle / 4, e2=angle / 4)
     q1 = ap.Quadrupole("q1", length=quad_length / 5, k1=k1)
     q2 = ap.Quadrupole("q2", length=quad_length / 5, k1=-k1)
     q3 = ap.Quadrupole("q3", length=quad_length / 5, k1=k1) if three_famlies else q1

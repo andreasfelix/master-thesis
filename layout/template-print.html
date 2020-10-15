@@ -52,7 +52,7 @@
     $endfor$
 
     <div id="title-page">
-        <img class="uni-logo" src="images/uni-logo-type.svg" />
+        <!-- <img class="uni-logo" src="images/uni-logo-type.svg" /> -->
         <div class="thesis-type">Master Thesis</div>
         <div class="thesis-title">
             $title$
@@ -107,12 +107,26 @@
         </section>
     </div>
 
-    <!-- Do not indent "body", because code tags are white-space sensitive! -->
+    <!-- Do not indent "body", because <code> tags are white-space sensitive! -->
     <main>$body$</main>
 
     $for(include-after)$
     $include-after$
     $endfor$
+
+    <div id="declaration-of-authorship">
+        <div>
+            <h1>Declaration of Authorship</h1>
+            <p>
+                I, Felix Andreas, declare that this thesis and the work presented in it are my own.
+                I confirm that where I have quoted from the work of others, the source is always given.
+            </p>
+        </div>
+        <div class="signature">
+            <div><span>Signature</span></div>
+            <div><span>Place, Date</span><span>$place$, $date$</span></div>
+        </div>
+    </div>
 
 </body>
 

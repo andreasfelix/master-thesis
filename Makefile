@@ -17,43 +17,38 @@ tex-pdfs: tex-dir $(patsubst figures/%.svg, _tex/figures/%.pdf, $(wildcard figur
 _tex/figures/%.pdf: figures/%.svg
 	rsvg-convert -f pdf -o $@ $<
 
-html: dist
-	pandoc content/!(_*).md \
-	--standalone \
-	-o dist/index.html \
+
+OPTIONS = \
+	content/!(_*).md \
 	--metadata-file metadata.yml \
 	--bibliography bibliography.bib \
-	--template layout/template.html \
-	--css css/variables.css \
-	--css css/ui.css \
-	--css css/page.css \
-	--section-divs \
-	--number-sections \
 	--csl layout/ieee.csl \
-	--mathml \
-	--filter pandoc-crossref \
-	--filter pandoc-citeproc \
 	--toc
 
-print: dist
-	pandoc content/!(_*).md \
+HTML_OPTIONS = \
 	--standalone \
-	-o dist/print.html \
-	--metadata-file metadata.yml \
-	--bibliography bibliography.bib \
-	--template layout/template-print.html \
-	--css css/variables.css \
-	--css css/page.css \
-	--css css/print.css \
-	--css css/ressources_interface-0.1.css \
 	--number-sections \
 	--section-divs \
-	--csl layout/ieee.csl \
 	--mathml \
 	--filter pandoc-crossref \
-	-M chapters \
+	--metadata=chapters \
 	--filter pandoc-citeproc \
-	--toc
+	--css css/variables.css \
+	--css css/page.css
+
+readme:
+	pandoc layout/template-readme.md --metadata-file metadata.yml -o README.md
+
+html: dist
+	pandoc $(OPTIONS) $(HTML_OPTIONS) -o dist/index.html \
+	--template layout/template-index.html \
+	--css css/ui.css \
+
+print: dist
+	pandoc $(OPTIONS) $(HTML_OPTIONS) -o dist/print.html \
+	--template layout/template-print.html \
+	--css css/ressources_interface-0.1.css \
+	--css css/print.css
 
 pdf-pandoc: dist
 	pandoc content/*.md \

@@ -1,5 +1,5 @@
 body {
-    font-family: "Source Serif Pro", serif;
+    font-family: var(--serif-font);
     hyphens: auto;
 }
 
@@ -143,6 +143,26 @@ section.level1 {
 
 #introduction>h1:first-child {
     counter-reset: page 1;
+}
+
+#declaration-of-authorship {
+    height: 240mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#declaration-of-authorship > .signature {
+    margin-top: 4em;
+    max-width: 400px;
+}
+
+#declaration-of-authorship > .signature > * {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75em 0;
+    border-bottom: 1px solid var(--text-color);
+    margin-bottom: 4em;
 }
 
 @media print {

@@ -7,7 +7,8 @@ from apace.plot import draw_lattice, plot_twiss, plt
 
 from dba import make_dba, figure_path, achromatic_condition
 
-config = dict(angle=math.pi / 8, drift_length=4, bend_length=3, quad_length=1, k1=0.8)
+# TODO: smaller angle
+config = dict(angle=math.pi / 4, drift_length=4, bend_length=3, quad_length=1, k1=0.8)
 lattice = make_dba(**config)
 achromatic_condition(lattice)
 twiss = ap.Twiss(lattice)
@@ -41,9 +42,7 @@ plt.annotate(
     xytext=(4, psi_bend[1]),
     arrowprops=dict(arrowstyle="<->"),
 )
-plt.annotate(
-    text=f"{phase_advance/math.pi} $\pi$", xy=xytext=(4, phase_advance / 2),
-)
+plt.text(3.45, phase_advance / 2 + 0.4, f"{phase_advance/math.pi:.2f} $\pi$")
 
 handles, labels = [], []
 for h, l in (ax.get_legend_handles_labels() for ax in axs):
@@ -84,3 +83,17 @@ print(
         ],
     ).to_markdown(floatfmt=".2f")
 )
+
+# without dipole edges
+# |                                         |   DBA |
+# |:----------------------------------------|------:|
+# | Cell length $L$                         |  8.00 |
+# | Bending angle $\varphi$                 |  0.39 |
+# | Quadrupole strength Q1 $k_1$            |  3.60 |
+# | Quadrupole strength Q2 $k_1$            | -4.16 |
+# | Quadrupole strength Q3 $k_1$            |  7.73 |
+# | Horizontal tune $Q_x$                   |  0.76 |
+# | Vertical tune $Q_y$                     |  0.30 |
+# | Maximum horizontal beta $\beta_{x,max}$ | 19.62 |
+# | Maximum vertical beta $\beta_{y,max}$   | 16.58 |
+# | Maximum dispersion $\eta_{x,max}$       |  0.50 |

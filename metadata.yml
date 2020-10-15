@@ -4,12 +4,13 @@ author: Felix Andreas
 supervisor-1st: Prof. Dr. Andreas Jankowiak
 supervisor-2nd: Dr. Paul Goslawski
 date: September 29, 2020
+place: Berlin
 lang: en-US
 link-citations: true
 abstract: |
   Due to the BESSY-VSR upgrade and the design of the next synchrotron radiation facility BESSY III there are several lattice development tasks at HZB. Within the last several years there was a large shift in the physics community from standalone plotting programs, optimization routines and numerical libraries towards the Python programming language, which absorbed these tools into different packages. At HZB Python is the main programming language and is used to set up the execution of simulations and to post-process their results. The issue with existing and mature particle accelerator simulation codes that is not trivial to integrate them into an ordinary Python workflow. To still leverage the power of Python's rich ecosystem of scientific tools, many physicists have written several wrapper scripts around the existing simulation codes. The issue with this wrappers is that there are often not reusable, because they are very specific to a certain task, and often rely on string manipulation of the lattice files or run files, which can be very error-prone and is computational inefficient. Furthermore these wrapper scripts only give access to the simulation results and not to the underlying internal models of the simulation codes, like the magnetic lattice or information about individual magnets. Therefore it was decided to develop a new Python package which generates an object-oriented model of the accelerator from a given lattice file. This model can be queried for information on individual magnets but also on properties of composed structures like the length of a straight. It is designed in such an extensible way, that it can be used as a foundation for different simulation methods which can be build on top of it. Such a method, which is capable of computing the Twiss parameter, dispersion function, chromaticity, emittance and synchrotron radiation integrals, was implemented. This thesis covers how this new tool was developed and then used to optimize the O5T2off optics for the BESSY-VSR project, adapt the beta functions of the BESSY II storage ring for an emittance exchange experiment and how it could be used for the development of a future BESSY III lattice. The goal of this new code is not to replace the more mature and full-featured particle accelerator codes, but extending the ecosystem of accelerator tools by enabling interactive basic lattice development using Python.
 acknowledgements: |
-  Blablabla
+  ...
 
 ---
 
