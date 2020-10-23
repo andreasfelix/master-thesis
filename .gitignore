@@ -21,3 +21,8 @@ __pycache__/
 # bibliography temporay files
 *.sav
 *.bak
+
+# direnv / nix
+.direnv
+cache*
+drv
