@@ -4,7 +4,6 @@ mkShell {
         gnumake
         pandoc
         haskellPackages.pandoc-crossref
-        haskellPackages.pandoc-citeproc
         nodePackages.live-server
     ];
     shellHook = "

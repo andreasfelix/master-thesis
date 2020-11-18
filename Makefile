@@ -32,7 +32,7 @@ HTML_OPTIONS = \
 	--mathml \
 	--filter pandoc-crossref \
 	--metadata=chapters \
-	--filter pandoc-citeproc \
+	--citeproc \
 	--css css/variables.css \
 	--css css/page.css
 
@@ -58,7 +58,7 @@ pdf-pandoc: dist
 	--csl layout/ieee.csl \
 	--metadata link-citations \
 	--filter pandoc-crossref \
-	--filter pandoc-citeproc \
+	--citeproc \
 	--verbose
 
 tex: dist tex-pdfs tex-pngs
@@ -72,7 +72,7 @@ tex: dist tex-pdfs tex-pngs
 	-N \
 	--csl layout/ieee.csl \
 	--filter pandoc-crossref \
-	--filter pandoc-citeproc \
+	--citeproc \
 	--toc
 	sed -i 's/.svg/.pdf/g' _tex/thesis.tex
 	cd _tex; latexmk -pdf thesis.tex
@@ -85,7 +85,7 @@ epub: dist
 	--number-sections \
 	--csl layout/ieee.csl \
 	--filter pandoc-crossref \
-	--filter pandoc-citeproc \
+	--citeproc \
 	--verbose
 
 .ONESHELL:
