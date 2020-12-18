@@ -312,7 +312,7 @@ A schematic of the most basic DBA cell is shown in @fig:dba-schematic: A horizon
 :DBA cell parameters {#tbl:dba-parameter}
 
 
-![Quadrupole scan for a DBA with three quadrupole families.]{figures/dba-quad_scan_3_families.svg}{#fig:dba-quad-scan}
+![Quadrupole scan for a DBA with three quadrupole families.](figures/dba-quad_scan_3_families.svg){#fig:dba-quad-scan}
 
 <!-- One of the hardest probelms in  lattice design are the disconnetnuites -->
 
