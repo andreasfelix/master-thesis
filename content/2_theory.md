@@ -1,13 +1,14 @@
 # Beam Dynamics in Electron Storage Rings
 
-This chapter introduces the basics of electron beam dynamics in ciruclar accelerators. The books of H. Wiedemann [@wiedemann], A. Wolski [@wolski2018introduction], K. Wille [@wille] and F. Hinterberger [@hinterberger] were the key sources of the following sections.
+This chapter covers all concepts of electron beam dynamics in ciruclar accelerators, which are implemented in the developed beam optics code. The books of H. Wiedemann [@wiedemann], A. Wolski [@wolski2018introduction], K. Wille [@wille] and F. Hinterberger [@hinterberger] were the main sources of this chapter.
 
-@sec:linear-beam-dynamics covers the linear optics. In @sec:chromaticity the effect of energy derivations of the particle beam on the betatron tune is discussed. Sectionq
+Electrons in an storage ring oscillate around a curved ideal path. Transforming this ideal orbit away by using a different coordianate system than Cartesian coordinates, will facilitate our work in the following sections; the Frenet-Serret coordinate system is introduced in @sec:frenet-serret-coordinates and the equations of motion in this new coordinate system are derived in @sec:equations-of-motion.
 
-All covered concepts are implemented in the developed beam optics code.
+Linearizing these equations of motions allows for an analytical description of the particle beam. The theory of linear beam optics is covered in @sec:linear-beam-dynamics. In @sec:chromaticity the effect of energy derivations of the particle beam on the betatron tune is discussed. 
 
+Important beam parameters like the emittance and beam brightness are determined by the arrangement of magnets. The most fundamental lattices are disscuesed in @sec:lattice-design.
 
-## The Co-moving coordinate system
+## The Co-moving coordinate system {#sec:frenet-serret-coordinates}
 
 To describe the motion of a particle within an accelerator it is common to choose the co-moving Frenet-Serret coordinates, whose origin follows the trajectory of the reference particle.
 
@@ -33,7 +34,7 @@ $$
 = k_0(p) + k_1(p) x + \frac{1}{2} k_2(p) x^2 + \frac{1}{6} k_3(p) x^3 + ...
 $$
 
-## Equations of motion
+## Equations of motion {#sec:equations-of-motion}
 
 $$ h = 1 + \kappa_\mathrm{x0} x + \kappa_\mathrm{y0} y
 $$
@@ -101,8 +102,8 @@ $$ \begin{aligned}
 \end{aligned}
 $$ {#eq:eom-8}
 
-
-The particle trajectory within non linear elements can be obtained by integrating @eq:eom-7 numerically. This method was for example used to created the plots in @sec:chromaticity.
+The equations of sind jetzt eine DGL 2ter ordung und können deshalb integriert werden um die indivduelle particle trajektorie zu erhalten.
+Integrating these equations of motions yields the individual particle trajectories and can be used to track particles through non-linear elements. An experimental implemenation of this method is included developed code, but is not as performant as other tracking methods of more mature codes. But it was for example used to created the plots in @sec:chromaticity.
 
 ...
 But it is rather computational expensive and only allos for a numerical investigation. It would be desireable to habe an analytical formalism. Courant and Synder [@courantsnyder] developed an analytical formalism for the linearized equations of motion which is covered in the next section.
@@ -175,7 +176,8 @@ $$ {#eq:transformation-beta-matrix}
 
 ### Chromaticity Correction
 
-## Synchrotron Radiation
+## Synchrotron Radiation {#sec:synchrotron-radiation}
+
 The previous sections discussed the particle motion while neglecting any emission of synchrotron radition. However the random emission of photons has an influence on the amplitude of the betatron and synchrotron oscillations, which changes the beam emittance. At first this might seem like a violation of the Liouville's theorem [reference to previous section]: It states that the phase space distribution of non-interacting particles in conservatives systems is constant along any path. Consequently the occupied volume in phase space must be conserved. The emittance corresponds to the occupied phase space volume of the electron beam. But as soon as an electron emits a photon, the beam emittance only occupies a sub-volume of the total electron-photon phase space, which is spaned by the coordinates of the electron and photon. Thus due to the synchrotron radiation and consistent with the Liouville's theorem the beam emittance can change. The Liouville's theorem still holds true for the entire electron-photon system.
 
 To describe the effects of synchrotron radiation on the beam properties it useful to define the five so-called synchrtoron radiation integrals:
@@ -193,7 +195,7 @@ TODO: include poleface effect (see MAD-X source code or SLAC-Pub-1193)
 $$ I_4 = \int_0^{C_0} \frac{\eta_x}{\rho}\left(\frac{1}{\rho^2} + 2k_1\right)\mathrm{d}s
 $$ {#eq:i4}
 
-$$ I_5 = \int_0^{C_0} \frac{H_x}{rho^3} \mathrm{d}s
+$$ I_5 = \int_0^{C_0} \frac{H_x}{\rho^3} \mathrm{d}s
 $$ {#eq:i5}
 
 ### Radiation damping

@@ -97,8 +97,9 @@ To still leverage the powerful optimizers of the Python ecosystem one common wor
 
 has several drawbacks:
 
+* No direct access to the accelerator model.
 * It is computationally very inefficient: The simulation software has to parse the run-file and rebuild the accelerator model for each iteration, because the memory is freed after the program terminates.
-* Storing simulation results in a file and loading them into Python for each iteration is another performance issue: Hard disks are many magnitudes slower then computer memory. Even though this could be enhanced by using a RAM disk, serializing and deserializing the simulation results for each iteration is still not optimal.
+* Storing simulation results in a file and loading them into Python for each iteration is another performance issue: Hard disks are many magnitudes slower than computer memory. Even though this could be enhanced by using a RAM disk, serializing and deserializing the simulation results for each iteration is still not optimal.
 * Substituting strings in a run-file is very error prone and can lead to hard to find bugs.
 
 For these reasons it would be desirable to have an direct Python API to drive the execution of accelerator simulations. As discussed above, integrating one of the existing simulation codes in Python is a difficult task. It was therefore decided to develop a new optics code as native Python package. As Python is a dynamically typed language and its major implementation CPython does not convert the source code directly into native machine instruction, ordinary Python programs execute slower than programs written in lower level languages like C or Fortran. To ensure extremely fast calculation of the Twiss parameter, which are necessary because high-dimensional optimizations often require millions of iterations, time-critical parts were implemented using the C language.
