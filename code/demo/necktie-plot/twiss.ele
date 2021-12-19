@@ -1,0 +1,10 @@
+&run_setup
+    lattice = lattice.lte,
+    p_central_mev = 1000,
+&end
+
+&twiss_output
+    filename = %s.twi,
+    ! magnets = "%s.mag",
+    statistics = 1,
+&end

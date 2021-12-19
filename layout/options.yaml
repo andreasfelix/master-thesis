@@ -1,0 +1,48 @@
+standalone: true
+table-of-contents: true
+number-sections: true
+section-divs: true
+strip-comments: true
+
+html-math-method:
+  method: katex
+
+metadata:
+  # citeproc
+  link-citations: true
+  # pandoc-crossref
+  # https://lierdakil.github.io/pandoc-crossref/
+  chapters: true
+  linkReferences: true
+  nameInLink: true
+  tableEqns: true
+  autoEqnLabels: true
+  figPrefix:
+    - "Figure"
+    - "Figures"
+  eqnPrefix:
+    - "Equation"
+    - "Equations"
+  tblPrefix:
+    - "Table"
+    - "Tables"
+  secPrefix:
+    - "Section"
+    - "Sections"
+
+metadata-files:
+  - metadata.yaml
+
+# citeproc
+csl: layout/ieee.csl
+bibliography: bibliography.bib
+
+css:
+  - css/variables.css
+  - css/pages.css
+
+include-after-body:
+  - layout/js/math-table-class.html
+  - layout/js/appendix-numbering.html
+  - layout/js/prefix-chapter-headings.html
+  - layout/js/cited_in_section.html

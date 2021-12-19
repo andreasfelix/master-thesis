@@ -1,0 +1,43 @@
+{
+    "version": "2.0",
+    "title": "BESSY II - Design Lattice",
+    "root": "RING",
+    "elements": {
+        "Q1": ["Quadrupole", {"length": 0.25, "k1": 2.4519}],
+        "Q2": ["Quadrupole", {"length": 0.2, "k1": -1.89757}],
+        "Q3D": ["Quadrupole", {"length": 0.25, "k1": -2.020250494966872}],
+        "Q4D": ["Quadrupole", {"length": 0.5, "k1": 1.408159470450006}],
+        "Q3T": ["Quadrupole", {"length": 0.25, "k1": -2.46319}],
+        "Q4T": ["Quadrupole", {"length": 0.5, "k1": 2.62081}],
+        "Q5T": ["Quadrupole", {"length": 0.2, "k1": -2.6}],
+        "S1": ["Sextupole", {"length": 0.105, "k2": 49.35808097165103}],
+        "S2": ["Sextupole", {"length": 0.16, "k2": -41.52033512035799}],
+        "S3D": ["Sextupole", {"length": 0.16, "k2": -46.66222668520843}],
+        "S4D": ["Sextupole", {"length": 0.16, "k2": 26.97788440561498}],
+        "S3T": ["Sextupole", {"length": 0.16, "k2": -59.15244659713909}],
+        "S4T": ["Sextupole", {"length": 0.16, "k2": 85.76518842267137}],
+        "DQ1": ["Drift", {"length": 0.288}],
+        "DS1": ["Drift", {"length": 0.16}],
+        "DQ2": ["Drift", {"length": 0.42}],
+        "DS2": ["Drift", {"length": 0.307}],
+        "DB": ["Drift", {"length": 0.42}],
+        "DS3": ["Drift", {"length": 0.153}],
+        "DQ": ["Drift", {"length": 0.153}],
+        "DL": ["Drift", {"length": 2.806}],
+        "DK": ["Drift", {"length": 2.453}],
+        "B": ["Dipole", {"length": 0.855, "angle": 0.196349540849362, "e1": 0.09817477042, "e2": 0.09817477042}]
+    },
+    "lattices": {
+        "ACHLH": ["DQ2", "Q2", "DS2", "S2", "DQ1", "Q1", "DS1", "S1"],
+        "ACHRH": ["S1", "DS1", "Q1", "DQ1", "S2", "DS2", "Q2", "DQ2"],
+        "STRTDLH": ["DB", "Q3D", "DQ", "S3D", "DS3", "Q4D", "DQ", "S4D", "DL"],
+        "STRTDRH": ["DL", "S4D", "DQ", "Q4D", "DS3", "S3D", "DQ", "Q3D", "DB"],
+        "STRTTLH": ["DB", "Q3T", "DQ", "S3T", "DS3", "Q4T", "DQ", "S4T", "DQ", "Q5T", "DK"],
+        "STRTTRH": ["DK", "Q5T", "DQ", "S4T", "DQ", "Q4T", "DS3", "S3T", "DQ", "Q3T", "DB"],
+        "DLH": ["ACHRH", "B", "STRTDLH"],
+        "DRH": ["STRTDRH", "B", "ACHLH"],
+        "D": ["DLH", "DRH"],
+        "T": ["ACHRH", "B", "STRTTLH", "STRTTRH", "B", "ACHLH"],
+        "RING": ["DRH", "T", "D", "T", "D", "T", "D", "T", "D", "T", "D", "T", "D", "T", "D", "T", "DLH"]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "version": "2.0",
+    "root": "Ring",
+    "info": "",
+    "lattice": ["Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell"],
+    "elements": {
+        "Q1": ["Quadrupole", {"length": 0.4, "k1": 2.2, "info": ""}],
+        "DS": ["Drift", {"length": 1.0, "info": ""}],
+        "Q2": ["Quadrupole", {"length": 0.4, "k1": -2.1, "info": ""}],
+        "B1": ["Dipole", {"length": 2.5, "angle": 0.2617993877991494, "e1": 0, "e2": 0, "info": ""}],
+        "DQ": ["Drift", {"length": 0.2, "info": ""}]
+    },
+    "lattices": {
+        "Cell": ["DS", "Q1", "DQ", "B1", "DQ", "Q2", "DS"],
+        "Ring": ["Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell", "Cell"]
+    }
+}

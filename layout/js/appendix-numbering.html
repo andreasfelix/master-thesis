@@ -1,0 +1,80 @@
+<!-- change appendix prefixes from numeric to alphabetic -->
+<!-- has to be run after math-table-class.js to correctly change equation numbers -->
+<script>
+    const lastChapter = document.querySelector("#conclusion")
+    const lastChapterNumber = Number(lastChapter.getAttribute("data-number"))
+
+    function numericToAlphabetic(prefix) {
+        const [number, ...others] = prefix.split(".")
+        if (number < lastChapterNumber) {
+            return false
+        }
+        const letter = (Number(number) + 9 - lastChapterNumber).toString(36).toUpperCase()
+        return [letter, ...others].join(".")
+    }
+
+    // change prefixes of appendix headings
+    let chapter = lastChapter
+    while (chapter) {
+        chapter = chapter.nextElementSibling;
+        if (chapter.id == "bibliography") {
+            break
+        }
+
+        [chapter, ...chapter.querySelectorAll("section")].forEach(section => {
+            const heading = section.firstChild
+            const sectionNumber = section.firstElementChild.firstElementChild
+            const prefix = numericToAlphabetic(sectionNumber.innerHTML)
+            sectionNumber.innerHTML = prefix
+        })
+    }
+
+    // change prefixes of appendix toc entries
+    let entry = document.querySelector('#toc a[href="#conclusion"]').parentElement
+    while (entry) {
+        entry = entry.nextElementSibling;
+        if (entry.firstChild.getAttribute("href") === "#bibliography") {
+            break
+        }
+
+        entry.querySelectorAll('a>span').forEach(span => {
+            span.innerHTML = numericToAlphabetic(span.innerText)
+        })
+    }
+
+
+    // change prefix in equations
+    document.querySelectorAll(".math-table td:nth-child(2) span.math.display").forEach(element => {
+        const newNumber = numericToAlphabetic(element.innerHTML.slice(1, -1))
+        if (newNumber) {
+            element.innerHTML = `(\\mathrm{${newNumber}})`
+        }
+    })
+
+    // change prefix in figure captions
+    document.querySelectorAll('figure figcaption, table caption').forEach(caption => {
+        const [label, text] = caption.innerHTML.split(":")
+        const [prefix, number] = label.split(" ")
+        if (prefix !== "Figure" || prefix !== "Table") {
+            return
+        }
+
+        const newNumber = numericToAlphabetic(number)
+        if (newNumber) {
+            caption.innerHTML = `${prefix} ${newNumber}: ${text}`
+        }
+    })
+
+    // change prefix in references
+    document.querySelectorAll('main a').forEach(link => {
+        const href = link.getAttribute('href')
+        const isSection = href.startsWith("#sec:")
+        if (isSection || href.startsWith("#eq:") || href.startsWith("#fig:") || href.startsWith("#tbl:")) {
+            const [prefix, number] = link.innerText.split('\xa0')
+            const newNumber = numericToAlphabetic(number)
+            if (newNumber) {
+                link.innerHTML = `${isSection ? 'Appendix' : prefix}\xa0${newNumber}`
+            }
+        }
+    })
+</script>

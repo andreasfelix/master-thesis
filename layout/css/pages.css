@@ -1,0 +1,202 @@
+html {
+    font-size: var(--pages-font-size);
+}
+
+.pages {
+    line-height: 1.625;
+    hyphens: auto;
+    font-family: var(--pages-font-family);
+    color: var(--pages-font-color);
+}
+
+/*
+ * CSS resets
+ */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr, th, td {
+    padding: 0;
+}
+
+/*
+ * headings 
+ */
+
+.pages h1 {
+    font-weight: 600;
+    font-size: 2.25rem;
+    margin: 1.25em 0 1em;
+    padding-bottom: 0.75em;
+    border-bottom: 1px solid var(--pages-border-color);
+}
+
+.pages h2, h3, h4 {
+    font-weight: 600;
+    margin: 1.5em 0 0.75em;
+    padding-top: 1.5em;
+    border-top: 1px solid var(--pages-border-color);
+}
+
+.pages h2 {
+    font-size: 1.25rem;
+}
+
+.pages h3 {
+    font-size: 1.125rem;
+}
+
+.pages .header-section-number {
+    margin-right: 0.25em;
+}
+
+/*
+ * text, figures, tables and code
+ */
+
+.pages p {
+    text-align: justify;
+    margin: 0;
+}
+
+.pages p+p {
+    margin-top: 0;
+    text-indent: 6mm;
+}
+
+.pages a {
+    text-decoration: none;
+}
+
+.pages figure {
+    margin: 2rem 0;
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+}
+
+.pages figure img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.pages figure figcaption {
+    text-align: justify;
+    font-size: 0.875rem;
+}
+
+.pages div[id^="tbl:"] table {
+    margin: 1.5rem auto;
+    border-width: 1px 0px;
+    border-style: solid;
+    border-color: var(--pages-border-color);
+    font-size: 0.875rem;
+}
+
+.pages div[id^="tbl:"] table th {
+    border-bottom: 1px solid var(--pages-border-color);
+}
+
+.pages div[id^="tbl:"] table td, .pages div[id^="tbl:"] table th {
+    padding: 0.25rem 1rem;
+}
+
+.pages div[id^="tbl:"] table caption {
+    margin-bottom: 0.5rem;
+}
+
+.pages li {
+    margin-top: 0.5em;
+}
+
+.pages code {
+    overflow-x: auto;
+    font-size: 0.75rem;
+    font-family: var(--mono-font);
+}
+
+.pages p>code {
+    /* inline */
+    margin: 0 0.25rem;
+    padding: 0 0.25rem;
+    background: var(--pages-code-color);
+}
+
+.pages div.sourceCode {
+    /* block */
+    background: var(--pages-code-color);
+    padding: 1rem;
+}
+
+/*
+ * math
+ */
+
+.pages .math .katex {
+    font-size: 1rem;
+}
+
+.pages .math.display .katex-display {
+    margin: 0;
+}
+
+.pages .katex-mathml {
+    /* mathml caused weird horizontal overflow of html root element in chrome
+     * this happens when a math inline element is in a table
+     */
+    display: none;
+}
+
+.pages table.math-table {
+    margin: 1.5rem 0;
+    width: 100% !important;
+    display: grid;
+    grid-template-columns: minmax(0px, 1fr) auto 1fr;
+}
+
+.pages table.math-table tbody, .pages table.math-table tr {
+    display: contents;
+}
+
+.pages table.math-table td {
+    padding: 0;
+}
+
+.pages table.math-table td:nth-child(1) {
+    display: block;
+}
+
+.pages table.math-table td:nth-child(2) {
+    margin-left: 1rem;
+    place-self: center end
+}
+
+/*
+ * special pages
+ */
+
+.pages #acknowledgments p {
+    text-indent: 0;
+    margin-bottom: 1em;
+}
+
+.pages #refs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: justify;
+    text-align-last: left;
+}
+
+.pages #refs a {
+    /* break long links, otherwise text-justify looks weird */
+    word-break: break-all;
+}
+
+.pages #refs cited-on>a {
+    word-break: normal;
+}

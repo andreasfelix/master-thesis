@@ -1,0 +1,6 @@
+<!-- set a class to all tables containing math -->
+<script>
+    document.querySelectorAll(".math.display").forEach(element => {
+        element.closest("table")?.classList.add("math-table")
+    })
+</script>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    $for(author-meta)$
+    <meta name="author" content="$author-meta$" />
+    $endfor$
+    <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        $styles.html()$
+    </style>
+    $for(css)$
+    <link rel="stylesheet" href="$css$" />
+    $endfor$
+    $for(header-includes)$ $header-includes$ $endfor$
+    <!-- don't use pandoc's katex, so we can only render html and not mathml -->
+    <!-- because katex's mathml causes weird overflow of root html in chrome for small screen sizes in a table -->
+    <!-- katex render is called at bottom of body -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+        integrity="sha384-zTROYFVGOfTw7JV7KUu8udsvW2fx4lWOsCEDqhBreBwlHI4ioVRtmIvEThzJHGET" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"
+        integrity="sha384-GxNFqL3r9uRJQhR+47eDxuPoNE7yLftQM8LcxzgS4HT73tp970WS/wV5p8UzCOmb"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+</head>
+
+<body>
+    $for(include-before)$
+    $include-before$
+    $endfor$
+
+    <div class="pages">
+        <!-- firefox overflows at height: 247mm -->
+        <div id="title-page" style="height: 246.9mm; text-align: center; display: grid; grid-auto-rows: 1fr;">
+            <div style="font-size: 1.875rem; font-weight: 500; align-self:center;">$title$</div>
+            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; font-size: 1.125rem;">
+                    <div style="text-align: left;">
+                        <div style="font-style: italic; margin-bottom: 0.5rem">Author</div>
+                        <div>$author$</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-style: italic; margin-bottom: 0.5rem">Supervisors</div>
+                        <div>$supervisor-1st$<br>$supervisor-2nd$</div>
+                    </div>
+                </div>
+                <div style="font-style: italic; display: grid; gap: 1rem;">
+                    <div>$degree-text$</div>
+                    <div>in the</div>
+                    <a href="$department-website$" target="_blank" rel="nofollow">
+                        $department$<br />$faculty$<br />$university$
+                    </a>
+                </div>
+                <div>$date$</div>
+            </div>
+        </div>
+
+        <div class="frontmatter">
+            <section id="abstract" class="level1">
+                <h1>Abstract</h1>
+                $abstract$
+            </section>
+
+            <section id="acknowledgments" class="level1">
+                <h1>Acknowledgments</h1>
+                $acknowledgments$
+            </section>
+
+            <section id="toc" class="level1">
+                <h1>Contents</h1>
+                $table-of-contents$
+            </section>
+        </div>
+
+        <!-- Do not indent "body", because <code> tags are white-space sensitive! -->
+        <main>$body$</main>
+
+        <div id="declaration-of-authorship">
+            <div>
+                <h1>Declaration of Authorship</h1>
+                <p>
+                    I, $author$, declare that this thesis and the work presented in it are my own.
+                    I confirm that where I have quoted from the work of others, the source is always given.
+                </p>
+            </div>
+            <div class="signature">
+                <div><span>Signature</span></div>
+                <div><span>Place, Date</span><span>$place$, $date$</span></div>
+            </div>
+        </div>
+    </div>
+
+    $for(include-after)$
+    $include-after$
+    $endfor$
+    <!-- don't wait for DOMContentLoaded event, because katex has to be executed before pagedjs chunker -->
+    <script>
+        document.querySelectorAll(".math").forEach(element => {
+            const texText = element.firstChild;
+            if (element.tagName == 'SPAN') {
+                katex.render(texText.data, element, {
+                    displayMode: element.classList.contains('display'),
+                    output: 'html',
+                    throwOnError: false,
+                });
+            }
+        })
+    </script>
+</body>
+
+</html>

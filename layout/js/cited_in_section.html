@@ -1,0 +1,36 @@
+<!-- add (cit. in sec. 2.x) links to bibliography -->
+<script>
+    const targetIdsToLinks = {}
+
+    for (const [index, link] of document.querySelectorAll("span.citation>a").entries()) {
+        const targetId = link.getAttribute("href")
+        link.id = `citation-${index}`
+        if (targetIdsToLinks[targetId] === undefined) {
+            targetIdsToLinks[targetId] = [link]
+        } else {
+            targetIdsToLinks[targetId].push(link)
+        }
+    }
+
+    for (const [targetId, links] of Object.entries(targetIdsToLinks)) {
+        const target = document.querySelector(targetId).children[1]
+        const newDiv = document.createElement("span");
+        newDiv.classList.add("cited-on")
+        newDiv.appendChild(document.createTextNode(" (cit. in sec. "))
+
+        links.map((link, index) => {
+            if (index !== 0) {
+                newDiv.appendChild(document.createTextNode(", "))
+            }
+
+            const linkNode = document.createElement('a');
+            const text = link.closest("section").getAttribute("data-number")
+            linkNode.appendChild(document.createTextNode(text));
+            linkNode.href = `#${link.id}`;
+            newDiv.appendChild(linkNode)
+        })
+
+        newDiv.appendChild(document.createTextNode(")"))
+        target.appendChild(newDiv)
+    }
+</script>

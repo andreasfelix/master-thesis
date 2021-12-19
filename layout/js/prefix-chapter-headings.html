@@ -1,0 +1,9 @@
+<!-- prefix chapter headings with 'Chapter' and appendix headings with 'Appendix' -->
+<script>
+    const isLetter = char => isNaN(Number(char))
+    document.querySelectorAll('section>h1>span').forEach(span => {
+        const prefix = span.innerHTML;
+        span.innerHTML = isLetter(prefix[0]) ? `Appendix ${prefix}` : `Chapter ${prefix}`
+        span.style = "display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"
+    })
+</script>

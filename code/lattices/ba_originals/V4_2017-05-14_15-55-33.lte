@@ -1,0 +1,176 @@
+!!NAME:BII_2017-03-28_17-54_LOCOFitByPS_noID_ActualUserMode_third_best.lte_CHANGED
+! canocial kick elements
+% 20 sto quadkicks
+% 10 sto sextkicks
+% 40 sto csbendkicks
+
+!! without IDs:
+!!##### QUADS #####
+QIT6    : KQUAD, n_kicks="quadkicks", L=0.122   , K1=-1.09324443
+Q1D     : KQUAD, n_kicks="quadkicks", L=0.25    , K1= 2.43992187
+Q2D     : KQUAD, n_kicks="quadkicks", L=0.2     , K1=-1.85354137
+Q3P1T1  : KQUAD, n_kicks="quadkicks", L=0.25    , K1 = -2.614926
+Q3P1T6  : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.68493846
+Q3P1T8  : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.44627319
+Q3P2T1  : KQUAD, n_kicks="quadkicks", L=0.25    , K1 = -2.435339
+Q3P2T6  : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.33722602
+Q3P2T8  : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.53960920
+Q3D1    : KQUAD, n_kicks="quadkicks", L=0.25    , K1 = -2.108927
+Q3D2    : KQUAD, n_kicks="quadkicks", L=0.25    , K1 = -2.124506
+Q3D3    : KQUAD, n_kicks="quadkicks", L=0.25    , K1 = -2.052596
+Q3D4    : KQUAD, n_kicks="quadkicks", L=0.25    , K1 = -2.222507
+Q3D5    : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.11955588
+Q3D6    : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.10963250
+Q3D7    : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.11735207
+Q3D8    : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.13655479
+Q3T2    : KQUAD, n_kicks="quadkicks", L=0.25    , K1 = -2.469444
+Q3T3    : KQUAD, n_kicks="quadkicks", L=0.25    , K1 = -2.466407
+Q3T4    : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.43958732
+Q3T5    : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.44973680
+Q3T7    : KQUAD, n_kicks="quadkicks", L=0.25    , K1=-2.43215097
+Q4P1T1  : KQUAD, n_kicks="quadkicks", L=0.5     , K1 = 2.586371
+Q4P1T6  : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 2.24854535
+Q4P1T8  : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 2.58252211
+Q4P2T1  : KQUAD, n_kicks="quadkicks", L=0.5     , K1 = 2.583036
+Q4P2T6  : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 2.56031750
+Q4P2T8  : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 2.62213165
+Q4D1    : KQUAD, n_kicks="quadkicks", L=0.5     , K1 = 1.440893
+Q4D2    : KQUAD, n_kicks="quadkicks", L=0.5     , K1 = 1.475894
+Q4D3    : KQUAD, n_kicks="quadkicks", L=0.5     , K1 = 1.458744
+Q4D4    : KQUAD, n_kicks="quadkicks", L=0.5     , K1 = 1.484946
+Q4D5    : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 1.47760503
+Q4D6    : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 1.48292220
+Q4D7    : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 1.47659449
+Q4D8    : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 1.49275949
+Q4T2    : KQUAD, n_kicks="quadkicks", L=0.5     , K1 = 2.032894
+Q4T3    : KQUAD, n_kicks="quadkicks", L=0.5     , K1 = 2.587473
+Q4T4    : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 2.58157782
+Q4T5    : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 2.58022594
+Q4T7    : KQUAD, n_kicks="quadkicks", L=0.5     , K1= 2.58000776
+Q5P1T1  : KQUAD, n_kicks="quadkicks", L=0.2     , K1 = -2.437264
+Q5P1T6  : KQUAD, n_kicks="quadkicks", L=0.2     , K1=-1.02671552
+Q5P1T8  : KQUAD, n_kicks="quadkicks", L=0.2     , K1=-2.59460394
+Q5P2T1  : KQUAD, n_kicks="quadkicks", L=0.2     , K1 = -2.610641
+Q5P2T6  : KQUAD, n_kicks="quadkicks", L=0.2     , K1=-2.45473858
+Q5P2T8  : KQUAD, n_kicks="quadkicks", L=0.2     , K1=-2.41402770
+Q5T2    : KQUAD, n_kicks="quadkicks", L=0.2     , K1 = 0.000000
+Q5T3    : KQUAD, n_kicks="quadkicks", L=0.2     , K1 = -2.642194
+Q5T4    : KQUAD, n_kicks="quadkicks", L=0.2     , K1=-2.59997779
+Q5T5    : KQUAD, n_kicks="quadkicks", L=0.2     , K1=-2.59005859
+Q5T7    : KQUAD, n_kicks="quadkicks", L=0.2     , K1=-2.60805533
+
+!!##### SEXTUPOLE #####
+! S1 and S2 from fit to desired chromaticities
+S1	    : KSEXT, n_kicks="sextkicks", L=0.105,K2=53.711598071533
+S2  	: KSEXT, n_kicks="sextkicks", L=0.16, K2=-44.968873069
+!S2D	: KSEXT, n_kicks="sextkicks", L=0.16, K2=-46.76723313
+!S2T	: KSEXT, n_kicks="sextkicks", L=0.16, K2=-46.76723313
+S3P1T6	: KSEXT, n_kicks="sextkicks", L=0.16, K2=-43.8795
+S3P2T6	: KSEXT, n_kicks="sextkicks", L=0.16, K2=-43.8795
+S3D1	: KSEXT, n_kicks="sextkicks", L=0.16, K2=-39.96
+S3D	    : KSEXT, n_kicks="sextkicks", L=0.16, K2=-42.735
+S3T	    : KSEXT, n_kicks="sextkicks", L=0.16, K2=-43.8795 
+S4P1T6	: KSEXT, n_kicks="sextkicks", L=0.16, K2=41.25
+S4P2T6	: KSEXT, n_kicks="sextkicks", L=0.16, K2=41.25
+S4D	    : KSEXT, n_kicks="sextkicks", L=0.16, K2=38.2185
+S4D1	: KSEXT, n_kicks="sextkicks", L=0.16, K2=27.0435
+S4T 	: KSEXT, n_kicks="sextkicks", L=0.16, K2=55.0
+
+
+!!##### DRIFTS #####
+! Naming convention: D+previous element at first appearence
+DQ1     : drif, L=0.288
+DS1     : drif, L=0.16
+DQ2     : drif, L=0.42
+DS2     : drif, L=0.307   
+DB      : drif, L=0.42
+DS3     : drif, L=0.153
+DQ3     : drif, L=0.153
+DL      : drif, L=2.80600
+DK      : drif, L=2.45300
+
+!##### DIPOLES #####
+!LENGTH  := 0.855 		     	<-- arc length !!!
+!ANGLE   := PI/16 = 0.196349540849362
+!ANGLE/2 := 0.09817477042
+!RHO     := LENGTH/ANGLE		<-- bending radius
+! CSRCSBEND: Like CSBEND, but incorporates a simulation of Incoherent Synchrotron radiation.
+! For a symmetric rectangular magnet, E1=E2=ANGLE/2.
+B: CSBEND, n_kicks="csbendkicks", L=0.855, ANGLE=0.196349540849362, E1=0.09817477042, E2=0.09817477042, USE_RAD_DIST=1
+!, SYNCH_RAD=1, ISR=1, ISR1PART=1
+
+! achromat right half 
+ACHRH: LINE=(S1,DS1,Q1D,DQ1,S2,DS2,Q2D,DQ2)
+! achromat left half 
+ACHLH: LINE=(DQ2,Q2D,DS2,S2,DQ1,Q1D,DS1,S1)
+
+D1LH: LINE=(DB,Q3D1,DQ3,S3D1,DS3,Q4D1,DQ3,S4D1,DL)
+D1RH: LINE=(DL,S4D1,DQ3,Q4D1,DS3,S3D1,DQ3,Q3D1,DB)
+T1LH: LINE=(DB,Q3P1T1,DQ3,S3T,DS3,Q4P1T1,DQ3,S4T,DQ3,Q5P1T1,DK)
+T1RH: LINE=(DK,Q5P2T1,DQ3,S4T,DQ3,Q4P2T1,DS3,S3T,DQ3,Q3P2T1,DB)
+D2LH: LINE=(DB,Q3D2,DQ3,S3D,DS3,Q4D2,DQ3,S4D,DL)
+D2RH: LINE=(DL,S4D,DQ3,Q4D2,DS3,S3D,DQ3,Q3D2,DB)
+T2LH: LINE=(DB,Q3T2,DQ3,S3T,DS3,Q4T2,DQ3,S4T,DQ3,Q5T2,DK)
+T2RH: LINE=(DK,Q5T2,DQ3,S4T,DQ3,Q4T2,DS3,S3T,DQ3,Q3T2,DB)
+D3LH: LINE=(DB,Q3D3,DQ3,S3D,DS3,Q4D3,DQ3,S4D,DL)
+D3RH: LINE=(DL,S4D,DQ3,Q4D3,DS3,S3D,DQ3,Q3D3,DB)
+T3LH: LINE=(DB,Q3T3,DQ3,S3T,DS3,Q4T3,DQ3,S4T,DQ3,Q5T3,DK)
+T3RH: LINE=(DK,Q5T3,DQ3,S4T,DQ3,Q4T3,DS3,S3T,DQ3,Q3T3,DB)
+D4LH: LINE=(DB,Q3D4,DQ3,S3D,DS3,Q4D4,DQ3,S4D,DL)
+D4RH: LINE=(DL,S4D,DQ3,Q4D4,DS3,S3D,DQ3,Q3D4,DB)
+T4LH: LINE=(DB,Q3T4,DQ3,S3T,DS3,Q4T4,DQ3,S4T,DQ3,Q5T4,DK)
+T4RH: LINE=(DK,Q5T4,DQ3,S4T,DQ3,Q4T4,DS3,S3T,DQ3,Q3T4,DB)
+D5LH: LINE=(DB,Q3D5,DQ3,S3D,DS3,Q4D5,DQ3,S4D,DL)
+D5RH: LINE=(DL,S4D,DQ3,Q4D5,DS3,S3D,DQ3,Q3D5,DB)
+T5LH: LINE=(DB,Q3T5,DQ3,S3T,DS3,Q4T5,DQ3,S4T,DQ3,Q5T5,DK)
+T5RH: LINE=(DK,Q5T5,DQ3,S4T,DQ3,Q4T5,DS3,S3T,DQ3,Q3T5,DB)
+
+
+! slicing section according to acclab file RING_from_bessyIIatdeck_17_multibunch_mod_D5_Sissy.mat
+B1ID: CSBEND, n_kicks="csbendkicks", L=0.2800, ANGLE=0.0578788879, E1=0, E2=0.0578788879
+B2ID: CSBEND, n_kicks="csbendkicks", L=0.5600, ANGLE=-0.1117010721, E1=-0.0578788879, E2=-0.0538221842
+B3ID: CSBEND, n_kicks="csbendkicks", L=0.2800, ANGLE=0.0538221842, E1=0.0538221842, E2=0
+DS4D6: drif,L=0.164000
+DB1ID: drif,L=2.020140
+DB2ID: drif,L=2.216250
+DB3ID: drif,L=0.100000
+
+D6LH: LINE=(DB,Q3D6,DQ3,S3D,DS3,Q4D6,DQ3,S4D, DS4D6, B1ID,DB1ID,B2ID,DB2ID,B3ID,DB3ID)
+D6RH: LINE=(S4D,DQ3,Q4D6,DS3,S3D,DQ3,Q3D6,DB)
+DQ5T6: drif, L=2.2976 
+DQIT6: drif, L=2.3644
+
+! EMIL quadrupole: position unclear
+T6LH: LINE=(DB,Q3P1T6,DQ3,S3P1T6,DS3,Q4P1T6,DQ3,S4P1T6,DQ3,Q5P1T6, DQ5T6,QIT6,QIT6,DQIT6)
+T6RH: LINE=(Q5P2T6,DQ3,S4P2T6,DQ3,Q4P2T6,DS3,S3P2T6,DQ3,Q3P2T6,DB)
+D7LH: LINE=(DB,Q3D7,DQ3,S3D,DS3,Q4D7,DQ3,S4D,DL)
+D7RH: LINE=(DL,S4D,DQ3,Q4D7,DS3,S3D,DQ3,Q3D7,DB)
+T7LH: LINE=(DB,Q3T7,DQ3,S3T,DS3,Q4T7,DQ3,S4T,DQ3,Q5T7,DK)
+T7RH: LINE=(DK,Q5T7,DQ3,S4T,DQ3,Q4T7,DS3,S3T,DQ3,Q3T7,DB)
+D8LH: LINE=(DB,Q3D8,DQ3,S3D,DS3,Q4D8,DQ3,S4D,DL)
+D8RH: LINE=(DL,S4D,DQ3,Q4D8,DS3,S3D,DQ3,Q3D8,DB)
+T8LH: LINE=(DB,Q3P1T8,DQ3,S3T,DS3,Q4P1T8,DQ3,S4T,DQ3,Q5P1T8,DK)
+T8RH: LINE=(DK,Q5P2T8,DQ3,S4T,DQ3,Q4P2T8,DS3,S3T,DQ3,Q3P2T8,DB)
+
+! Full Triplet and Duplet sections (each approx. 1/16 Ring)
+! Note: D1 is split to set zero corrdinate at its center
+T1: LINE=(ACHRH,B, T1LH,T1RH, B,ACHLH)
+D2: LINE=(ACHRH,B, D2LH,D2RH, B,ACHLH)
+T2: LINE=(ACHRH,B, T2LH,T2RH, B,ACHLH)
+D3: LINE=(ACHRH,B, D3LH,D3RH, B,ACHLH)
+T3: LINE=(ACHRH,B, T3LH,T3RH, B,ACHLH)
+D4: LINE=(ACHRH,B, D4LH,D4RH, B,ACHLH)
+T4: LINE=(ACHRH,B, T4LH,T4RH, B,ACHLH)
+D5: LINE=(ACHRH,B, D5LH,D5RH, B,ACHLH)
+T5: LINE=(ACHRH,B, T5LH,T5RH, B,ACHLH)
+D6: LINE=(ACHRH,B, D6LH,D6RH, B,ACHLH)
+T6: LINE=(ACHRH,B, T6LH,T6RH, B,ACHLH)
+D7: LINE=(ACHRH,B, D7LH,D7RH, B,ACHLH)
+T7: LINE=(ACHRH,B, T7LH,T7RH, B,ACHLH)
+D8: LINE=(ACHRH,B, D8LH,D8RH, B,ACHLH)
+T8: LINE=(ACHRH,B, T8LH,T8RH, B,ACHLH)
+
+! Injection is a center of D1
+RING: LINE=(D1RH, B,ACHLH, &
+      T1, D2,T2, D3,T3, D4,T4, D5,T5, D6,T6, D7,T7, D8,T8, &
+      ACHRH,B, D1LH)

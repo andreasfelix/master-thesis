@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    $for(author-meta)$
+    <meta name="author" content="$author-meta$" />
+    $endfor$
+    <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+    <style>
+        $styles.html()$
+    </style>
+    $for(css)$
+    <link rel="stylesheet" href="$css$" />
+    $endfor$
+    $for(header-includes)$ $header-includes$ $endfor$
+    <!-- don't use pandoc's katex, so we can only render html and not mathml -->
+    <!-- because katex's mathml causes weird overflow of root html in chrome for small screen sizes in a table -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+        integrity="sha384-zTROYFVGOfTw7JV7KUu8udsvW2fx4lWOsCEDqhBreBwlHI4ioVRtmIvEThzJHGET" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"
+        integrity="sha384-GxNFqL3r9uRJQhR+47eDxuPoNE7yLftQM8LcxzgS4HT73tp970WS/wV5p8UzCOmb"
+        crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".math").forEach(element => {
+                const texText = element.firstChild;
+                if (element.tagName == 'SPAN') {
+                    katex.render(texText.data, element, {
+                        displayMode: element.classList.contains('display'),
+                        output: 'html',
+                        throwOnError: false,
+                    });
+                }
+            })
+        })
+    </script>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.5/dist/medium-zoom.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+        integrity="sha384-zTROYFVGOfTw7JV7KUu8udsvW2fx4lWOsCEDqhBreBwlHI4ioVRtmIvEThzJHGET" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"
+        integrity="sha384-GxNFqL3r9uRJQhR+47eDxuPoNE7yLftQM8LcxzgS4HT73tp970WS/wV5p8UzCOmb"
+        crossorigin="anonymous"></script>
+    <script>
+        function getTheme() {
+            return document.documentElement.getAttribute("data-theme")
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute("data-theme", theme)
+        }
+
+        if (window.matchMedia) {
+            setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        }
+    </script>
+</head>
+
+<body>
+    $for(include-before)$
+    $include-before$
+    $endfor$
+
+    <header>
+        <div class="header__item header__item--toggle-nav" onclick="openNav()">
+            <svg width="24" height="24" viewBox="0 0 32 32">
+                <path d="M4 6h24v2H4z" fill="currentColor"></path>
+                <path d="M4 24h24v2H4z" fill="currentColor"></path>
+                <path d="M4 12h24v2H4z" fill="currentColor"></path>
+                <path d="M4 18h24v2H4z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="header__item" onclick="setTheme(getTheme() === 'light' ? 'dark' : 'light')">
+            <svg class="light" width="24" height="24" viewBox="0 0 32 32">
+                <path d="M15 2h2v5h-2z" fill="currentColor"></path>
+                <path d="M21.687 8.9l3.506-3.507l1.414 1.415l-3.506 3.506z" fill="currentColor"></path>
+                <path d="M25 15h5v2h-5z" fill="currentColor"></path>
+                <path d="M21.687 23.1l1.414-1.414l3.506 3.506l-1.414 1.415z" fill="currentColor"></path>
+                <path d="M15 25h2v5h-2z" fill="currentColor"></path>
+                <path d="M5.394 25.192L8.9 21.686l1.414 1.415l-3.506 3.506z" fill="currentColor"></path>
+                <path d="M2 15h5v2H2z" fill="currentColor"></path>
+                <path d="M5.394 6.808l1.414-1.415L10.314 8.9L8.9 10.314z" fill="currentColor"></path>
+                <path d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6z" fill="currentColor"></path>
+            </svg>
+            <svg class="dark" width="24px" height="24px" viewBox="0 0 32 32">
+                <path
+                    d="M13.502 5.414a15.075 15.075 0 0 0 11.594 18.194a11.113 11.113 0 0 1-7.975 3.39c-.138 0-.278.005-.418 0a11.094 11.094 0 0 1-3.2-21.584M14.98 3a1.002 1.002 0 0 0-.175.016a13.096 13.096 0 0 0 1.825 25.981c.164.006.328 0 .49 0a13.072 13.072 0 0 0 10.703-5.555a1.01 1.01 0 0 0-.783-1.565A13.08 13.08 0 0 1 15.89 4.38A1.015 1.015 0 0 0 14.98 3z"
+                    fill="currentColor"></path>
+            </svg>
+            <span class="tooltip" style="left: 4px">Toggle Theme</span>
+        </div>
+        <div class="header__item" onclick="toggleFont()">
+            <svg width="24" height="24" viewBox="0 0 32 32">
+                <path
+                    d="M25 12h-5v2h5a1 1 0 0 1 1 1v2h-4a3.003 3.003 0 0 0-3 3v1a3.003 3.003 0 0 0 3 3h6v-9a3.003 3.003 0 0 0-3-3zm-3 10a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1h4v3z"
+                    fill="currentColor"></path>
+                <path d="M16 24h2L12 7h-2L4 24h2l1.694-5h6.613zm-7.629-7l2.497-7.371h.266L13.63 17z"
+                    fill="currentColor"></path>
+            </svg>
+            <span class="tooltip">Toggle Font Style</span>
+        </div>
+        <a class="header__item" href="thesis.pdf" download>
+            <svg width="24" height="24" viewBox="0 0 32 32">
+                <path d="M30 18v-2h-6v10h2v-4h3v-2h-3v-2h4z" fill="currentColor"></path>
+                <path
+                    d="M19 26h-4V16h4a3.003 3.003 0 0 1 3 3v4a3.003 3.003 0 0 1-3 3zm-2-2h2a1.001 1.001 0 0 0 1-1v-4a1.001 1.001 0 0 0-1-1h-2z"
+                    fill="currentColor"></path>
+                <path d="M11 16H6v10h2v-3h3a2.003 2.003 0 0 0 2-2v-3a2.002 2.002 0 0 0-2-2zm-3 5v-3h3l.001 3z"
+                    fill="currentColor"></path>
+                <path
+                    d="M22 14v-4a.91.91 0 0 0-.3-.7l-7-7A.909.909 0 0 0 14 2H4a2.006 2.006 0 0 0-2 2v24a2 2 0 0 0 2 2h16v-2H4V4h8v6a2.006 2.006 0 0 0 2 2h6v2zm-8-4V4.4l5.6 5.6z"
+                    fill="currentColor"></path>
+            </svg>
+            <span class="tooltip">Download PDF</span>
+        </a>
+        <a class="header__item" href="print.html" target="_blank">
+            <svg width="24" height="24" viewBox="0 0 32 32">
+                <path d="M19 10h7v2h-7z" fill="currentColor"></path>
+                <path d="M19 15h7v2h-7z" fill="currentColor"></path>
+                <path d="M19 20h7v2h-7z" fill="currentColor"></path>
+                <path d="M6 10h7v2H6z" fill="currentColor"></path>
+                <path d="M6 15h7v2H6z" fill="currentColor"></path>
+                <path d="M6 20h7v2H6z" fill="currentColor"></path>
+                <path
+                    d="M28 5H4a2.002 2.002 0 0 0-2 2v18a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2V7a2.002 2.002 0 0 0-2-2zM4 7h11v18H4zm13 18V7h11v18z"
+                    fill="currentColor"></path>
+            </svg>
+            <span class="tooltip">Paginated HTML</span>
+        </a>
+        <a class="header__item" style="margin-left: auto" href="https://github.com/$github$/$repository$"
+            target="_blank">
+            <svg width="24" height="24" viewBox="0 0 32 32">
+                <path
+                    d="M16 2a14 14 0 0 0-4.43 27.28c.7.13 1-.3 1-.67v-2.38c-3.89.84-4.71-1.88-4.71-1.88a3.71 3.71 0 0 0-1.62-2.05c-1.27-.86.1-.85.1-.85a2.94 2.94 0 0 1 2.14 1.45a3 3 0 0 0 4.08 1.16a2.93 2.93 0 0 1 .88-1.87c-3.1-.36-6.37-1.56-6.37-6.92a5.4 5.4 0 0 1 1.44-3.76a5 5 0 0 1 .14-3.7s1.17-.38 3.85 1.43a13.3 13.3 0 0 1 7 0c2.67-1.81 3.84-1.43 3.84-1.43a5 5 0 0 1 .14 3.7a5.4 5.4 0 0 1 1.44 3.76c0 5.38-3.27 6.56-6.39 6.91a3.33 3.33 0 0 1 .95 2.59v3.84c0 .46.25.81 1 .67A14 14 0 0 0 16 2z"
+                    fillRule="evenodd" fill="currentColor"></path>
+            </svg>
+            <span class="tooltip" style="right: 4px">View Github Page</span>
+        </a>
+        </div>
+    </header>
+    <nav>
+        <div class="nav__top">
+            <div class="nav__close">
+                <svg width="24" height="24" viewBox="0 0 32 32">
+                    <path d="M14 26l1.41-1.41L7.83 17H28v-2H7.83l7.58-7.59L14 6L4 16l10 10z" fill="currentColor"></path>
+                </svg>
+            </div>
+        </div>
+        <div id="toc">
+            $toc$
+        </div>
+    </nav>
+    <main class="pages-container">
+        <div class="pages">
+            <section id="title-page">
+                <div class="title">$title$</div>
+                <div class="degree-text">$degree-text$</div>
+                <div class="info">
+                    <div>Author</div>
+                    <div>$author$</div>
+                    <div>Supervisors</div>
+                    <div>$supervisor-1st$<br>$supervisor-2nd$</div>
+                    <div>Institution</div>
+                    <div>
+                        <a href="$department-website$" target="_blank" rel="nofollow">
+                            $department$<br />$faculty$<br />$university$
+                        </a>
+                    </div>
+                    <div>Date</div>
+                    <div>$date$</div>
+                </div>
+            </section>
+            <section id="abstract" class="level1">
+                <h1>Abstract</h1>
+                $abstract$
+            </section>
+            <section id="acknowledgments" class="level1">
+                <h1>Acknowledgments</h1>
+                $acknowledgments$
+            </section>
+            <!-- The arrows avoid that the body is indented.  -->
+            <!-- This is necessary because <code> tags are white-space sensitive! -->
+            <!--  --> $body$
+        </div>
+    </main>
+    <div class="header-stripe"></div>
+    <div id="overlay"></div>
+
+    $for(include-after)$
+    $include-after$
+    $endfor$
+
+    <script>
+        let root = document.documentElement;
+        const nav = document.querySelector('nav');
+        const overlay = document.querySelector('#overlay');
+
+        function openNav() {
+            nav.classList.add('show');
+            overlay.classList.add('show');
+            document.body.addEventListener('click', () => {
+                nav.classList.remove('show');
+                overlay.classList.remove('show');
+            }, { capture: true, once: true })
+        }
+
+        function toggleFont() {
+            const isSerif = root.style.getPropertyValue('--pages-font-family') !== 'var(--sans-font)'
+            root.style.setProperty(
+                '--pages-font-family',
+                isSerif ? 'var(--sans-font)' : 'var(--serif-font)'
+            )
+        }
+
+        document.querySelectorAll(".pages table").forEach(table => {
+            table.parentElement.style.overflowX = "auto"
+        })
+
+        mediumZoom(document.querySelectorAll("figure>img"), {
+            margin: 50,
+            background: "#FFFFFF",
+        });
+    </script>
+</body>
+
+</html>

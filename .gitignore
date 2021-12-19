@@ -1,0 +1,18 @@
+.direnv
+
+# output
+dist
+
+# symlink to show images in markdown preview
+chapters/figures
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+.mypy_cache/
+.pytest_cache/
+
+# bibliography temporay files
+*.sav
+*.bak
