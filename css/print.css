@@ -1,0 +1,191 @@
+body {
+    font-family: var(--serif-font);
+}
+
+section>p:first-child {
+    text-indent: 0;
+}
+
+a {
+    color: inherit;
+}
+
+h1 {
+    string-set: heading-1 content(text);
+}
+
+h2 {
+    string-set: heading-2 content(text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    break-after: avoid;
+}
+
+figure, table, .sourceCode {
+    break-inside: avoid;
+}
+
+#toc ul {
+    line-height: normal;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#toc>ul>li {
+    margin-top: 2rem;
+}
+
+#toc>ul>li li {
+    margin-top: 0.625rem;
+}
+
+#toc a {
+    display: grid;
+}
+
+#toc>ul>li>a {
+    font-weight: 600;
+    grid-template-columns: 1.25rem 1fr auto;
+}
+
+#toc>ul>li>ul>li>a {
+    grid-template-columns: 2rem 1fr auto;
+    padding-left: 1.25rem;
+}
+
+#toc>ul>li>ul>li>ul>li>a {
+    grid-template-columns: 2.75rem 1fr auto;
+    padding-left: 3.25rem;
+}
+
+#toc a::after {
+    content: target-counter(attr(href), page);
+    grid-column: 3;
+}
+
+#title-page {
+    page: title-page;
+    break-after: right;
+}
+
+section.level1 {
+    break-after: right;
+}
+
+.frontmatter {
+    page: frontmatter;
+}
+
+/* both are selectors are necessary:
+ * 1. set first page of first section to main
+ * 2. set first page of other sections to main
+ */
+
+main, main>* {
+    page: main;
+}
+
+#abstract>h1:first-child {
+    counter-reset: page 1;
+    /* FIXME: firefox issue with counter-reset */
+    /* counter-set: page 1; */
+}
+
+#introduction>h1:first-child {
+    counter-reset: page 1;
+    /* FIXME: firefox issue with counter-reset */
+    /* counter-set: page 1; */
+}
+
+#declaration-of-authorship {
+    height: 240mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#declaration-of-authorship>.signature {
+    margin-top: 4rem;
+    max-width: 400px;
+}
+
+#declaration-of-authorship>.signature>* {
+    margin-bottom: 4rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--pages-font-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+@media print {
+    @page {
+        size: A4;
+        margin-top: 25mm;
+        margin-bottom: 25mm;
+    }
+
+    @page :first {
+        margin-left: 25mm;
+        margin-right: 25mm;
+    }
+
+    @page :left {
+        margin-left: 30mm;
+        margin-right: 20mm;
+    }
+
+    @page :right {
+        margin-left: 20mm;
+        margin-right: 30mm;
+    }
+
+    @page main :first {
+        @top-left {
+            content: none !important;
+        }
+    }
+
+    @page main :left {
+        @top-left {
+            font-size: 0.875rem;
+            content: counter(page);
+        }
+
+        @top-right {
+            font-size: 0.875rem;
+            content: string(heading-1);
+            width: max-content;
+            font-style: italic;
+        }
+    }
+
+    @page main :right {
+        @top-left {
+            font-size: 0.875rem;
+            content: string(heading-2);
+            width: max-content;
+            font-style: italic;
+        }
+
+        @top-right {
+            font-size: 0.875rem;
+            content: counter(page);
+        }
+    }
+
+    @page frontmatter :left {
+        @top-left {
+            font-size: 0.875rem;
+            content: counter(page, lower-roman);
+        }
+    }
+
+    @page frontmatter :right {
+        @top-right {
+            font-size: 0.875rem;
+            content: counter(page, lower-roman);
+        }
+    }
+}
